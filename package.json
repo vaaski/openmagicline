@@ -1,0 +1,59 @@
+{
+  "name": "openmagicline",
+  "description": "Magicline API for everybody.",
+  "keywords": [
+    "magicline",
+    "gym",
+    "mysports",
+    "reverse-engineered"
+  ],
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "author": "vaaski <admin@vaa.ski>",
+  "scripts": {
+    "start": "node -r dotenv/config lib",
+    "build": "rimraf lib && tsc",
+    "prepare": "npm run build",
+    "dev": "nodemon",
+    "test": "nyc ava",
+    "coverage": "live-server coverage/lcov-report",
+    "prepublishOnly": "npm test",
+    "commit": "cz -S"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "ava": {
+    "extensions": [
+      "ts"
+    ],
+    "files": [
+      "tests/**/*"
+    ],
+    "require": [
+      "ts-node/register",
+      "dotenv/config"
+    ],
+    "failFast": true
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.1",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "ava": "^3.15.0",
+    "commitizen": "^4.2.2",
+    "dotenv": "^10.0.0",
+    "eslint": "^7.28.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-ava": "^12.0.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "live-server": "^1.2.1",
+    "nodemon": "^2.0.7",
+    "nyc": "^15.1.0",
+    "prettier": "^2.3.0",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
+  }
+}
