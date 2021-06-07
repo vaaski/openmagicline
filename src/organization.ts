@@ -1,6 +1,6 @@
 import type mgl from "."
 import type { Responses } from "../types/magicline"
-import type { Openmagicline } from "../types/openmagicline"
+import type * as Openmagicline from "../types/openmagicline"
 
 export function permitted(this: mgl): Promise<Responses.Permitted> {
   return this.got("organizationunit/permitted").json()

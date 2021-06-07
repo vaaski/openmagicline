@@ -1,4 +1,4 @@
-import type { Openmagicline } from "../types/openmagicline"
+import type * as Openmagicline from "../types/openmagicline"
 
 import _got, { Got } from "got"
 import once from "lodash/once"
@@ -6,11 +6,11 @@ import debug from "debug"
 
 import { currentLocale, supportedLocales } from "./locale"
 import { accountInfo, apps, notices, permitted } from "./organization"
+import { search } from "./customer"
 
 const _log = debug("openmagicline")
 
 export default class openmagicline {
-  private credentials: Openmagicline.Config
   private cookies?: string[]
 
   protected baseUrl: string
@@ -19,8 +19,7 @@ export default class openmagicline {
 
   public loggedIn = false
 
-  constructor(credentials: Openmagicline.Config) {
-    this.credentials = credentials
+  constructor(private credentials: Openmagicline.Config) {
     this.log = _log.extend(credentials.gym)
 
     this.baseUrl = `https://${this.credentials.gym}.web.magicline.com`
@@ -48,7 +47,7 @@ export default class openmagicline {
     })
   }
 
-  private _login = async (): Promise<void> => {
+  private _login = async (): Promise<boolean> => {
     try {
       const { username, password } = this.credentials
       const response = await this.got.post("login", {
@@ -64,6 +63,8 @@ export default class openmagicline {
       this.loggedIn = false
       this.cookies = undefined
     }
+
+    return this.loggedIn
   }
 
   login = once(this._login)
@@ -71,8 +72,14 @@ export default class openmagicline {
   currentLocale = currentLocale
   supportedLocales = supportedLocales
 
-  permitted = permitted
-  notices = notices
-  accountInfo = accountInfo
-  apps = apps
+  organization = {
+    permitted: permitted.bind(this),
+    notices: notices.bind(this),
+    accountInfo: accountInfo.bind(this),
+    apps: apps.bind(this),
+  }
+
+  customer = {
+    search: search.bind(this),
+  }
 }
