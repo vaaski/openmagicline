@@ -5,6 +5,7 @@ import once from "lodash/once"
 import debug from "debug"
 
 import { currentLocale, supportedLocales } from "./locale"
+import { accountInfo, apps, notices, permitted } from "./organization"
 
 const _log = debug("openmagicline")
 
@@ -69,4 +70,9 @@ export default class openmagicline {
 
   currentLocale = currentLocale
   supportedLocales = supportedLocales
+
+  permitted = permitted
+  notices = notices
+  accountInfo = accountInfo
+  apps = apps
 }

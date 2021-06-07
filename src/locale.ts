@@ -1,14 +1,10 @@
-import type openmagicline from "."
-import type { Magicline } from "../types/magicline"
+import type mgl from "."
+import type { Responses } from "../types/magicline"
 
-export async function currentLocale(
-  this: openmagicline
-): Promise<Magicline.Responses.CurrentLocale> {
-  return await this.got("currentLocale").text()
+export function currentLocale(this: mgl): Promise<Responses.CurrentLocale> {
+  return this.got("currentLocale").text()
 }
 
-export async function supportedLocales(
-  this: openmagicline
-): Promise<Magicline.Responses.SupportedLocales> {
-  return await this.got("supportedLocales").json()
+export function supportedLocales(this: mgl): Promise<Responses.SupportedLocales> {
+  return this.got("supportedLocales").json()
 }
