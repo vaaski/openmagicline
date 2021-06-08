@@ -1,4 +1,4 @@
-export * from "./Customer"
+export * from "./customer"
 
 /**
  * the "organizationUnitId" used to identify different units for the same gym.

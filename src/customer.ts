@@ -1,6 +1,6 @@
 import type mgl from "."
-import type { Responses } from "../types/magicline"
-import type * as Openmagicline from "../types/openmagicline"
+import type * as Responses from "$/magicline/responses"
+import type * as Openmagicline from "$/openmagicline"
 
 const defaultSearchOptions: Required<Openmagicline.Customer.Search> = {
   searchString: "",
@@ -20,7 +20,7 @@ const defaultSearchOptions: Required<Openmagicline.Customer.Search> = {
 export function search(
   this: mgl,
   options: Openmagicline.Customer.Search
-): Promise<Responses.SearchedCustomer> {
+): Promise<Responses.Customer.SearchedCustomer[]> {
   return this.got("customersearch", {
     method: "POST",
     json: { ...defaultSearchOptions, ...options },

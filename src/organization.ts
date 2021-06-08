@@ -1,6 +1,7 @@
 import type mgl from "."
-import type { Responses } from "../types/magicline"
-import type * as Openmagicline from "../types/openmagicline"
+import type * as Responses from "$/magicline/responses"
+import type * as Openmagicline from "$/openmagicline"
+import { getDefaultUnitID } from "./util"
 
 export function permitted(this: mgl): Promise<Responses.Permitted> {
   return this.got("organizationunit/permitted").json()
@@ -18,12 +19,8 @@ export async function apps(
   this: mgl,
   unitID?: Openmagicline.unitID
 ): Promise<Responses.App[]> {
-  if (!unitID) {
-    const data = await permitted.call(this)
+  if (!unitID) unitID = await getDefaultUnitID.call(this)
 
-    //! idk if 1 or 0 is the default, my gym is 2 for some reason
-    unitID = data.listChildren[0].databaseId ?? 1
-  }
   return this.got("app", {
     searchParams: {
       organizationUnitId: unitID,

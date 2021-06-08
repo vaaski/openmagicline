@@ -1,5 +1,5 @@
 import type mgl from "."
-import type { Responses } from "../types/magicline"
+import type * as Responses from "$/magicline/responses"
 
 export function currentLocale(this: mgl): Promise<Responses.CurrentLocale> {
   return this.got("currentLocale").text()

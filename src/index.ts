@@ -1,4 +1,4 @@
-import type * as Openmagicline from "../types/openmagicline"
+import type * as Openmagicline from "$/openmagicline"
 
 import _got, { Got } from "got"
 import once from "lodash/once"
@@ -7,6 +7,7 @@ import debug from "debug"
 import { currentLocale, supportedLocales } from "./locale"
 import { accountInfo, apps, notices, permitted } from "./organization"
 import { search } from "./customer"
+import { getSlots } from "./checkin"
 
 const _log = debug("openmagicline")
 
@@ -81,5 +82,9 @@ export default class openmagicline {
 
   customer = {
     search: search.bind(this),
+  }
+
+  checkin = {
+    slots: getSlots.bind(this),
   }
 }
