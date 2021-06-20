@@ -7,7 +7,7 @@ import debug from "debug"
 import { currentLocale, supportedLocales } from "./locale"
 import { accountInfo, apps, notices, permitted } from "./organization"
 import { search } from "./customer"
-import { getSlots } from "./checkin"
+import { getDefaultUnitID } from "./util"
 
 const _log = debug("openmagicline")
 
@@ -26,6 +26,7 @@ export default class openmagicline {
     this.baseUrl = `https://${this.credentials.gym}.web.magicline.com`
     const prefixUrl = `${this.baseUrl}/rest-api`
 
+    const httpLog = this.log.extend("http")
     this.got = _got.extend({
       headers: {
         "user-agent": "openmagicline (https://github.com/vaaski/openmagicline)",
@@ -40,7 +41,11 @@ export default class openmagicline {
         ],
         afterResponse: [
           response => {
-            this.log(`[${response.statusCode}] ${response.url}`)
+            let log = `[${response.request.options.method}](${response.statusCode})`
+            log += response.url
+            if (response.statusCode > 200) log += `\n${response.body}`
+
+            httpLog(log)
             return response
           },
         ],
@@ -73,6 +78,10 @@ export default class openmagicline {
   currentLocale = currentLocale
   supportedLocales = supportedLocales
 
+  util = {
+    getDefaultUnitID: getDefaultUnitID.bind(this),
+  }
+
   organization = {
     permitted: permitted.bind(this),
     notices: notices.bind(this),
@@ -82,9 +91,5 @@ export default class openmagicline {
 
   customer = {
     search: search.bind(this),
-  }
-
-  checkin = {
-    slots: getSlots.bind(this),
   }
 }
