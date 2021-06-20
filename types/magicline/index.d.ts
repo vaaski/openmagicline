@@ -3,6 +3,17 @@ export * from "./checkin"
 
 export type CurrentLocale = string
 export type SupportedLocales = string[]
+export interface Success {
+  success: "true"
+}
+export interface GenericError {
+  errorMessage: string
+  errorCode: string
+  args: any[]
+  typedArgs: any[]
+}
+
+export type ErrorOrSuccess = Partial<Success> & GenericError[]
 
 export interface Permitted {
   databaseId: null | number

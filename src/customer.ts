@@ -26,3 +26,23 @@ export function search(
     json: { ...defaultSearchOptions, ...options },
   }).json()
 }
+
+export function getCards(
+  this: mgl,
+  customerID: Openmagicline.Customer.CustomerID
+): Promise<Responses.Customer.AccessIdentification[]> {
+  return this.got(`customer/${customerID}/accessidentification`).json()
+}
+
+export function removeCard(
+  this: mgl,
+  customerID: Openmagicline.Customer.CustomerID,
+  AccessIdentificationID: Openmagicline.Customer.AccessIdentificationID
+): Promise<Responses.ErrorOrSuccess> {
+  return this.got(`customer/${customerID}/accessidentification/${AccessIdentificationID}`, {
+    method: "DELETE",
+    searchParams: {
+      optLockRemote: 0,
+    },
+  }).json()
+}

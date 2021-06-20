@@ -1,4 +1,7 @@
 export namespace Customer {
+  export type CustomerID = number
+  export type AccessIdentificationID = number
+
   export interface Search {
     searchString: string
     facility: number

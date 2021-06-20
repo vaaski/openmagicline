@@ -1,6 +1,11 @@
+import type * as Openmagicline from "$/openmagicline"
+
 export namespace Customer {
-  export interface SearchedCustomer {
-    databaseId: number
+  export interface Base {
+    databaseId: Openmagicline.Customer.CustomerID
+  }
+
+  export interface SearchedCustomer extends Base {
     firstname: string
     lastname: string
     gender: number
@@ -19,5 +24,15 @@ export namespace Customer {
     houseNumber: null | string
     zip: null | string
     city: null | string
+  }
+
+  export interface AccessIdentification {
+    databaseId: Openmagicline.Customer.AccessIdentificationID
+    optlock: number
+    fkOrganizationUnit: number
+    createdDate: Date
+    type: string
+    uid: string
+    stompDestination: string
   }
 }

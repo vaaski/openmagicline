@@ -6,7 +6,7 @@ import debug from "debug"
 
 import { currentLocale, supportedLocales } from "./locale"
 import { accountInfo, apps, notices, permitted } from "./organization"
-import { search } from "./customer"
+import { getCards, removeCard, search } from "./customer"
 import { getDefaultUnitID } from "./util"
 
 const _log = debug("openmagicline")
@@ -91,5 +91,7 @@ export default class openmagicline {
 
   customer = {
     search: search.bind(this),
+    getCards: getCards.bind(this),
+    removeCard: removeCard.bind(this),
   }
 }

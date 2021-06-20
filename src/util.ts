@@ -1,5 +1,4 @@
 import type mgl from "."
-import type * as Openmagicline from "$/openmagicline"
 
 import { permitted } from "./organization"
 
