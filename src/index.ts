@@ -1,4 +1,4 @@
-import type * as Openmagicline from "$/openmagicline"
+import type * as Openmagicline from "../types/openmagicline"
 
 import _got, { Got } from "got"
 import once from "lodash/once"

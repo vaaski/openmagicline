@@ -11,10 +11,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "paths": {
-      "$/*": ["./types/*"]
-    }
+    "declaration": true
   },
   "include": ["src"]
 }

@@ -1,6 +1,6 @@
 import type mgl from "."
-import type * as Responses from "$/magicline"
-import type * as Openmagicline from "$/openmagicline"
+import type * as Responses from "../types/magicline"
+import type * as Openmagicline from "../types/openmagicline"
 
 const defaultSearchOptions: Required<Openmagicline.Customer.Search> = {
   searchString: "",
