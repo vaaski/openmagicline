@@ -1,29 +1,32 @@
-import type * as Openmagicline from "../types/openmagicline"
+import type * as OMGL from "../types/openmagicline"
 
 import _got, { Got } from "got"
 import once from "lodash/once"
 import debug from "debug"
 
-import { currentLocale, supportedLocales } from "./locale"
-import { accountInfo, apps, notices, permitted } from "./organization"
-import { getCards, removeCard, search } from "./customer"
-import { getDefaultUnitID } from "./util"
+import Locale from "./locale"
+import Organization from "./organization"
+import Customer from "./customer"
+import Util from "./util"
 
 const _log = debug("openmagicline")
 
-export default class openmagicline {
-  private cookies?: string[]
-
+export default class Openmagicline {
   protected baseUrl: string
   protected log: debug.Debugger
   protected got: Got
 
-  public loggedIn = false
+  public cookies?: string[]
 
-  constructor(private credentials: Openmagicline.Config) {
-    this.log = _log.extend(credentials.gym)
+  customer: Customer
+  locale: Locale
+  organization: Organization
+  util: Util
 
-    this.baseUrl = `https://${this.credentials.gym}.web.magicline.com`
+  constructor(private config: OMGL.Config) {
+    this.log = _log.extend(config.gym)
+
+    this.baseUrl = `https://${this.config.gym}.web.magicline.com`
     const prefixUrl = `${this.baseUrl}/rest-api`
 
     const httpLog = this.log.extend("http")
@@ -51,11 +54,31 @@ export default class openmagicline {
         ],
       },
     })
+
+    this.customer = new Customer(this.got)
+    this.locale = new Locale(this.got)
+    this.organization = new Organization(this.got, this)
+    this.util = new Util(this.got, this)
   }
 
-  private _login = async (): Promise<boolean> => {
+  /**
+   * authenticate the Openmagicline instance.
+   *
+   * if a token is passed, it will be validated and the request to /login will be skipped.
+   * @param cookies existing cookies, available after login at `.cookies`
+   * @returns instance for chaining
+   * @throws when not authenticated
+   */
+  private _login = async (cookies?: string[]): Promise<Openmagicline> => {
+    if (cookies) {
+      this.cookies = cookies
+      if (await this.util.testLogin()) {
+        return this
+      } else throw Error("invalid token")
+    }
+
     try {
-      const { username, password } = this.credentials
+      const { username, password } = this.config
       const response = await this.got.post("login", {
         prefixUrl: this.baseUrl,
         form: { username, password, client: "webclient" },
@@ -63,35 +86,14 @@ export default class openmagicline {
 
       this.login = once(this._login)
 
-      this.loggedIn = true
       this.cookies = response.headers["set-cookie"]
     } catch (err) {
-      this.loggedIn = false
       this.cookies = undefined
+      throw err
     }
 
-    return this.loggedIn
+    return this
   }
 
   login = once(this._login)
-
-  currentLocale = currentLocale
-  supportedLocales = supportedLocales
-
-  util = {
-    getDefaultUnitID: getDefaultUnitID.bind(this),
-  }
-
-  organization = {
-    permitted: permitted.bind(this),
-    notices: notices.bind(this),
-    accountInfo: accountInfo.bind(this),
-    apps: apps.bind(this),
-  }
-
-  customer = {
-    search: search.bind(this),
-    getCards: getCards.bind(this),
-    removeCard: removeCard.bind(this),
-  }
 }

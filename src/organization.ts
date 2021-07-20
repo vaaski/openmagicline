@@ -1,29 +1,31 @@
+import type { Got } from "got/dist/source"
 import type mgl from "."
+
 import type * as Responses from "../types/magicline"
 import type * as Openmagicline from "../types/openmagicline"
-import { getDefaultUnitID } from "./util"
 
-export function permitted(this: mgl): Promise<Responses.Permitted> {
-  return this.got("organizationunit/permitted").json()
-}
+export default class Organization {
+  constructor(private got: Got, private mgl: mgl) {}
 
-export function notices(this: mgl): Promise<Responses.Notices> {
-  return this.got("notices").json()
-}
+  permitted(): Promise<Responses.Permitted> {
+    return this.got("organizationunit/permitted").json()
+  }
 
-export function accountInfo(this: mgl): Promise<Responses.AccountInfo> {
-  return this.got("me/info").json()
-}
+  notices(): Promise<Responses.Notices> {
+    return this.got("notices").json()
+  }
 
-export async function apps(
-  this: mgl,
-  unitID?: Openmagicline.unitID
-): Promise<Responses.App[]> {
-  if (!unitID) unitID = await getDefaultUnitID.call(this)
+  accountInfo(): Promise<Responses.AccountInfo> {
+    return this.got("me/info").json()
+  }
 
-  return this.got("app", {
-    searchParams: {
-      organizationUnitId: unitID,
-    },
-  }).json()
+  async apps(unitID?: Openmagicline.unitID): Promise<Responses.App[]> {
+    if (!unitID) unitID = await this.mgl.util.getDefaultUnitID()
+
+    return this.got("app", {
+      searchParams: {
+        organizationUnitId: unitID,
+      },
+    }).json()
+  }
 }

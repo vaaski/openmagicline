@@ -16,7 +16,8 @@
     "build": "rimraf lib && tsc",
     "prepare": "npm run build",
     "dev": "nodemon",
-    "test": "nyc ava",
+    "test": "nyc ava -v tests/*.test.ts",
+    "test:watch": "nodemon -w src -w tests -w types --exec npm test",
     "coverage": "live-server coverage/lcov-report",
     "prepublishOnly": "npm test",
     "commit": "cz -S"

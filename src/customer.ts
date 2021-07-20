@@ -1,48 +1,54 @@
-import type mgl from "."
+import type { Got } from "got/dist/source"
+
 import type * as Responses from "../types/magicline"
 import type * as Openmagicline from "../types/openmagicline"
 
 const defaultSearchOptions: Required<Openmagicline.Customer.Search> = {
-  searchString: "",
   facility: 0,
+  searchInName: true,
+  searchInCustomerNumber: true,
   searchInAddress: false,
   searchInBankAccount: false,
   searchInCardNumber: false,
-  searchInCustomerNumber: true,
   searchInLockerKey: false,
-  searchInName: true,
   searchInPurchasedContingentCode: false,
   showAllFacilities: true,
   showCheckedIn: false,
   showOnlyMembers: false,
 }
 
-export function search(
-  this: mgl,
-  options: Openmagicline.Customer.Search
-): Promise<Responses.Customer.SearchedCustomer[]> {
-  return this.got("customersearch", {
-    method: "POST",
-    json: { ...defaultSearchOptions, ...options },
-  }).json()
-}
+export default class Customer {
+  constructor(private got: Got) {}
 
-export function getCards(
-  this: mgl,
-  customerID: Openmagicline.Customer.CustomerID
-): Promise<Responses.Customer.AccessIdentification[]> {
-  return this.got(`customer/${customerID}/accessidentification`).json()
-}
+  search(
+    searchString: string,
+    options?: Openmagicline.Customer.Search
+  ): Promise<Responses.Customer.SearchedCustomer[]> {
+    return this.got("customersearch", {
+      method: "POST",
+      json: {
+        ...defaultSearchOptions,
+        ...options,
+        searchString,
+      },
+    }).json()
+  }
 
-export function removeCard(
-  this: mgl,
-  customerID: Openmagicline.Customer.CustomerID,
-  AccessIdentificationID: Openmagicline.Customer.AccessIdentificationID
-): Promise<Responses.ErrorOrSuccess> {
-  return this.got(`customer/${customerID}/accessidentification/${AccessIdentificationID}`, {
-    method: "DELETE",
-    searchParams: {
-      optLockRemote: 0,
-    },
-  }).json()
+  getCards(
+    customerID: Openmagicline.Customer.CustomerID
+  ): Promise<Responses.Customer.AccessIdentification[]> {
+    return this.got(`customer/${customerID}/accessidentification`).json()
+  }
+
+  removeCard(
+    customerID: Openmagicline.Customer.CustomerID,
+    AccessIdentificationID: Openmagicline.Customer.AccessIdentificationID
+  ): Promise<Responses.ErrorOrSuccess> {
+    return this.got(`customer/${customerID}/accessidentification/${AccessIdentificationID}`, {
+      method: "DELETE",
+      searchParams: {
+        optLockRemote: 0,
+      },
+    }).json()
+  }
 }

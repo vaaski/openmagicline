@@ -1,10 +1,15 @@
-import type mgl from "."
+import type { Got } from "got/dist/source"
+
 import type * as Responses from "../types/magicline"
 
-export function currentLocale(this: mgl): Promise<Responses.CurrentLocale> {
-  return this.got("currentLocale").text()
-}
+export default class Locale {
+  constructor(private got: Got) {}
 
-export function supportedLocales(this: mgl): Promise<Responses.SupportedLocales> {
-  return this.got("supportedLocales").json()
+  currentLocale(): Promise<Responses.CurrentLocale> {
+    return this.got("currentLocale").text()
+  }
+
+  supportedLocales(): Promise<Responses.SupportedLocales> {
+    return this.got("supportedLocales").json()
+  }
 }

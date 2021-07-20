@@ -3,7 +3,6 @@ export namespace Customer {
   export type AccessIdentificationID = number
 
   export interface Search {
-    searchString: string
     facility: number
     /**
      * searchInAddress

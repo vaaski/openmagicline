@@ -3,3 +3,4 @@ lib
 .nyc_output
 coverage
 .env
+token.json
