@@ -1,19 +1,12 @@
-import { readFileSync, writeFileSync } from "fs"
 import { join } from "path"
+import { read, write } from "fs-jetpack"
 
 import Openmagicline from "../src"
 
 const tokenPath = join(__dirname, "../token.json")
 
-const readToken = () => {
-  const tokenString = readFileSync(tokenPath).toString()
-  return JSON.parse(tokenString)
-}
-
-const saveToken = (token: string[]) => {
-  const tokenString = JSON.stringify(token)
-  writeFileSync(tokenPath, tokenString)
-}
+const readToken = () => read(tokenPath, "json")
+const saveToken = (token: string[]) => write(tokenPath, token)
 
 export const config = {
   gym: process.env.OPENMAGICLINE_GYM ?? "",
@@ -29,14 +22,14 @@ export default async (): Promise<Openmagicline> => {
   if (token) {
     console.log("logging in with existing token")
     try {
-      instance.login(token)
+      await instance.login(token)
     } catch (error) {
       console.log("logging in with token threw, getting new token")
-      instance.login()
+      await instance.login()
     }
   } else {
     console.log("getting new token")
-    instance.login()
+    await instance.login()
   }
 
   if (instance.cookies) saveToken(instance.cookies)

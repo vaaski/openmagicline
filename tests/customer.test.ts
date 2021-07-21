@@ -24,3 +24,6 @@ test("get cards of a customer", async t => {
   t.truthy(result[0].databaseId)
   t.truthy(result[0].uid)
 })
+
+test.todo("add customer card")
+test.todo("remove customer card")

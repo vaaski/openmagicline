@@ -27,6 +27,7 @@ export default class Util {
     const data = await this.mgl.organization.permitted()
 
     //! idk if 1 or 0 is the default, my gym is 2 for some reason
+    /* istanbul ignore next */
     return data.listChildren[0].databaseId ?? 1
   }
 

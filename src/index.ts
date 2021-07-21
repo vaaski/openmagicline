@@ -62,9 +62,9 @@ export default class Openmagicline {
   }
 
   /**
-   * authenticate the Openmagicline instance.
+   * authenticate the Openmagicline instance using username/password from the instance config.
    *
-   * if a token is passed, it will be validated and the request to /login will be skipped.
+   * if a token is passed, it will be validated and the request to `/login` will be skipped.
    * @param cookies existing cookies, available after login at `.cookies`
    * @returns instance for chaining
    * @throws when not authenticated
