@@ -1,5 +1,6 @@
 import type { Got } from "got/dist/source"
 import type mgl from "."
+import { DEFAULT_UNIT_ID } from "./constants"
 
 //? this was for checkin slots, which i don't currently use.
 // /**
@@ -26,9 +27,8 @@ export default class Util {
   async getDefaultUnitID(): Promise<number> {
     const data = await this.mgl.organization.permitted()
 
-    //! idk if 1 or 0 is the default, my gym is 2 for some reason
     /* istanbul ignore next */
-    return data.listChildren[0].databaseId ?? 1
+    return data.listChildren[0].databaseId ?? DEFAULT_UNIT_ID
   }
 
   /**

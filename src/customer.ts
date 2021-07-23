@@ -3,31 +3,31 @@ import type { Got } from "got/dist/source"
 import type * as Responses from "../types/magicline"
 import type * as Openmagicline from "../types/openmagicline"
 
-const defaultSearchOptions: Required<Openmagicline.Customer.Search> = {
-  facility: 0,
-  searchInName: true,
-  searchInCustomerNumber: true,
-  searchInAddress: false,
-  searchInBankAccount: false,
-  searchInCardNumber: false,
-  searchInLockerKey: false,
-  searchInPurchasedContingentCode: false,
-  showAllFacilities: true,
-  showCheckedIn: false,
-  showOnlyMembers: false,
-}
-
 export default class Customer {
   constructor(private got: Got) {}
 
+  defaultSearchOptions: Required<Openmagicline.Customer.SearchOptions> = {
+    facility: 0,
+    searchInName: true,
+    searchInCustomerNumber: true,
+    searchInAddress: false,
+    searchInBankAccount: false,
+    searchInCardNumber: false,
+    searchInLockerKey: false,
+    searchInPurchasedContingentCode: false,
+    showAllFacilities: true,
+    showCheckedIn: false,
+    showOnlyMembers: false,
+  }
+
   search(
     searchString: string,
-    options?: Openmagicline.Customer.Search
+    options?: Openmagicline.Customer.SearchOptions
   ): Promise<Responses.Customer.SearchedCustomer[]> {
     return this.got("customersearch", {
       method: "POST",
       json: {
-        ...defaultSearchOptions,
+        ...this.defaultSearchOptions,
         ...options,
         searchString,
       },

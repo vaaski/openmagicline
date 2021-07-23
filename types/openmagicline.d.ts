@@ -1,4 +1,5 @@
 export * from "./customer"
+export * from "./checkin"
 
 /**
  * the "organizationUnitId" used to identify different units for the same gym.

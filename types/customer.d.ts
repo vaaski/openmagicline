@@ -2,7 +2,7 @@ export namespace Customer {
   export type CustomerID = number
   export type AccessIdentificationID = number
 
-  export interface Search {
+  export interface SearchOptions {
     facility: number
     /**
      * searchInAddress

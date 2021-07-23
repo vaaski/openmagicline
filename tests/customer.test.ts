@@ -1,6 +1,6 @@
-import test, { before } from "ava"
+import test, { before, beforeEach } from "ava"
 import Openmagicline from "../src"
-import setup from "./setup"
+import setup, { delay } from "./_setup"
 
 let instance: Openmagicline
 
@@ -10,6 +10,7 @@ const TEST_FACILITY = parseInt(process.env.OPENMAGICLINE_TEST_FACILITY ?? "0")
 before(async () => {
   instance = await setup()
 })
+beforeEach(delay)
 
 test("search for customers", async t => {
   const result = await instance.customer.search("e", { facility: TEST_FACILITY })

@@ -20,15 +20,12 @@ export default async (): Promise<Openmagicline> => {
   const instance = new Openmagicline(config)
 
   if (token) {
-    console.log("logging in with existing token")
     try {
       await instance.login(token)
     } catch (error) {
-      console.log("logging in with token threw, getting new token")
       await instance.login()
     }
   } else {
-    console.log("getting new token")
     await instance.login()
   }
 
@@ -36,3 +33,11 @@ export default async (): Promise<Openmagicline> => {
 
   return instance
 }
+
+const randomNumber = (m = 0, M = 1) => Math.random() * (M - m) + m
+/**
+ * magicline starts to return 429s pretty early.
+ * we delay each test by 2-5 seconds to avoid this.
+ */
+export const delay = (): Promise<void> =>
+  new Promise(r => setTimeout(r, randomNumber(2e3, 5e3)))

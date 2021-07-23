@@ -8,6 +8,7 @@ import Locale from "./locale"
 import Organization from "./organization"
 import Customer from "./customer"
 import Util from "./util"
+import Checkin from "./checkin"
 
 const _log = debug("openmagicline")
 
@@ -21,6 +22,13 @@ export default class Openmagicline {
   customer: Customer
   locale: Locale
   organization: Organization
+  /**
+   * everything related to the checkin process
+   */
+  checkin: Checkin
+  /**
+   * miscellaneous helpers and thingies
+   */
   util: Util
 
   constructor(private config: OMGL.Config) {
@@ -58,6 +66,7 @@ export default class Openmagicline {
     this.customer = new Customer(this.got)
     this.locale = new Locale(this.got)
     this.organization = new Organization(this.got, this)
+    this.checkin = new Checkin(this.got, this)
     this.util = new Util(this.got, this)
   }
 

@@ -1,6 +1,8 @@
-import test from "ava"
+import test, { beforeEach } from "ava"
 import Openmagicline from "../src"
-import setup, { config } from "./setup"
+import setup, { config, delay } from "./_setup"
+
+beforeEach(delay)
 
 test("throws with invalid preexisting token", async t => {
   const instance = new Openmagicline(config)

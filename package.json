@@ -16,7 +16,8 @@
     "build": "rimraf lib && tsc",
     "prepare": "npm run build",
     "dev": "nodemon",
-    "test": "nyc ava -v -s tests/*.test.ts",
+    "test": "nyc ava -s",
+    "test:full": "rimraf token.json && npm test",
     "test:watch": "nodemon -w src -w tests -w types --exec npm test",
     "coverage": "live-server coverage/lcov-report --port=8069",
     "prepublishOnly": "npm test",
@@ -30,13 +31,14 @@
       "ts"
     ],
     "files": [
-      "tests/**/*"
+      "tests/**/*.test.ts"
     ],
     "require": [
       "ts-node/register",
       "dotenv/config"
     ],
-    "failFast": true
+    "failFast": true,
+    "verbose": true
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
