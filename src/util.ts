@@ -1,4 +1,4 @@
-import type { Got } from "got/dist/source"
+import type { Got, Headers } from "got/dist/source"
 import type mgl from "."
 import { DEFAULT_UNIT_ID } from "./constants"
 
@@ -41,5 +41,25 @@ export default class Util {
     } catch {
       return false
     }
+  }
+}
+
+export const headers = (mgl: mgl): Headers => {
+  const u = new URL(mgl.baseUrl)
+
+  return {
+    authority: u.hostname,
+    "sec-ch-ua": `" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"`,
+    accept: `application/json, text/javascript, */*; q=0.01`,
+    "x-requested-with": `XMLHttpRequest`,
+    "sec-ch-ua-mobile": `?0`,
+    "user-agent": `Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36`,
+    origin: u.href,
+    "sec-fetch-site": `same-origin`,
+    "sec-fetch-mode": `cors`,
+    "sec-fetch-dest": `empty`,
+    referer: u.href,
+    "accept-language": `en-CA,en-US;q=0.9,en;q=0.8,de-DE;q=0.7,de;q=0.6,en-GB;q=0.5`,
+    cookies: mgl.cookies,
   }
 }

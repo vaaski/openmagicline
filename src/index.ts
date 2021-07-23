@@ -7,16 +7,16 @@ import debug from "debug"
 import Locale from "./locale"
 import Organization from "./organization"
 import Customer from "./customer"
-import Util from "./util"
+import Util, { headers } from "./util"
 import Checkin from "./checkin"
 
 const _log = debug("openmagicline")
 
 export default class Openmagicline {
-  protected baseUrl: string
   protected log: debug.Debugger
   protected got: Got
 
+  public baseUrl: string
   public cookies?: string[]
 
   customer: Customer
@@ -39,10 +39,7 @@ export default class Openmagicline {
 
     const httpLog = this.log.extend("http")
     this.got = _got.extend({
-      headers: {
-        "user-agent": "openmagicline (https://github.com/vaaski/openmagicline)",
-        cookies: this.cookies,
-      },
+      headers: headers(this),
       prefixUrl,
       hooks: {
         beforeRequest: [
