@@ -1,11 +1,13 @@
 export namespace Checkin {
   export interface CheckinResponse {
+    /** this is the checkinID **not** the customerID, that is `fkCustomer` */
     databaseId: number
     optlock: number
     fkOrganizationUnit: number
+    /** this is the customerID */
     fkCustomer: number
     fkEmployee: null
-    fkDevice: number
+    fkDevice: number | null
     firstname: string
     lastname: string
     cardNumber: null
@@ -15,9 +17,9 @@ export namespace Checkin {
     gender: number
     imageUrl: null
     studioName: null
-    lockerKey: null
+    lockerKey: null | string
     checkinTime: string
-    checkoutTime: null
+    checkoutTime: null | string
     stompDestination: string
   }
 

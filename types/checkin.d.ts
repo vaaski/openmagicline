@@ -2,10 +2,12 @@ export namespace Checkin {
   export interface ListOptions {
     organizationUnitId?: number
     offset?: number
+    /** magiclines webclient sets this to  */
     maxResults?: number
     search?: string
     filter?: string
     sortedby?: "checkinTime" | "checkinDuration" | "lastname" | "firstname" | "lockerKey"
+    /** list checkouts instead */
     checkouts?: boolean
     direction?: "DESCENDING" | "ASCENDING"
   }
@@ -31,5 +33,9 @@ export namespace Checkin {
     optlock?: number
     /** organizationUnitId */
     requiredOrganizationUnitId?: number
+  }
+
+  export interface CheckoutOptions {
+    optLockRemote?: number
   }
 }

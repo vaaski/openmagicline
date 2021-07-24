@@ -27,3 +27,14 @@ test("check-in a customer", async t => {
   })
   t.true(data.fkCustomer === TEST_CUSTOMER)
 })
+
+test("check-out a customer", async t => {
+  const checkin = await instance.checkin.checkin({
+    lockerKey: "openmagicline automated test",
+    fkCustomer: TEST_CUSTOMER,
+    requiredOrganizationUnitId: TEST_FACILITY,
+  })
+
+  const checkout = await instance.checkin.checkout(checkin.databaseId)
+  t.true(checkout.fkCustomer === TEST_CUSTOMER)
+})

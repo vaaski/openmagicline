@@ -23,9 +23,11 @@ export default async (): Promise<Openmagicline> => {
     try {
       await instance.login(token)
     } catch (error) {
+      console.log("getting new token")
       await instance.login()
     }
   } else {
+    console.log("getting new token")
     await instance.login()
   }
 

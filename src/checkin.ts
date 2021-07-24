@@ -19,6 +19,10 @@ export default class Checkin {
     sortedby: "checkinTime",
     direction: "DESCENDING",
   }
+  /**
+   * list all checked-in customers
+   * @param options filter, sort, etc.
+   */
   async list(
     options?: Openmagicline.Checkin.ListOptions
   ): Promise<Responses.Checkin.CheckinList> {
@@ -48,6 +52,9 @@ export default class Checkin {
     optlock: 0,
     requiredOrganizationUnitId: DEFAULT_UNIT_ID,
   }
+  /**
+   * check-in a customer
+   */
   async checkin(
     options: Openmagicline.Checkin.CheckinOptions
   ): Promise<Responses.Checkin.CheckinResponse> {
@@ -64,6 +71,21 @@ export default class Checkin {
         requiredOrganizationUnitId: unitID,
         ...options,
       },
+    }).json()
+  }
+
+  /**
+   * check-out a customer
+   * @param checkinID the ID of the checkin, **not** the customer ID
+   * @param options optional object containing optLockRemote, not sure what it does
+   */
+  async checkout(
+    checkinID: number,
+    options?: Openmagicline.Checkin.CheckoutOptions
+  ): Promise<Responses.Checkin.CheckinResponse> {
+    return this.got(`checkin/${checkinID}`, {
+      method: "DELETE",
+      searchParams: { ...options },
     }).json()
   }
 }
