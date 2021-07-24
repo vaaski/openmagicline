@@ -38,4 +38,11 @@ export namespace Checkin {
   export interface CheckoutOptions {
     optLockRemote?: number
   }
+
+  export interface LockerKeyOptions {
+    /** not sure what this is for */
+    databaseId?: null | any
+    /** not sure what this is for */
+    optlock?: 0 | number
+  }
 }

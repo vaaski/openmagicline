@@ -76,16 +76,36 @@ export default class Checkin {
 
   /**
    * check-out a customer
-   * @param checkinID the ID of the checkin, **not** the customer ID
+   * @param checkinId the ID of the checkin, **not** the customer ID
    * @param options optional object containing optLockRemote, not sure what it does
    */
   async checkout(
-    checkinID: number,
+    checkinId: number,
     options?: Openmagicline.Checkin.CheckoutOptions
   ): Promise<Responses.Checkin.CheckinResponse> {
-    return this.got(`checkin/${checkinID}`, {
+    return this.got(`checkin/${checkinId}`, {
       method: "DELETE",
       searchParams: { ...options },
+    }).json()
+  }
+
+  private defaultLockerKeyParams: Openmagicline.Checkin.LockerKeyOptions = {
+    databaseId: null,
+    optlock: 0,
+  }
+  async lockerKey(
+    checkinId: number,
+    lockerKey: number | string,
+    options?: Openmagicline.Checkin.LockerKeyOptions
+  ): Promise<Responses.Checkin.LockerKeyResponse> {
+    return this.got(`checkin/lockerkey/${checkinId}`, {
+      method: "PUT",
+      json: {
+        ...this.defaultLockerKeyParams,
+        checkinId,
+        lockerKey,
+        ...options,
+      },
     }).json()
   }
 }

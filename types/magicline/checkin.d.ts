@@ -1,4 +1,9 @@
 export namespace Checkin {
+  export interface LockerKeyResponse {
+    checkinId: number
+    lockerKey: string
+  }
+
   export interface CheckinResponse {
     /** this is the checkinID **not** the customerID, that is `fkCustomer` */
     databaseId: number

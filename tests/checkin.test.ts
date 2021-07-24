@@ -38,3 +38,24 @@ test("check-out a customer", async t => {
   const checkout = await instance.checkin.checkout(checkin.databaseId)
   t.true(checkout.fkCustomer === TEST_CUSTOMER)
 })
+
+test("change lockerKey", async t => {
+  const checkin = await instance.checkin.checkin({
+    lockerKey: "openmagicline automated test",
+    fkCustomer: TEST_CUSTOMER,
+    requiredOrganizationUnitId: TEST_FACILITY,
+  })
+
+  await delay()
+
+  const changedTo = "openmagicline automated test 2"
+  await instance.checkin.lockerKey(checkin.databaseId, changedTo)
+
+  await delay()
+
+  const list = await instance.checkin.list()
+  const changedCheckin = list.checkins.find(c => c.databaseId === checkin.databaseId)
+  if (!changedCheckin) throw "can't find lockerkey-changed checkin anymore"
+
+  t.true(changedCheckin.lockerKey === changedTo)
+})
