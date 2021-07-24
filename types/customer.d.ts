@@ -1,9 +1,11 @@
+import { unitID } from "./openmagicline"
+
 export namespace Customer {
   export type CustomerID = number
   export type AccessIdentificationID = number
 
   export interface SearchOptions {
-    facility: number
+    facility: unitID
     /**
      * searchInAddress
      * @default false
@@ -21,7 +23,7 @@ export namespace Customer {
     searchInCardNumber?: boolean
     /**
      * searchInCustomerNumber
-     * @default false
+     * @default true
      */
     searchInCustomerNumber?: boolean
     /**
@@ -31,7 +33,7 @@ export namespace Customer {
     searchInLockerKey?: boolean
     /**
      * searchInName
-     * @default false
+     * @default true
      */
     searchInName?: boolean
     /**
@@ -41,7 +43,7 @@ export namespace Customer {
     searchInPurchasedContingentCode?: boolean
     /**
      * showAllFacilities
-     * @default false
+     * @default true
      */
     showAllFacilities?: boolean
     /**

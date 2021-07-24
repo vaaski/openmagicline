@@ -1,5 +1,6 @@
 export * from "./customer"
 export * from "./checkin"
+export * from "./sales"
 
 export type CurrentLocale = string
 export type SupportedLocales = string[]

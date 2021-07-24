@@ -40,15 +40,17 @@ export default class Customer {
     return this.got(`customer/${customerID}/accessidentification`).json()
   }
 
-  removeCard(
-    customerID: Openmagicline.Customer.CustomerID,
-    AccessIdentificationID: Openmagicline.Customer.AccessIdentificationID
-  ): Promise<Responses.ErrorOrSuccess> {
-    return this.got(`customer/${customerID}/accessidentification/${AccessIdentificationID}`, {
-      method: "DELETE",
-      searchParams: {
-        optLockRemote: 0,
-      },
-    }).json()
-  }
+  // todo: implement card methods
+  //? removed until more card methods are implemented
+  // removeCard(
+  //   customerID: Openmagicline.Customer.CustomerID,
+  //   AccessIdentificationID: Openmagicline.Customer.AccessIdentificationID
+  // ): Promise<Responses.ErrorOrSuccess> {
+  //   return this.got(`customer/${customerID}/accessidentification/${AccessIdentificationID}`, {
+  //     method: "DELETE",
+  //     searchParams: {
+  //       optLockRemote: 0,
+  //     },
+  //   }).json()
+  // }
 }

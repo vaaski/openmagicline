@@ -1,14 +1,17 @@
 import type * as OMGL from "../types/openmagicline"
+import type * as Magicline from "../types/magicline/index"
+export { OMGL, Magicline }
 
 import _got, { Got } from "got"
 import once from "lodash/once"
 import debug from "debug"
 
+import Util, { headers } from "./util"
 import Locale from "./locale"
 import Organization from "./organization"
 import Customer from "./customer"
-import Util, { headers } from "./util"
 import Checkin from "./checkin"
+import Sales from "./sales"
 
 const _log = debug("openmagicline")
 
@@ -22,15 +25,16 @@ export default class Openmagicline {
   customer: Customer
   locale: Locale
   organization: Organization
-  /**
-   * everything related to the checkin process
-   */
+  /** everything related to the checkin process */
   checkin: Checkin
-  /**
-   * miscellaneous helpers and thingies
-   */
+  /** miscellaneous helpers and thingies */
   util: Util
+  /** everything related to retail sales (magicline calls this disposal in some places) */
+  sales: Sales
+  /** reference to this.sales */
+  disposal: Sales
 
+  // TODO: check version and warn if openmagicline is outdated
   constructor(private config: OMGL.Config) {
     this.log = _log.extend(config.gym)
 
@@ -65,6 +69,8 @@ export default class Openmagicline {
     this.organization = new Organization(this.got, this)
     this.checkin = new Checkin(this.got, this)
     this.util = new Util(this.got, this)
+    this.sales = new Sales(this.got, this)
+    this.disposal = this.sales
   }
 
   /**

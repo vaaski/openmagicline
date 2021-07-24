@@ -19,11 +19,19 @@ test("get checkin list", async t => {
   t.true(typeof data.checkins[0].databaseId === "number")
 })
 
+test("get checkin list with a unitID", async t => {
+  const data = await instance.checkin.list({
+    organizationUnitId: TEST_FACILITY,
+  })
+  t.true(data.checkins instanceof Array)
+  t.truthy(data.checkins[0].firstname)
+  t.true(typeof data.checkins[0].databaseId === "number")
+})
+
 test("check-in a customer", async t => {
   const data = await instance.checkin.checkin({
     lockerKey: "openmagicline automated test",
     fkCustomer: TEST_CUSTOMER,
-    requiredOrganizationUnitId: TEST_FACILITY,
   })
   t.true(data.fkCustomer === TEST_CUSTOMER)
 })
@@ -43,7 +51,7 @@ test("change lockerKey", async t => {
   const checkin = await instance.checkin.checkin({
     lockerKey: "openmagicline automated test",
     fkCustomer: TEST_CUSTOMER,
-    requiredOrganizationUnitId: TEST_FACILITY,
+    fkOrganizationUnit: TEST_FACILITY,
   })
 
   await delay()

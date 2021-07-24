@@ -1,5 +1,6 @@
 export * from "./customer"
 export * from "./checkin"
+export * from "./sales"
 
 /**
  * the "organizationUnitId" used to identify different units for the same gym.
@@ -27,5 +28,5 @@ export interface Config {
    * login password, making a dedicated account for API access is recommended.
    */
   password: string
-  unitID?: number
+  // unitID?: number
 }

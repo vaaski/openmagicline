@@ -43,7 +43,7 @@ const randomNumber = (m = 0, M = 1) => Math.random() * (M - m) + m
  */
 export const delay = (): Promise<void> => {
   return new Promise(r => {
-    const delay = Math.floor(randomNumber(2e3, 5e3))
+    const delay = Math.floor(randomNumber(1e3, 3e3))
     console.log(`delaying execution by ${delay}ms`)
     setTimeout(r, delay)
   })

@@ -1,6 +1,8 @@
+import { unitID } from "./openmagicline"
+
 export namespace Checkin {
   export interface ListOptions {
-    organizationUnitId?: number
+    organizationUnitId?: unitID
     offset?: number
     /** magiclines webclient sets this to  */
     maxResults?: number
@@ -22,7 +24,7 @@ export namespace Checkin {
     /** not sure what this is for */
     fkDevice?: null | any
     /** organizationUnitId */
-    fkOrganizationUnit?: number
+    fkOrganizationUnit?: unitID
     /** not sure what this is for */
     lockerKey: number | string
     /** not sure what this is for */
@@ -32,7 +34,7 @@ export namespace Checkin {
     /** not sure what this is for, was 0 for me */
     optlock?: number
     /** organizationUnitId */
-    requiredOrganizationUnitId?: number
+    requiredOrganizationUnitId?: unitID
   }
 
   export interface CheckoutOptions {

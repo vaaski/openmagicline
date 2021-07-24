@@ -1,5 +1,6 @@
 import type { Got, Headers } from "got/dist/source"
 import type mgl from "."
+import { unitID } from "../types/openmagicline"
 import { DEFAULT_UNIT_ID } from "./constants"
 
 //? this was for checkin slots, which i don't currently use.
@@ -24,7 +25,7 @@ import { DEFAULT_UNIT_ID } from "./constants"
 export default class Util {
   constructor(private got: Got, private mgl: mgl) {}
 
-  async getDefaultUnitID(): Promise<number> {
+  async getDefaultUnitID(): Promise<unitID> {
     const data = await this.mgl.organization.permitted()
 
     /* istanbul ignore next */
