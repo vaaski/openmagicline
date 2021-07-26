@@ -64,3 +64,19 @@ export const headers = (mgl: mgl): Headers => {
     cookies: mgl.cookies,
   }
 }
+
+export const websocketHeaders = (mgl: mgl): Headers => {
+  const u = new URL(mgl.baseUrl)
+
+  return {
+    Pragma: "no-cache",
+    Origin: u.href,
+    "Accept-Language": "en-CA,en-US;q=0.9,en;q=0.8,de-DE;q=0.7,de;q=0.6,en-GB;q=0.5",
+    "User-Agent":
+      "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36",
+    Upgrade: "websocket",
+    "Cache-Control": "no-cache",
+    Connection: "Upgrade",
+    cookies: mgl.cookies,
+  }
+}

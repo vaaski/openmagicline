@@ -12,8 +12,9 @@ import Organization from "./organization"
 import Customer from "./customer"
 import Checkin from "./checkin"
 import Sales from "./sales"
+import MagicSocket from "./socket"
 
-const _log = debug("openmagicline")
+export const _log = debug("openmagicline")
 
 export default class Openmagicline {
   protected log: debug.Debugger
@@ -33,6 +34,8 @@ export default class Openmagicline {
   sales: Sales
   /** reference to this.sales */
   disposal: Sales
+  /** event handler for magiclines websockets */
+  socket: (unitID: OMGL.unitID) => MagicSocket
 
   // TODO: check version and warn if openmagicline is outdated
   constructor(private config: OMGL.Config) {
@@ -71,6 +74,7 @@ export default class Openmagicline {
     this.util = new Util(this.got, this)
     this.sales = new Sales(this.got, this)
     this.disposal = this.sales
+    this.socket = unitID => new MagicSocket(this, unitID)
   }
 
   /**

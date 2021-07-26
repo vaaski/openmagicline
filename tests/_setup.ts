@@ -38,7 +38,7 @@ export default async (): Promise<Openmagicline> => {
 
 const randomNumber = (m = 0, M = 1) => Math.random() * (M - m) + m
 /**
- * magicline starts to return 429s pretty early.
+ * magicline starts to return 429s pretty early i think.
  * we delay calls randomly by 2-5 seconds to avoid this.
  */
 export const delay = (): Promise<void> => {
