@@ -88,9 +88,14 @@ export default class Openmagicline {
   private _login = async (cookies?: string[]): Promise<Openmagicline> => {
     if (cookies) {
       this.cookies = cookies
+      this.login = once(this._login)
+
       if (await this.util.testLogin()) {
         return this
-      } else throw Error("invalid token")
+      } else {
+        this.cookies = undefined
+        throw Error("invalid token")
+      }
     }
 
     try {

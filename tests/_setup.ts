@@ -5,7 +5,7 @@ import Openmagicline from "../src"
 
 const tokenPath = join(__dirname, "../token.json")
 
-const readToken = () => read(tokenPath, "json")
+const readToken = (): string[] => read(tokenPath, "json")
 const saveToken = (token: string[]) => write(tokenPath, token)
 
 export const config = {
@@ -23,7 +23,7 @@ export default async (): Promise<Openmagicline> => {
     try {
       await instance.login(token)
     } catch (error) {
-      console.log("getting new token")
+      console.log("getting new token because the existing was invalid")
       await instance.login()
     }
   } else {
@@ -39,12 +39,11 @@ export default async (): Promise<Openmagicline> => {
 const randomNumber = (m = 0, M = 1) => Math.random() * (M - m) + m
 /**
  * magicline starts to return 429s pretty early i think.
- * we delay calls randomly by 2-5 seconds to avoid this.
+ * we delay calls randomly by 1-3 seconds to avoid this.
  */
 export const delay = (): Promise<void> => {
   return new Promise(r => {
     const delay = Math.floor(randomNumber(1e3, 3e3))
-    console.log(`delaying execution by ${delay}ms`)
     setTimeout(r, delay)
   })
 }

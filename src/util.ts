@@ -61,7 +61,7 @@ export const headers = (mgl: mgl): Headers => {
     "sec-fetch-dest": `empty`,
     referer: u.href,
     "accept-language": `en-CA,en-US;q=0.9,en;q=0.8,de-DE;q=0.7,de;q=0.6,en-GB;q=0.5`,
-    cookies: mgl.cookies,
+    cookie: mgl.cookies,
   }
 }
 
@@ -74,9 +74,7 @@ export const websocketHeaders = (mgl: mgl): Headers => {
     "Accept-Language": "en-CA,en-US;q=0.9,en;q=0.8,de-DE;q=0.7,de;q=0.6,en-GB;q=0.5",
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36",
-    Upgrade: "websocket",
     "Cache-Control": "no-cache",
-    Connection: "Upgrade",
-    cookies: mgl.cookies,
+    cookie: mgl.cookies,
   }
 }

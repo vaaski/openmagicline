@@ -25,8 +25,7 @@ export namespace Checkin {
     fkDevice?: null | any
     /** organizationUnitId */
     fkOrganizationUnit?: unitID
-    /** not sure what this is for */
-    lockerKey: number | string
+    lockerKey?: number | string
     /** not sure what this is for */
     purchasedContingentCode?: null | any
     /** not sure what this is for */

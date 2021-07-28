@@ -1,13 +1,11 @@
 import type mgl from "."
 import type { unitID } from "../types/openmagicline"
 
-import { _log } from "."
+import { Magicline, _log } from "."
 import { Client } from "@stomp/stompjs"
 import { websocketHeaders } from "./util"
 
 import WebSocket from "ws"
-
-type CallbackFn = (data: Record<string, any>) => void
 
 export default class MagicSocket {
   private client: Client
@@ -33,16 +31,18 @@ export default class MagicSocket {
       heartbeatIncoming: 10000,
       heartbeatOutgoing: 10000,
       webSocketFactory: this.webSocketFactory(mgl.baseUrl, unitID),
-      onWebSocketError: err => {
+
+      onWebSocketError: /* istanbul ignore next */ err => {
+        console.log(err.target._req.res)
         throw err
       },
-      onStompError: err => {
+      onStompError: /* istanbul ignore next */ err => {
         throw err
       },
     })
   }
 
-  subscriptions: Record<string, false | (() => void)> = {}
+  subscriptions: Record<string, Magicline.Socket.UnsubscribeFn> = {}
 
   activate(): Promise<unknown> {
     if (this.isActive) return this.isActive
@@ -55,29 +55,43 @@ export default class MagicSocket {
     return this.isActive
   }
 
+  unsubscribeAll(): Promise<void> {
+    Object.entries(this.subscriptions).forEach(([key, unsubscribe]) => {
+      unsubscribe()
+      delete this.subscriptions[key]
+    })
+    return this.deactivate()
+  }
+
   deactivate(): Promise<void> {
     this.log("deactivating STOMP")
+    this.isActive = false
     return this.client.deactivate()
   }
 
-  private deactivateIfNoSubscriptions() {
-    const subs = Object.values(this.subscriptions).filter(s => s && typeof s === "function")
-    if (!subs.length) this.deactivate()
+  private deactivateAutomatically() {
+    /* istanbul ignore else */
+    if (!this.subscriptions.length) this.deactivate()
     else this.log("there are still active subscriptions, keeping stomp active")
   }
 
-  private subscribeFactory = (topic: string) => async (cb: CallbackFn) => {
-    await this.activate()
-    this.client.subscribe(topic, ({ body }) => cb(JSON.parse(body)))
-    this.log(`subscribed to "${topic}"`)
+  /* eslint-disable @typescript-eslint/indent */
+  private subscribeFactory =
+    <T = Record<string, any>>(topic: string) =>
+    async (cb: Magicline.Socket.CallbackFn<T>) => {
+      await this.activate()
+      this.client.subscribe(topic, ({ body }) => cb(JSON.parse(body)))
+      this.log(`subscribed to "${topic}"`)
 
-    this.subscriptions[topic] = () => {
-      this.client.unsubscribe(topic)
-      this.subscriptions[topic] = false
-      this.deactivateIfNoSubscriptions()
+      const unsubscribe = () => {
+        this.client.unsubscribe(topic)
+        delete this.subscriptions[topic]
+        this.deactivateAutomatically()
+      }
+      this.subscriptions[topic] = unsubscribe
+      return this.subscriptions[topic]
     }
-    return this.subscriptions[topic]
-  }
+  /* eslint-enable @typescript-eslint/indent */
 
-  checkin = this.subscribeFactory("/user/topic/checkin")
+  onCheckin = this.subscribeFactory<Magicline.Socket.CheckinEvent>("/user/topic/checkin")
 }
