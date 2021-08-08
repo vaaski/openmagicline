@@ -23,10 +23,10 @@ export interface Config {
   /**
    * login username, making a dedicated account for API access is recommended.
    */
-  username: string
+  username?: string
   /**
    * login password, making a dedicated account for API access is recommended.
    */
-  password: string
+  password?: string
   // unitID?: number
 }

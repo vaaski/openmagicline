@@ -100,6 +100,9 @@ export default class Openmagicline {
 
     try {
       const { username, password } = this.config
+      if (!username || !password)
+        throw Error("username and password need to be set when cookies aren't provided")
+
       const response = await this.got.post("login", {
         prefixUrl: this.baseUrl,
         form: { username, password, client: "webclient" },
