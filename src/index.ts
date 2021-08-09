@@ -3,10 +3,11 @@ import type * as Magicline from "../types/magicline/index"
 export { OMGL, Magicline }
 
 import _got, { Got } from "got"
+import _axios, { AxiosInstance } from "axios"
 import once from "lodash/once"
 import debug from "debug"
 
-import Util, { headers } from "./util"
+import Util, { headers, searchParams } from "./util"
 import Locale from "./locale"
 import Organization from "./organization"
 import Customer from "./customer"
@@ -19,6 +20,7 @@ export const _log = debug("openmagicline")
 export default class Openmagicline {
   protected log: debug.Debugger
   protected got: Got
+  protected axios: AxiosInstance
 
   public baseUrl: string
   public cookies?: string[]
@@ -38,7 +40,7 @@ export default class Openmagicline {
   socket: (unitID: OMGL.unitID) => MagicSocket
 
   // TODO: check version and warn if openmagicline is outdated
-  constructor(private config: OMGL.Config) {
+  constructor(private config: OMGL.Config, axios?: AxiosInstance) {
     this.log = _log.extend(config.gym)
 
     this.baseUrl = `https://${this.config.gym}.web.magicline.com`
@@ -67,7 +69,29 @@ export default class Openmagicline {
       },
     })
 
-    this.customer = new Customer(this.got)
+    const httpAxiosLog = this.log.extend("http")
+    if (axios) this.axios = axios
+    else {
+      this.axios = _axios.create({
+        baseURL: prefixUrl,
+        headers: headers(this),
+      })
+    }
+
+    this.axios.interceptors.request.use(config => {
+      if (this.cookies) config.headers.cookie = this.cookies
+      return config
+    })
+    this.axios.interceptors.response.use(response => {
+      let log = `[${response.config.method}](${response.status}) `
+      log += response.config.url
+      if (response.status > 200) log += `\n${response.data}`
+
+      httpAxiosLog(log)
+      return response
+    })
+
+    this.customer = new Customer(this.axios)
     this.locale = new Locale(this.got)
     this.organization = new Organization(this.got, this)
     this.checkin = new Checkin(this.got, this)
@@ -103,16 +127,18 @@ export default class Openmagicline {
       if (!username || !password)
         throw Error("username and password need to be set when cookies aren't provided")
 
-      const response = await this.got.post("login", {
-        prefixUrl: this.baseUrl,
-        form: { username, password, client: "webclient" },
-      })
+      const response = await this.axios.post(
+        "login",
+        searchParams({ username, password, client: "webclient" }),
+        { baseURL: this.baseUrl }
+      )
 
       this.login = once(this._login)
 
       this.cookies = response.headers["set-cookie"]
     } catch (err) {
       this.cookies = undefined
+      if (err?.response?.data) throw Error(err.response.data)
       throw err
     }
 
