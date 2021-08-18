@@ -32,10 +32,11 @@ export default class Customer {
     return data
   }
 
-  getCards(
+  async getCards(
     customerID: Openmagicline.Customer.CustomerID
   ): Promise<Responses.Customer.AccessIdentification[]> {
-    return this.axios.get(`customer/${customerID}/accessidentification`)
+    const { data } = await this.axios(`customer/${customerID}/accessidentification`)
+    return data
   }
 
   // todo: implement card methods

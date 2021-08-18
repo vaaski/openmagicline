@@ -2,7 +2,6 @@ import type * as OMGL from "../types/openmagicline"
 import type * as Magicline from "../types/magicline/index"
 export { OMGL, Magicline }
 
-import _got, { Got } from "got"
 import _axios, { AxiosInstance } from "axios"
 import once from "lodash/once"
 import debug from "debug"
@@ -19,7 +18,6 @@ export const _log = debug("openmagicline")
 
 export default class Openmagicline {
   protected log: debug.Debugger
-  protected got: Got
   protected axios: AxiosInstance
 
   public baseUrl: string
@@ -46,29 +44,6 @@ export default class Openmagicline {
     this.baseUrl = `https://${this.config.gym}.web.magicline.com`
     const prefixUrl = `${this.baseUrl}/rest-api`
 
-    const httpLog = this.log.extend("http")
-    this.got = _got.extend({
-      headers: headers(this),
-      prefixUrl,
-      hooks: {
-        beforeRequest: [
-          options => {
-            if (this.cookies) options.headers.cookie = this.cookies
-          },
-        ],
-        afterResponse: [
-          response => {
-            let log = `[${response.request.options.method}](${response.statusCode})`
-            log += response.url
-            if (response.statusCode > 200) log += `\n${response.body}`
-
-            httpLog(log)
-            return response
-          },
-        ],
-      },
-    })
-
     const httpAxiosLog = this.log.extend("http")
     if (axios) this.axios = axios
     else {
@@ -92,11 +67,11 @@ export default class Openmagicline {
     })
 
     this.customer = new Customer(this.axios)
-    this.locale = new Locale(this.got)
-    this.organization = new Organization(this.got, this)
-    this.checkin = new Checkin(this.got, this)
-    this.util = new Util(this.got, this)
-    this.sales = new Sales(this.got, this)
+    this.locale = new Locale(this.axios)
+    this.organization = new Organization(this.axios, this)
+    this.checkin = new Checkin(this.axios, this)
+    this.util = new Util(this.axios, this)
+    this.sales = new Sales(this.axios, this)
     this.disposal = this.sales
     this.socket = unitID => new MagicSocket(this, unitID)
   }

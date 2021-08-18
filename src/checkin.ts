@@ -1,4 +1,4 @@
-import type { Got } from "got/dist/source"
+import type { AxiosInstance } from "axios"
 import type mgl from "."
 
 import type * as Responses from "../types/magicline"
@@ -7,7 +7,7 @@ import type * as Openmagicline from "../types/openmagicline"
 import { DEFAULT_UNIT_ID } from "./constants"
 
 export default class Checkin {
-  constructor(private got: Got, private mgl: mgl) {}
+  constructor(private axios: AxiosInstance, private mgl: mgl) {}
 
   defaultListParams: Openmagicline.Checkin.ListOptions = {
     organizationUnitId: DEFAULT_UNIT_ID,
@@ -31,13 +31,14 @@ export default class Checkin {
       organizationUnitId = await this.mgl.util.getDefaultUnitID()
     }
 
-    return this.got("checkin", {
-      searchParams: {
+    const { data } = await this.axios("checkin", {
+      params: {
         ...this.defaultListParams,
         organizationUnitId,
         ...options,
       },
-    }).json()
+    })
+    return data
   }
 
   private defaultCheckinParams: Openmagicline.Checkin.CheckinOptions = {
@@ -63,15 +64,13 @@ export default class Checkin {
       unitID = await this.mgl.util.getDefaultUnitID()
     }
 
-    return this.got("checkin", {
-      method: "POST",
-      json: {
-        ...this.defaultCheckinParams,
-        fkOrganizationUnit: unitID,
-        requiredOrganizationUnitId: unitID,
-        ...options,
-      },
-    }).json()
+    const { data } = await this.axios.post("checkin", {
+      ...this.defaultCheckinParams,
+      fkOrganizationUnit: unitID,
+      requiredOrganizationUnitId: unitID,
+      ...options,
+    })
+    return data
   }
 
   /**
@@ -83,10 +82,10 @@ export default class Checkin {
     checkinId: number,
     options?: Openmagicline.Checkin.CheckoutOptions
   ): Promise<Responses.Checkin.CheckinResponse> {
-    return this.got(`checkin/${checkinId}`, {
-      method: "DELETE",
-      searchParams: { ...options },
-    }).json()
+    const { data } = await this.axios.delete(`checkin/${checkinId}`, {
+      params: { ...options },
+    })
+    return data
   }
 
   private defaultLockerKeyParams: Openmagicline.Checkin.LockerKeyOptions = {
@@ -98,14 +97,12 @@ export default class Checkin {
     lockerKey: number | string,
     options?: Openmagicline.Checkin.LockerKeyOptions
   ): Promise<Responses.Checkin.LockerKeyResponse> {
-    return this.got(`checkin/lockerkey/${checkinId}`, {
-      method: "PUT",
-      json: {
-        ...this.defaultLockerKeyParams,
-        checkinId,
-        lockerKey,
-        ...options,
-      },
-    }).json()
+    const { data } = await this.axios.put(`checkin/lockerkey/${checkinId}`, {
+      ...this.defaultLockerKeyParams,
+      checkinId,
+      lockerKey,
+      ...options,
+    })
+    return data
   }
 }
