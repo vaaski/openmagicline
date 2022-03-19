@@ -1,6 +1,7 @@
 import type Openmagicline from "../src"
+import type { Checkin } from "../types/magicline"
 
-import test, { before, beforeEach } from "ava"
+import test, { after, before, beforeEach } from "ava"
 import setup, { delay } from "./_setup"
 
 const TEST_CUSTOMER = parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")
@@ -11,6 +12,16 @@ before(async () => {
   instance = await setup()
 })
 beforeEach(delay)
+
+let checkin: Checkin.CheckinResponse
+
+after(async () => {
+  try {
+    await instance.checkin.checkout(checkin.databaseId)
+  } catch (_) {
+    // ignore
+  }
+})
 
 test("checkin event handler fires", t => {
   t.timeout(5e3)

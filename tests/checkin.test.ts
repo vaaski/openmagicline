@@ -1,7 +1,7 @@
 import type Openmagicline from "../src"
 import type { Checkin } from "../types/magicline"
 
-import test, { after, before, beforeEach } from "ava"
+import test, { before, beforeEach } from "ava"
 import setup, { delay } from "./_setup"
 
 let instance: Openmagicline
@@ -16,14 +16,6 @@ beforeEach(delay)
 
 let checkin: Checkin.CheckinResponse
 let checkinList: Checkin.CheckinList
-
-after(async () => {
-  try {
-    await instance.checkin.checkout(checkin.databaseId)
-  } catch (_) {
-    // ignore
-  }
-})
 
 test("get checkin list", async t => {
   checkinList = await instance.checkin.list()
