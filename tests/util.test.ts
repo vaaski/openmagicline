@@ -15,6 +15,6 @@ test("logs in with valid preexisting token", async t => {
 })
 
 test("throws with wrong username/password", async t => {
-  const instance = new Openmagicline({ ...config, password: "wrong" })
+  const instance = new Openmagicline({ ...config, username: "wrong", password: "wrong" })
   await t.throwsAsync(instance.login())
 })
