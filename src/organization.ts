@@ -12,11 +12,6 @@ export default class Organization {
     return data
   }
 
-  async notices(): Promise<Responses.Notices> {
-    const { data } = await this.axios("notices")
-    return data
-  }
-
   async accountInfo(): Promise<Responses.AccountInfo> {
     const { data } = await this.axios("me/info")
     return data

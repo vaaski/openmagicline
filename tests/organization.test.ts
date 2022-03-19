@@ -14,11 +14,6 @@ test("get permitted", async t => {
   t.truthy(data)
 })
 
-test("get notices", async t => {
-  const data = await instance.organization.notices()
-  t.truthy(data)
-})
-
 test("get accountInfo", async t => {
   const data = await instance.organization.accountInfo()
   t.truthy(data)

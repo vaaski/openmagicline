@@ -76,14 +76,6 @@ export default class Openmagicline {
     this.socket = unitID => new MagicSocket(this, unitID)
   }
 
-  /**
-   * authenticate the Openmagicline instance using username/password from the instance config.
-   *
-   * if a token is passed, it will be validated and the request to `/login` will be skipped.
-   * @param cookies existing cookies, available after login at `.cookies`
-   * @returns instance for chaining
-   * @throws when not authenticated
-   */
   private _login = async (cookies?: string[]): Promise<Openmagicline> => {
     if (cookies) {
       this.cookies = cookies
@@ -111,7 +103,7 @@ export default class Openmagicline {
       this.login = once(this._login)
 
       this.cookies = response.headers["set-cookie"]
-    } catch (err) {
+    } catch (err: any) {
       this.cookies = undefined
       if (err?.response?.data) throw Error(err.response.data)
       throw err
@@ -120,5 +112,13 @@ export default class Openmagicline {
     return this
   }
 
+  /**
+   * authenticate the Openmagicline instance using username/password from the instance config.
+   *
+   * if a token is passed, it will be validated and the request to `/login` will be skipped.
+   * @param cookies existing cookies, available after login at `.cookies`
+   * @returns instance for chaining
+   * @throws when not authenticated
+   */
   login = once(this._login)
 }
