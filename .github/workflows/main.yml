@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+
+  # schedule:
+  #   - cron: "0 0 * * *"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: run tests
+        run: npm test
+        env:
+          OPENMAGICLINE_GYM: ${{ secrets.OPENMAGICLINE_GYM }}
+          OPENMAGICLINE_USERNAME: ${{ secrets.OPENMAGICLINE_USERNAME }}
+          OPENMAGICLINE_PASSWORD: ${{ secrets.OPENMAGICLINE_PASSWORD }}
+          OPENMAGICLINE_TEST_CUSTOMER: ${{ secrets.OPENMAGICLINE_TEST_CUSTOMER }}
+          OPENMAGICLINE_TEST_FACILITY: ${{ secrets.OPENMAGICLINE_TEST_FACILITY }}
