@@ -1,7 +1,7 @@
 import type Openmagicline from "../src"
 import type { Checkin } from "../types/magicline"
 
-import test, { before, beforeEach } from "ava"
+import test, { after, before, beforeEach } from "ava"
 import setup, { delay } from "./_setup"
 
 let instance: Openmagicline
@@ -13,6 +13,16 @@ before(async () => {
   instance = await setup()
 })
 beforeEach(delay)
+
+let checkin: Checkin.CheckinResponse
+
+after(async () => {
+  try {
+    await instance.checkin.checkout(checkin.databaseId)
+  } catch (_) {
+    // ignore
+  }
+})
 
 test("get checkin list", async t => {
   const data = await instance.checkin.list()
@@ -49,7 +59,6 @@ test("check-out a customer", async t => {
   t.true(checkout.fkCustomer === TEST_CUSTOMER)
 })
 
-let checkin: Checkin.CheckinResponse
 test("change lockerKey part 1: ensure checkin", async t => {
   const lockerKey = "openmagicline automated test"
 
