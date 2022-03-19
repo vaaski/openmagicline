@@ -1,8 +1,8 @@
 import type Openmagicline from "../src"
 import type { Checkin } from "../types/magicline"
 
-import test, { after, before, beforeEach } from "ava"
-import setup, { delay } from "./_setup"
+import test, { after, before } from "ava"
+import setup from "./_setup"
 
 const TEST_CUSTOMER = parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")
 const TEST_FACILITY = parseInt(process.env.OPENMAGICLINE_TEST_FACILITY ?? "0")
@@ -11,7 +11,6 @@ let instance: Openmagicline
 before(async () => {
   instance = await setup()
 })
-beforeEach(delay)
 
 let checkin: Checkin.CheckinResponse
 
@@ -24,7 +23,7 @@ after(async () => {
 })
 
 test("checkin event handler fires", t => {
-  t.timeout(5e3)
+  t.timeout(30e3)
   t.plan(1)
 
   // eslint-disable-next-line no-async-promise-executor
