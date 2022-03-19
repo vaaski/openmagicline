@@ -22,7 +22,7 @@ jobs:
         run: npm ci
 
       - name: run tests
-        run: npm test
+        run: npm test -- --verbose
         env:
           OPENMAGICLINE_GYM: ${{ secrets.OPENMAGICLINE_GYM }}
           OPENMAGICLINE_USERNAME: ${{ secrets.OPENMAGICLINE_USERNAME }}
