@@ -1,6 +1,7 @@
+import type Openmagicline from "../src"
+import type { Checkin } from "../types/magicline"
+
 import test, { before, beforeEach } from "ava"
-import Openmagicline from "../src"
-import { Checkin } from "../types/magicline"
 import setup, { delay } from "./_setup"
 
 let instance: Openmagicline

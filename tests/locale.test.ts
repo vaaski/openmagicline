@@ -1,5 +1,6 @@
+import type Openmagicline from "../src"
+
 import test, { before, beforeEach } from "ava"
-import Openmagicline from "../src"
 import setup, { delay } from "./_setup"
 
 let instance: Openmagicline

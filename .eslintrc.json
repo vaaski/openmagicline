@@ -2,13 +2,14 @@
   "parser": "@typescript-eslint/parser",
   "root": true,
   "env": {
+    "es2021": true,
     "node": true
   },
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 2020
   },
-  "plugins": [],
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -16,6 +17,7 @@
   ],
   "ignorePatterns": "**/*.html",
   "rules": {
+    "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/member-delimiter-style": [
       "error",
       {

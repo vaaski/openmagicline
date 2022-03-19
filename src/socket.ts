@@ -1,7 +1,8 @@
 import type mgl from "."
 import type { unitID } from "../types/openmagicline"
+import type { Magicline } from "."
 
-import { Magicline, _log } from "."
+import { _log } from "."
 import { Client } from "@stomp/stompjs"
 import { websocketHeaders } from "./util"
 

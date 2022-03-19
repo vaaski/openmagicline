@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios"
+import type { AxiosInstance } from "axios"
 import type mgl from "."
 
 import type * as Responses from "../types/magicline"

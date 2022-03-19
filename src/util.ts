@@ -1,8 +1,8 @@
 import type { AxiosInstance } from "axios"
 import type mgl from "."
+import type { unitID } from "../types/openmagicline"
 
 import FormData from "form-data"
-import { unitID } from "../types/openmagicline"
 import { DEFAULT_UNIT_ID } from "./constants"
 
 //? this was for checkin slots, which i don't currently use.

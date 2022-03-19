@@ -1,5 +1,6 @@
+import type Openmagicline from "../src"
+
 import test, { before, beforeEach } from "ava"
-import Openmagicline from "../src"
 import setup, { delay } from "./_setup"
 
 const TEST_CUSTOMER = parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")

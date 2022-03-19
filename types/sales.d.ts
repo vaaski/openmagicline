@@ -1,4 +1,4 @@
-import { unitID } from "./openmagicline"
+import type { unitID } from "./openmagicline"
 
 export namespace Sales {
   export interface ProductOptions {
