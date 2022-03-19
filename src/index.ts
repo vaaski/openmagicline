@@ -107,7 +107,8 @@ export default class Openmagicline {
       this.cookies = response.headers["set-cookie"]
     } catch (err: any) {
       this.cookies = undefined
-      if (err?.response?.data) throw Error(err.response.data)
+
+      if (err?.response?.data) throw err.response.data
       throw err
     }
 
