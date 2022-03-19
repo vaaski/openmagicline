@@ -108,8 +108,9 @@ export default class Openmagicline {
     } catch (err: any) {
       this.cookies = undefined
 
-      if (err?.response?.data) throw err.response.data
-      throw err
+      if (err?.response?.data?.error_description) {
+        throw Error(err.response.data.error_description)
+      } else throw err
     }
 
     return this
