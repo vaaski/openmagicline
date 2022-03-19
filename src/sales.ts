@@ -1,11 +1,11 @@
-import type { Got } from "got/dist/source"
+import type { AxiosInstance } from "axios"
 import type mgl from "."
 
 import type * as Responses from "../types/magicline"
 import type * as Openmagicline from "../types/openmagicline"
 
 export default class Sales {
-  constructor(private got: Got, private mgl: mgl) {}
+  constructor(private axios: AxiosInstance, private mgl: mgl) {}
 
   async products(
     options?: Openmagicline.Sales.ProductOptions
@@ -13,11 +13,12 @@ export default class Sales {
     const organizationUnitId =
       options?.organizationUnitId ?? (await this.mgl.util.getDefaultUnitID())
 
-    return this.got("sales/productoverview", {
-      searchParams: {
+    const { data } = await this.axios("sales/productoverview", {
+      params: {
         organizationUnitId,
         ...options,
       },
-    }).json()
+    })
+    return data
   }
 }

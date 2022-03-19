@@ -1,5 +1,8 @@
-import test, { before, beforeEach, ExecutionContext } from "ava"
-import Openmagicline, { Magicline } from "../src"
+import type { ExecutionContext } from "ava"
+import type { Magicline } from "../src"
+import type Openmagicline from "../src"
+
+import test, { before, beforeEach } from "ava"
 import setup, { delay } from "./_setup"
 
 const TEST_CUSTOMER = parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")

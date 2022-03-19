@@ -1,5 +1,7 @@
+import type Openmagicline from "../src"
+import type { Checkin } from "../types/magicline"
+
 import test, { before, beforeEach } from "ava"
-import Openmagicline from "../src"
 import setup, { delay } from "./_setup"
 
 let instance: Openmagicline
@@ -47,20 +49,28 @@ test("check-out a customer", async t => {
   t.true(checkout.fkCustomer === TEST_CUSTOMER)
 })
 
-test("change lockerKey", async t => {
-  const checkin = await instance.checkin.checkin({
-    lockerKey: "openmagicline automated test",
+let checkin: Checkin.CheckinResponse
+test("change lockerKey part 1: ensure checkin", async t => {
+  const lockerKey = "openmagicline automated test"
+
+  checkin = await instance.checkin.checkin({
+    lockerKey,
     fkCustomer: TEST_CUSTOMER,
     fkOrganizationUnit: TEST_FACILITY,
   })
 
-  await delay()
+  t.assert(checkin.lockerKey === lockerKey)
+})
 
-  const changedTo = "openmagicline automated test 2"
-  await instance.checkin.lockerKey(checkin.databaseId, changedTo)
+const changedTo = "openmagicline automated test 2"
+test("change lockerKey part 2: change key", async t => {
+  const changed = await instance.checkin.lockerKey(checkin.databaseId, changedTo)
 
-  await delay()
+  t.assert(changed.lockerKey === changedTo)
+  t.assert(changed.checkinId === checkin.databaseId)
+})
 
+test("change lockerKey part 3: check key", async t => {
   const list = await instance.checkin.list()
   const changedCheckin = list.checkins.find(c => c.databaseId === checkin.databaseId)
   if (!changedCheckin) throw "can't find lockerkey-changed checkin anymore"

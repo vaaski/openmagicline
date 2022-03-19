@@ -1,15 +1,17 @@
-import type { Got } from "got/dist/source"
+import type { AxiosInstance } from "axios"
 
 import type * as Responses from "../types/magicline"
 
 export default class Locale {
-  constructor(private got: Got) {}
+  constructor(private axios: AxiosInstance) {}
 
-  currentLocale(): Promise<Responses.CurrentLocale> {
-    return this.got("currentLocale").text()
+  async currentLocale(): Promise<Responses.CurrentLocale> {
+    const { data } = await this.axios.get("currentLocale")
+    return data
   }
 
-  supportedLocales(): Promise<Responses.SupportedLocales> {
-    return this.got("supportedLocales").json()
+  async supportedLocales(): Promise<Responses.SupportedLocales> {
+    const { data } = await this.axios.get("supportedLocales")
+    return data
   }
 }

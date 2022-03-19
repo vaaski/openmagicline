@@ -1,10 +1,10 @@
-import type { Got } from "got/dist/source"
+import type { AxiosInstance } from "axios"
 
 import type * as Responses from "../types/magicline"
 import type * as Openmagicline from "../types/openmagicline"
 
 export default class Customer {
-  constructor(private got: Got) {}
+  constructor(private axios: AxiosInstance) {}
 
   defaultSearchOptions: Required<Openmagicline.Customer.SearchOptions> = {
     facility: 0,
@@ -20,24 +20,23 @@ export default class Customer {
     showOnlyMembers: false,
   }
 
-  search(
+  async search(
     searchString: string,
     options?: Openmagicline.Customer.SearchOptions
   ): Promise<Responses.Customer.SearchedCustomer[]> {
-    return this.got("customersearch", {
-      method: "POST",
-      json: {
-        ...this.defaultSearchOptions,
-        ...options,
-        searchString,
-      },
-    }).json()
+    const { data } = await this.axios.post("customersearch", {
+      ...this.defaultSearchOptions,
+      ...options,
+      searchString,
+    })
+    return data
   }
 
-  getCards(
+  async getCards(
     customerID: Openmagicline.Customer.CustomerID
   ): Promise<Responses.Customer.AccessIdentification[]> {
-    return this.got(`customer/${customerID}/accessidentification`).json()
+    const { data } = await this.axios(`customer/${customerID}/accessidentification`)
+    return data
   }
 
   // todo: implement card methods

@@ -1,5 +1,6 @@
+import type Openmagicline from "../src"
+
 import test, { before, beforeEach } from "ava"
-import Openmagicline from "../src"
 import setup, { delay } from "./_setup"
 
 let instance: Openmagicline
@@ -11,11 +12,6 @@ beforeEach(delay)
 
 test("get permitted", async t => {
   const data = await instance.organization.permitted()
-  t.truthy(data)
-})
-
-test("get notices", async t => {
-  const data = await instance.organization.notices()
   t.truthy(data)
 })
 
