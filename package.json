@@ -20,11 +20,11 @@
     "test:full": "rimraf token.json && npm test",
     "test:watch": "nodemon -w src -w tests -w types --exec npm test",
     "coverage": "live-server coverage/lcov-report --port=8069",
-    "prepublishOnly": "npm test",
     "commit": "cz -S"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "types/**/*"
   ],
   "ava": {
     "extensions": [
