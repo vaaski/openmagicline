@@ -2,7 +2,7 @@ import type * as OMGL from "../types/openmagicline"
 import type * as Magicline from "../types/magicline/index"
 import type { AxiosInstance } from "axios"
 
-export { OMGL, Magicline }
+export { OMGL, Magicline, Openmagicline }
 
 import _axios from "axios"
 import once from "lodash/once"
