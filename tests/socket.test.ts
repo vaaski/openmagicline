@@ -41,7 +41,7 @@ test("checkin event handler fires", t => {
     // checks if already active returns instantly
     socket.activate()
 
-    await instance.checkin.checkin({
+    checkin = await instance.checkin.checkin({
       fkCustomer: TEST_CUSTOMER,
       requiredOrganizationUnitId: TEST_FACILITY,
     })
