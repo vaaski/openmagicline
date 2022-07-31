@@ -2,17 +2,17 @@ import type { ExecutionContext } from "ava"
 import type { Magicline } from "../src"
 import type Openmagicline from "../src"
 
-import test, { before, beforeEach } from "ava"
+import test from "ava"
 import setup, { delay } from "./_setup"
 
 const TEST_CUSTOMER = parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")
 const TEST_FACILITY = parseInt(process.env.OPENMAGICLINE_TEST_FACILITY ?? "0")
 
 let instance: Openmagicline
-before(async () => {
+test.before(async () => {
   instance = await setup()
 })
-beforeEach(delay)
+test.beforeEach(delay)
 
 const verifyProductOverview = (p: Magicline.Sales.ProductOverview, t: ExecutionContext) => {
   const { classOfGoodsList } = p

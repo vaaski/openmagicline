@@ -1,14 +1,14 @@
 import type Openmagicline from "../src"
 
-import test, { before, beforeEach } from "ava"
+import test from "ava"
 import setup, { delay } from "./_setup"
 
 let instance: Openmagicline
 
-before(async () => {
+test.before(async () => {
   instance = await setup()
 })
-beforeEach(delay)
+test.beforeEach(delay)
 
 test("get supported locales", async t => {
   const data = await instance.locale.supportedLocales()

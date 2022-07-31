@@ -1,20 +1,20 @@
 import type Openmagicline from "../src"
 import type { Checkin } from "../types/magicline"
 
-import test, { after, before } from "ava"
+import test from "ava"
 import setup from "./_setup"
 
 const TEST_CUSTOMER = parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")
 const TEST_FACILITY = parseInt(process.env.OPENMAGICLINE_TEST_FACILITY ?? "0")
 
 let instance: Openmagicline
-before(async () => {
+test.before(async () => {
   instance = await setup()
 })
 
 let checkin: Checkin.CheckinResponse
 
-after(async () => {
+test.after(async () => {
   try {
     await instance.checkin.checkout(checkin.databaseId)
   } catch (_) {
