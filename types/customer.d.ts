@@ -5,7 +5,7 @@ export namespace Customer {
   export type AccessIdentificationID = number
 
   export interface SearchOptions {
-    facility: unitID
+    facility?: unitID
     /**
      * searchInAddress
      * @default false
