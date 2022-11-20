@@ -78,10 +78,10 @@ export default class MagicSocket {
 
   /* eslint-disable @typescript-eslint/indent */
   private subscribeFactory =
-    <T = Record<string, any>>(topic: string) =>
-    async (cb: Magicline.Socket.CallbackFn<T>) => {
+    <T>(topic: string) =>
+    async (callback: Magicline.Socket.CallbackFn<T>) => {
       await this.activate()
-      this.client.subscribe(topic, ({ body }) => cb(JSON.parse(body)))
+      this.client.subscribe(topic, ({ body }) => callback(JSON.parse(body)))
       this.log(`subscribed to "${topic}"`)
 
       const unsubscribe = () => {

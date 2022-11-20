@@ -1,5 +1,5 @@
 export namespace Socket {
-  export type CallbackFn<T extends Record<string, any>> = (data: T) => void
+  export type CallbackFn<T> = (data: T) => void
   export type UnsubscribeFn = () => void
 
   export interface CheckinEvent {
