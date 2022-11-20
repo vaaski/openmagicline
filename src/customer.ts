@@ -39,6 +39,19 @@ export default class Customer {
     return data
   }
 
+  /**
+   * get contracts of a customer
+   * @param customerId customer id
+   * @param isActive get only active contracts (default: `true`)
+   */
+  contract = async (customerId: Openmagicline.Customer.CustomerID, isActive = true) => {
+    const { data } = await this.axios.get("contract", {
+      params: { customerId, isActive },
+    })
+
+    return data as Responses.Customer.Contract[]
+  }
+
   // todo: implement card methods
   //? removed until more card methods are implemented
   // removeCard(
