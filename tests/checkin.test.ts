@@ -6,8 +6,8 @@ import setup, { delay } from "./_setup"
 
 let instance: Openmagicline
 
-const TEST_CUSTOMER = parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")
-const TEST_FACILITY = parseInt(process.env.OPENMAGICLINE_TEST_FACILITY ?? "0")
+const TEST_CUSTOMER = Number.parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")
+const TEST_FACILITY = Number.parseInt(process.env.OPENMAGICLINE_TEST_FACILITY ?? "0")
 
 test.before(async () => {
   instance = await setup()
@@ -19,7 +19,7 @@ let checkinList: Checkin.CheckinList
 
 test("get checkin list", async t => {
   checkinList = await instance.checkin.list()
-  t.true(checkinList.checkins instanceof Array)
+  t.true(Array.isArray(checkinList.checkins))
   t.truthy(checkinList.checkins[0].firstname)
   t.true(typeof checkinList.checkins[0].databaseId === "number")
 })
@@ -44,7 +44,7 @@ test("get checkin list with a unitID", async t => {
   checkinList = await instance.checkin.list({
     organizationUnitId: TEST_FACILITY,
   })
-  t.true(checkinList.checkins instanceof Array)
+  t.true(Array.isArray(checkinList.checkins))
   t.truthy(checkinList.checkins[0].firstname)
   t.true(typeof checkinList.checkins[0].databaseId === "number")
 })

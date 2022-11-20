@@ -39,5 +39,11 @@ test("get contracts of a customer", async t => {
   }
 })
 
+test("get checkin conditions", async t => {
+  const conditions = await instance.customer.checkinConditions(TEST_CUSTOMER, TEST_FACILITY)
+  t.true(Array.isArray(conditions))
+  console.log(conditions)
+})
+
 test.todo("add customer card")
 test.todo("remove customer card")

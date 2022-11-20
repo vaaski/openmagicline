@@ -5,6 +5,12 @@ export namespace Customer {
     databaseId: Openmagicline.Customer.CustomerID
   }
 
+  export interface CheckinCondition {
+    type: string
+    messageKey: string
+    args: string[]
+  }
+
   export interface SearchedCustomer extends Base {
     firstname: string
     lastname: string

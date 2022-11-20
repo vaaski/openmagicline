@@ -2,9 +2,10 @@ import type { AxiosInstance } from "axios"
 
 import type * as Responses from "../types/magicline"
 import type * as Openmagicline from "../types/openmagicline"
+import type mgl from "."
 
 export default class Customer {
-  constructor(private axios: AxiosInstance) {}
+  constructor(private axios: AxiosInstance, private mgl: mgl) {}
 
   defaultSearchOptions: Required<Openmagicline.Customer.SearchOptions> = {
     facility: 0,
@@ -50,6 +51,18 @@ export default class Customer {
     })
 
     return data as Responses.Customer.Contract[]
+  }
+
+  checkinConditions = async (customerId: number, organizationUnitId?: number) => {
+    if (typeof organizationUnitId !== "number") {
+      organizationUnitId = await this.mgl.util.getDefaultUnitID()
+    }
+
+    const { data } = await this.axios.get(`customer/${customerId}/conditions/checkin`, {
+      params: { organizationUnitId },
+    })
+
+    return data as Responses.Customer.CheckinCondition[]
   }
 
   // todo: implement card methods

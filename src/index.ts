@@ -68,7 +68,7 @@ export default class Openmagicline {
       return response
     })
 
-    this.customer = new Customer(this.axios)
+    this.customer = new Customer(this.axios, this)
     this.locale = new Locale(this.axios)
     this.organization = new Organization(this.axios, this)
     this.checkin = new Checkin(this.axios, this)
