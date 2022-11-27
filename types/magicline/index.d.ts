@@ -11,8 +11,8 @@ export interface Success {
 export interface GenericError {
   errorMessage: string
   errorCode: string
-  args: any[]
-  typedArgs: any[]
+  args: unknown[]
+  typedArgs: unknown[]
 }
 
 export type ErrorOrSuccess = Partial<Success> & GenericError[]
@@ -38,7 +38,7 @@ export interface Permitted {
   permissions: string[]
   isStudioLoginPermitted: boolean
 }
-export type Notices = any[]
+export type Notices = unknown[]
 export interface AccountInfo {
   firstname: string
   lastname: string

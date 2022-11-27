@@ -1,5 +1,8 @@
-import { join } from "path"
+import { join, dirname } from "node:path"
 import { read, write } from "fs-jetpack"
+import { fileURLToPath } from "node:url"
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 import Openmagicline from "../src"
 
@@ -22,7 +25,7 @@ export default async (): Promise<Openmagicline> => {
   if (token) {
     try {
       await instance.login(token)
-    } catch (error) {
+    } catch {
       console.log("getting new token because the existing was invalid")
       await instance.login()
     }

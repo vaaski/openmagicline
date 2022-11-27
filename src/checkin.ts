@@ -42,14 +42,14 @@ export default class Checkin {
   }
 
   private defaultCheckinParams: Openmagicline.Checkin.CheckinOptions = {
-    customerCardNumber: null,
+    customerCardNumber: undefined,
     customerUUID: "",
     fkCustomer: 0,
-    fkDevice: null,
+    fkDevice: undefined,
     fkOrganizationUnit: DEFAULT_UNIT_ID,
     lockerKey: "",
-    purchasedContingentCode: null,
-    databaseId: null,
+    purchasedContingentCode: undefined,
+    databaseId: undefined,
     optlock: 0,
     requiredOrganizationUnitId: DEFAULT_UNIT_ID,
   }
@@ -89,7 +89,7 @@ export default class Checkin {
   }
 
   private defaultLockerKeyParams: Openmagicline.Checkin.LockerKeyOptions = {
-    databaseId: null,
+    databaseId: undefined,
     optlock: 0,
   }
   async lockerKey(

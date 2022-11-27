@@ -16,20 +16,20 @@ export namespace Checkin {
 
   export interface CheckinOptions {
     /** not sure what this is for */
-    customerCardNumber?: null | any
+    customerCardNumber?: null | unknown
     /** not sure what this is for */
     customerUUID?: string
     /** customerID */
     fkCustomer: number
     /** not sure what this is for */
-    fkDevice?: null | any
+    fkDevice?: null | unknown
     /** organizationUnitId */
     fkOrganizationUnit?: unitID
     lockerKey?: number | string
     /** not sure what this is for */
-    purchasedContingentCode?: null | any
+    purchasedContingentCode?: null | unknown
     /** not sure what this is for */
-    databaseId?: null | any
+    databaseId?: null | unknown
     /** not sure what this is for, was 0 for me */
     optlock?: number
     /** organizationUnitId */
@@ -42,7 +42,7 @@ export namespace Checkin {
 
   export interface LockerKeyOptions {
     /** not sure what this is for */
-    databaseId?: null | any
+    databaseId?: null | unknown
     /** not sure what this is for */
     optlock?: 0 | number
   }

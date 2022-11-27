@@ -1,14 +1,17 @@
 import type * as OMGL from "../types/openmagicline"
-import type * as Magicline from "../types/magicline/index"
+import type * as Magicline from "../types/magicline"
+
 import type { AxiosInstance } from "axios"
 
-export { OMGL, Magicline, Openmagicline }
+// eslint-disable-next-line unicorn/prefer-export-from
+export { Openmagicline, OMGL, Magicline }
+
 
 import _axios from "axios"
 import once from "lodash/once"
 import debug from "debug"
 
-import Util, { headers, searchParams } from "./util"
+import Util, { headers, searchParameters } from "./util"
 import Locale from "./locale"
 import Organization from "./organization"
 import Customer from "./customer"
@@ -47,6 +50,7 @@ export default class Openmagicline {
     const prefixUrl = `${this.baseUrl}/rest-api`
 
     const httpAxiosLog = this.log.extend("http")
+    // eslint-disable-next-line unicorn/prefer-ternary
     if (axios) this.axios = axios
     else {
       this.axios = _axios.create({
@@ -87,30 +91,32 @@ export default class Openmagicline {
         return this
       } else {
         this.cookies = undefined
-        throw Error("invalid token")
+        throw new Error("invalid token")
       }
     }
 
     try {
       const { username, password } = this.config
       if (!username || !password)
-        throw Error("username and password need to be set when cookies aren't provided")
+        throw new Error("username and password need to be set when cookies aren't provided")
 
       const response = await this.axios.post(
         "login",
-        searchParams({ username, password, client: "webclient" }),
+        searchParameters({ username, password, client: "webclient" }),
         { baseURL: this.baseUrl }
       )
 
       this.login = once(this._login)
 
       this.cookies = response.headers["set-cookie"]
-    } catch (err: any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error_: any) {
       this.cookies = undefined
 
-      if (err?.response?.data?.error_description) {
-        throw Error(err.response.data.error_description)
-      } else throw err
+      const error = error_?.response?.data?.error_description
+        ? new Error(error_.response.data.error_description)
+        : error_
+      throw error
     }
 
     return this

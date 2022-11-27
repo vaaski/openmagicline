@@ -1,6 +1,6 @@
 export namespace Socket {
-  export type CallbackFn<T> = (data: T) => void
-  export type UnsubscribeFn = () => void
+  export type CallbackFunction<T> = (data: T) => void
+  export type UnsubscribeFunction = () => void
 
   export interface CheckinEvent {
     type: string
@@ -8,7 +8,7 @@ export namespace Socket {
     timestamp: number
     tenantName: string
     organizationUnitId: number
-    customerIds: any[]
+    customerIds: unknown[]
     payload: Payload
   }
 

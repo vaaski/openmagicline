@@ -29,27 +29,27 @@ export default class MagicSocket {
   constructor(private mgl: mgl, unitID: unitID) {
     this.client = new Client({
       debug: this.log,
-      heartbeatIncoming: 10000,
-      heartbeatOutgoing: 10000,
+      heartbeatIncoming: 10_000,
+      heartbeatOutgoing: 10_000,
       webSocketFactory: this.webSocketFactory(mgl.baseUrl, unitID),
 
-      onWebSocketError: /* istanbul ignore next */ err => {
-        console.log(err.target._req.res)
-        throw err
+      onWebSocketError: /* istanbul ignore next */ error => {
+        console.log(error.target._req.res)
+        throw error
       },
-      onStompError: /* istanbul ignore next */ err => {
-        throw err
+      onStompError: /* istanbul ignore next */ error => {
+        throw error
       },
     })
   }
 
-  subscriptions: Record<string, Magicline.Socket.UnsubscribeFn> = {}
+  subscriptions: Record<string, Magicline.Socket.UnsubscribeFunction> = {}
 
   activate(): Promise<unknown> {
     if (this.isActive) return this.isActive
 
-    this.isActive = new Promise(res => {
-      this.client.onConnect = res
+    this.isActive = new Promise(resolve => {
+      this.client.onConnect = resolve
       this.client.activate()
     })
 
@@ -57,10 +57,10 @@ export default class MagicSocket {
   }
 
   unsubscribeAll(): Promise<void> {
-    Object.entries(this.subscriptions).forEach(([key, unsubscribe]) => {
+    for (const [key, unsubscribe] of Object.entries(this.subscriptions)) {
       unsubscribe()
       delete this.subscriptions[key]
-    })
+    }
     return this.deactivate()
   }
 
@@ -72,14 +72,14 @@ export default class MagicSocket {
 
   private deactivateAutomatically() {
     /* istanbul ignore else */
-    if (!this.subscriptions.length) this.deactivate()
+    if (Object.entries(this.subscriptions).length === 0) this.deactivate()
     else this.log("there are still active subscriptions, keeping stomp active")
   }
 
   /* eslint-disable @typescript-eslint/indent */
   private subscribeFactory =
     <T>(topic: string) =>
-    async (callback: Magicline.Socket.CallbackFn<T>) => {
+    async (callback: Magicline.Socket.CallbackFunction<T>) => {
       await this.activate()
       this.client.subscribe(topic, ({ body }) => callback(JSON.parse(body)))
       this.log(`subscribed to "${topic}"`)

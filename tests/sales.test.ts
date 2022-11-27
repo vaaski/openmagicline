@@ -5,8 +5,8 @@ import type Openmagicline from "../src"
 import test from "ava"
 import setup, { delay } from "./_setup"
 
-const TEST_CUSTOMER = parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")
-const TEST_FACILITY = parseInt(process.env.OPENMAGICLINE_TEST_FACILITY ?? "0")
+const TEST_CUSTOMER = Number.parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")
+const TEST_FACILITY = Number.parseInt(process.env.OPENMAGICLINE_TEST_FACILITY ?? "0")
 
 let instance: Openmagicline
 test.before(async () => {

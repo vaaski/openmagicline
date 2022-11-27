@@ -4,8 +4,8 @@ import type { Checkin } from "../types/magicline"
 import test from "ava"
 import setup from "./_setup"
 
-const TEST_CUSTOMER = parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")
-const TEST_FACILITY = parseInt(process.env.OPENMAGICLINE_TEST_FACILITY ?? "0")
+const TEST_CUSTOMER = Number.parseInt(process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0")
+const TEST_FACILITY = Number.parseInt(process.env.OPENMAGICLINE_TEST_FACILITY ?? "0")
 
 let instance: Openmagicline
 test.before(async () => {
@@ -17,7 +17,7 @@ let checkin: Checkin.CheckinResponse
 test.after(async () => {
   try {
     await instance.checkin.checkout(checkin.databaseId)
-  } catch (_) {
+  } catch {
     // ignore
   }
 })
@@ -27,7 +27,7 @@ test("checkin event handler fires", t => {
   t.plan(1)
 
   // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async res => {
+  return new Promise(async resolve => {
     const socket = instance.socket(TEST_FACILITY)
 
     await socket.onCheckin(data => {
@@ -35,7 +35,7 @@ test("checkin event handler fires", t => {
 
       socket.unsubscribeAll()
       socket.deactivate()
-      res()
+      resolve()
     })
 
     // checks if already active returns instantly
@@ -50,12 +50,12 @@ test("checkin event handler fires", t => {
 
 test("socket unsubscribing deactivates the connection automatically", t => {
   // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async res => {
+  return new Promise(async resolve => {
     const socket = instance.socket(TEST_FACILITY)
 
-    const unsubscribe = await socket.onCheckin(() => null)
+    const unsubscribe = await socket.onCheckin(() => "")
     unsubscribe()
     t.true(socket.isActive === false)
-    res()
+    resolve()
   })
 })

@@ -51,7 +51,7 @@ type AxiosHeaders = Record<string, string>
 export const headers = (mgl: mgl): AxiosHeaders => {
   const u = new URL(mgl.baseUrl)
 
-  const ret: AxiosHeaders = {
+  const returnValue: AxiosHeaders = {
     authority: u.hostname,
     "sec-ch-ua": `" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"`,
     accept: `application/json, text/javascript, */*; q=0.01`,
@@ -66,14 +66,14 @@ export const headers = (mgl: mgl): AxiosHeaders => {
     "accept-language": `en-CA,en-US;q=0.9,en;q=0.8,de-DE;q=0.7,de;q=0.6,en-GB;q=0.5`,
   }
 
-  if (mgl.cookies) ret.cookie = mgl.cookies.join("")
-  return ret
+  if (mgl.cookies) returnValue.cookie = mgl.cookies.join("")
+  return returnValue
 }
 
 export const websocketHeaders = (mgl: mgl): AxiosHeaders => {
   const u = new URL(mgl.baseUrl)
 
-  const ret: AxiosHeaders = {
+  const returnValue: AxiosHeaders = {
     Pragma: "no-cache",
     Origin: u.href,
     "Accept-Language": "en-CA,en-US;q=0.9,en;q=0.8,de-DE;q=0.7,de;q=0.6,en-GB;q=0.5",
@@ -82,8 +82,8 @@ export const websocketHeaders = (mgl: mgl): AxiosHeaders => {
     "Cache-Control": "no-cache",
   }
 
-  if (mgl.cookies) ret.cookie = mgl.cookies.join("")
-  return ret
+  if (mgl.cookies) returnValue.cookie = mgl.cookies.join("")
+  return returnValue
 }
 
 export const formData = (data: Record<string, string>): FormData => {
@@ -92,8 +92,8 @@ export const formData = (data: Record<string, string>): FormData => {
   return form
 }
 
-export const searchParams = (data: Record<string, string>): URLSearchParams => {
-  const params = new URLSearchParams()
-  for (const [key, value] of Object.entries(data)) params.set(key, value)
-  return params
+export const searchParameters = (data: Record<string, string>): URLSearchParams => {
+  const parameters = new URLSearchParams()
+  for (const [key, value] of Object.entries(data)) parameters.set(key, value)
+  return parameters
 }
