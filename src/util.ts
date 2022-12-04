@@ -53,11 +53,11 @@ export const headers = (mgl: mgl): AxiosHeaders => {
 
   const returnValue: AxiosHeaders = {
     authority: u.hostname,
-    "sec-ch-ua": `" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"`,
+    "sec-ch-ua": `"Google Chrome";v="107", "Chromium";v="107", "Not=A?Brand";v="24"`,
     accept: `application/json, text/javascript, */*; q=0.01`,
     "x-requested-with": `XMLHttpRequest`,
     "sec-ch-ua-mobile": `?0`,
-    "user-agent": `Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36`,
+    "user-agent": `Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36`,
     origin: u.href,
     "sec-fetch-site": `same-origin`,
     "sec-fetch-mode": `cors`,
@@ -78,7 +78,7 @@ export const websocketHeaders = (mgl: mgl): AxiosHeaders => {
     Origin: u.href,
     "Accept-Language": "en-CA,en-US;q=0.9,en;q=0.8,de-DE;q=0.7,de;q=0.6,en-GB;q=0.5",
     "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36",
+      "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
     "Cache-Control": "no-cache",
   }
 
