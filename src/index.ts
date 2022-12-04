@@ -2,10 +2,10 @@ import type * as OMGL from "../types/openmagicline"
 import type * as Magicline from "../types/magicline"
 
 import type { AxiosInstance } from "axios"
+import createAuthRefreshInterceptor from "axios-auth-refresh"
 
 // eslint-disable-next-line unicorn/prefer-export-from
 export { Openmagicline, OMGL, Magicline }
-
 
 import _axios from "axios"
 import once from "lodash/once"
@@ -72,6 +72,11 @@ export default class Openmagicline {
       return response
     })
 
+    createAuthRefreshInterceptor(this.axios, () => {
+      console.log("request failed, refreshing token")
+      return this.login()
+    })
+
     this.customer = new Customer(this.axios, this)
     this.locale = new Locale(this.axios)
     this.organization = new Organization(this.axios, this)
@@ -103,7 +108,8 @@ export default class Openmagicline {
       const response = await this.axios.post(
         "login",
         searchParameters({ username, password, client: "webclient" }),
-        { baseURL: this.baseUrl }
+        // @ts-expect-error i am too lazy to fix these types ngl
+        { baseURL: this.baseUrl, skipAuthRefresh: true }
       )
 
       this.login = once(this._login)
