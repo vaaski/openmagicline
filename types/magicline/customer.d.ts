@@ -1,4 +1,4 @@
-import type * as Openmagicline from "../types/openmagicline"
+import type * as Openmagicline from "../openmagicline"
 
 export namespace Customer {
   export interface Base {
