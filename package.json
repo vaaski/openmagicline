@@ -21,7 +21,8 @@
     "test:watch": "nodemon -w src -w tests -w types --exec npm test",
     "coverage": "live-server coverage/lcov-report --port=8069",
     "lint": "eslint . --fix --ext ts",
-    "format": "prettier -w types/* tests/* src/*"
+    "format": "prettier -w types/* tests/* src/*",
+    "typecheck": "tsc --noEmit"
   },
   "files": [
     "lib/**/*",
