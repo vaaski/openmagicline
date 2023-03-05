@@ -11,6 +11,10 @@
   "main": "lib/index.js",
   "license": "MIT",
   "author": "vaaski <admin@vaa.ski>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaaski/openmagicline.git"
+  },
   "scripts": {
     "start": "node -r dotenv/config lib",
     "build": "rimraf lib && tsc",
