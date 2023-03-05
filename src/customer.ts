@@ -69,7 +69,7 @@ export default class Customer {
     customerId: Openmagicline.Customer.CustomerID,
     active: boolean | "both" = "both"
   ) => {
-    const returnList: Responses.Customer.Benefits[] = []
+    const returnList: Responses.Customer.Benefit[] = []
 
     if (active === true || active === "both") {
       const { data } = await this.axios.get("benefitaccount", {

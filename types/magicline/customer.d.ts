@@ -1,7 +1,7 @@
 import type * as Openmagicline from "../openmagicline"
 
 export namespace Customer {
-  export interface Benefits {
+  export interface Benefit {
     name: string
     available: number | null
     total: number | null
