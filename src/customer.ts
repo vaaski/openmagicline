@@ -65,6 +65,29 @@ export default class Customer {
     return data as Responses.Customer.CheckinCondition[]
   }
 
+  benefits = async (
+    customerId: Openmagicline.Customer.CustomerID,
+    active: boolean | "both" = "both"
+  ) => {
+    const returnList: Responses.Customer.Benefits[] = []
+
+    if (active === true || active === "both") {
+      const { data } = await this.axios.get("benefitaccount", {
+        params: { customerId, active: true },
+      })
+      returnList.push(...data)
+    }
+
+    if (active === false || active === "both") {
+      const { data } = await this.axios.get("benefitaccount", {
+        params: { customerId, active: false },
+      })
+      returnList.push(...data)
+    }
+
+    return returnList
+  }
+
   // todo: implement card methods
   //? removed until more card methods are implemented
   // removeCard(

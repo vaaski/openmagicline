@@ -1,6 +1,24 @@
 import type * as Openmagicline from "../openmagicline"
 
 export namespace Customer {
+  export interface Benefits {
+    name: string
+    available: number | null
+    total: number | null
+    hasUsages: boolean
+    colorHex: string
+    unit: string
+    inclusiveContingentId: null
+    purchasedContingentId: number | null
+    trialContingentId: null
+    freeUsage: boolean
+    benefitId: number
+    expiryDate: null | string
+    createdDate: null | string
+    durationText: null
+    flat: boolean
+  }
+
   export interface Base {
     databaseId: Openmagicline.Customer.CustomerID
   }
