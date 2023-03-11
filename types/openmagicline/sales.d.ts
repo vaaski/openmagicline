@@ -1,4 +1,4 @@
-import type { unitID } from "../openmagicline/openmagicline"
+import type { unitID } from ".."
 
 export interface ProductOptions {
   organizationUnitId?: unitID

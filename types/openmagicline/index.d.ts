@@ -1,4 +1,3 @@
-export * as Openmagicline from "./openmagicline"
 export * as Customer from "./customer"
 export * as Checkin from "./checkin"
 export * as Sales from "./sales"

@@ -1,4 +1,4 @@
-import type { unitID } from "./openmagicline"
+import type { unitID } from ".."
 
 export type CustomerID = number
 export type AccessIdentificationID = number
