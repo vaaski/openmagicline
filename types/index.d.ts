@@ -1,4 +1,4 @@
-export * as Openmagicline from "./openmagicline"
+export * as OMGL from "./openmagicline"
 export * as Magicline from "./magicline"
 
 /**

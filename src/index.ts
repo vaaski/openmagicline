@@ -1,4 +1,4 @@
-import type { Openmagicline as OMGL, unitID } from "../types"
+import type { OMGL, unitID } from "../types"
 
 import type { AxiosInstance } from "axios"
 import createAuthRefreshInterceptor from "axios-auth-refresh"
@@ -17,7 +17,7 @@ import MagicSocket from "./socket"
 
 /** @deprecated todo: move to util */
 export const _log = debug("openmagicline")
-export type { Openmagicline as OMGL, Magicline, unitID } from "../types"
+export type { OMGL, Magicline, unitID } from "../types"
 export class Openmagicline {
   protected log: debug.Debugger
   protected axios: AxiosInstance

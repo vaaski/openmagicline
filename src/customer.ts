@@ -1,12 +1,12 @@
 import type { AxiosInstance } from "axios"
 
-import type { Magicline, Openmagicline } from "../types"
+import type { Magicline, OMGL } from "../types"
 import type { Openmagicline as mgl } from "."
 
 export default class Customer {
   constructor(private axios: AxiosInstance, private mgl: mgl) {}
 
-  defaultSearchOptions: Required<Openmagicline.Customer.SearchOptions> = {
+  defaultSearchOptions: Required<OMGL.Customer.SearchOptions> = {
     facility: 0,
     searchInName: true,
     searchInCustomerNumber: true,
@@ -22,7 +22,7 @@ export default class Customer {
 
   async search(
     searchString: string,
-    options?: Openmagicline.Customer.SearchOptions
+    options?: OMGL.Customer.SearchOptions
   ): Promise<Magicline.Customer.SearchedCustomer[]> {
     const { data } = await this.axios.post("customersearch", {
       ...this.defaultSearchOptions,
@@ -33,7 +33,7 @@ export default class Customer {
   }
 
   async getCards(
-    customerID: Openmagicline.Customer.CustomerID
+    customerID: OMGL.Customer.CustomerID
   ): Promise<Magicline.Customer.AccessIdentification[]> {
     const { data } = await this.axios(`customer/${customerID}/accessidentification`)
     return data
@@ -44,7 +44,7 @@ export default class Customer {
    * @param customerId customer id
    * @param isActive get only active contracts (default: `true`)
    */
-  contract = async (customerId: Openmagicline.Customer.CustomerID, isActive = true) => {
+  contract = async (customerId: OMGL.Customer.CustomerID, isActive = true) => {
     const { data } = await this.axios.get("contract", {
       params: { customerId, isActive },
     })
@@ -65,7 +65,7 @@ export default class Customer {
   }
 
   benefits = async (
-    customerId: Openmagicline.Customer.CustomerID,
+    customerId: OMGL.Customer.CustomerID,
     active: boolean | "both" = "both"
   ) => {
     const returnList: Magicline.Customer.Benefit[] = []

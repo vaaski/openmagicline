@@ -1,14 +1,14 @@
 import type { AxiosInstance } from "axios"
 import type { Openmagicline as mgl } from "."
 
-import type { Magicline, Openmagicline } from "../types"
+import type { Magicline, OMGL } from "../types"
 
 import { DEFAULT_UNIT_ID } from "./constants"
 
 export default class Checkin {
   constructor(private axios: AxiosInstance, private mgl: mgl) {}
 
-  defaultListParams: Openmagicline.Checkin.ListOptions = {
+  defaultListParams: OMGL.Checkin.ListOptions = {
     organizationUnitId: DEFAULT_UNIT_ID,
     checkouts: false,
     offset: 0,
@@ -23,7 +23,7 @@ export default class Checkin {
    * @param options filter, sort, etc.
    */
   async list(
-    options?: Openmagicline.Checkin.ListOptions
+    options?: OMGL.Checkin.ListOptions
   ): Promise<Magicline.Checkin.CheckinList> {
     let organizationUnitId = options?.organizationUnitId
     if (typeof organizationUnitId !== "number") {
@@ -40,7 +40,7 @@ export default class Checkin {
     return data
   }
 
-  private defaultCheckinParams: Openmagicline.Checkin.CheckinOptions = {
+  private defaultCheckinParams: OMGL.Checkin.CheckinOptions = {
     customerCardNumber: undefined,
     customerUUID: "",
     fkCustomer: 0,
@@ -56,7 +56,7 @@ export default class Checkin {
    * check-in a customer
    */
   async checkin(
-    options: Openmagicline.Checkin.CheckinOptions
+    options: OMGL.Checkin.CheckinOptions
   ): Promise<Magicline.Checkin.CheckinResponse> {
     let unitID = options.requiredOrganizationUnitId ?? options.fkOrganizationUnit
     if (typeof unitID !== "number") {
@@ -79,7 +79,7 @@ export default class Checkin {
    */
   async checkout(
     checkinId: number,
-    options?: Openmagicline.Checkin.CheckoutOptions
+    options?: OMGL.Checkin.CheckoutOptions
   ): Promise<Magicline.Checkin.CheckinResponse> {
     const { data } = await this.axios.delete(`checkin/${checkinId}`, {
       params: { ...options },
@@ -87,14 +87,14 @@ export default class Checkin {
     return data
   }
 
-  private defaultLockerKeyParams: Openmagicline.Checkin.LockerKeyOptions = {
+  private defaultLockerKeyParams: OMGL.Checkin.LockerKeyOptions = {
     databaseId: undefined,
     optlock: 0,
   }
   async lockerKey(
     checkinId: number,
     lockerKey: number | string,
-    options?: Openmagicline.Checkin.LockerKeyOptions
+    options?: OMGL.Checkin.LockerKeyOptions
   ): Promise<Magicline.Checkin.LockerKeyResponse> {
     const { data } = await this.axios.put(`checkin/lockerkey/${checkinId}`, {
       ...this.defaultLockerKeyParams,
