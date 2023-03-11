@@ -8,7 +8,7 @@
     "reverse-engineered"
   ],
   "version": "0.3.0",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "author": "vaaski <admin@vaa.ski>",
   "repository": {
@@ -16,8 +16,8 @@
     "url": "https://github.com/vaaski/openmagicline.git"
   },
   "scripts": {
-    "start": "node -r dotenv/config lib",
-    "build": "rimraf lib && tsc",
+    "start": "node -r dotenv/config dist",
+    "build": "tsup",
     "prepare": "npm run build",
     "dev": "nodemon",
     "test": "nyc ava -s",
@@ -29,8 +29,7 @@
     "typecheck": "tsc --noEmit && tsc -p tests/tsconfig.json"
   },
   "files": [
-    "lib/**/*",
-    "types/**/*"
+    "dist/**/*"
   ],
   "ava": {
     "extensions": [
@@ -67,6 +66,7 @@
     "nyc": "^15.1.0",
     "prettier": "^2.3.0",
     "rimraf": "^3.0.2",
+    "tsup": "^6.6.3",
     "tsx": "^3.12.3",
     "typescript": "^4.9.3"
   },
