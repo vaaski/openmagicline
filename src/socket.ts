@@ -1,5 +1,6 @@
-import type mgl from "."
-import type { unitID } from "../types/openmagicline"
+import type { Openmagicline as mgl } from "."
+
+import type { unitID } from "../types"
 import type { Magicline } from "."
 
 import { _log } from "."

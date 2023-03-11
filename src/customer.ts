@@ -1,8 +1,7 @@
 import type { AxiosInstance } from "axios"
 
-import type * as Responses from "../types/magicline"
-import type * as Openmagicline from "../types/openmagicline"
-import type mgl from "."
+import type { Magicline, Openmagicline } from "../types"
+import type { Openmagicline as mgl } from "."
 
 export default class Customer {
   constructor(private axios: AxiosInstance, private mgl: mgl) {}
@@ -24,7 +23,7 @@ export default class Customer {
   async search(
     searchString: string,
     options?: Openmagicline.Customer.SearchOptions
-  ): Promise<Responses.Customer.SearchedCustomer[]> {
+  ): Promise<Magicline.Customer.SearchedCustomer[]> {
     const { data } = await this.axios.post("customersearch", {
       ...this.defaultSearchOptions,
       ...options,
@@ -35,7 +34,7 @@ export default class Customer {
 
   async getCards(
     customerID: Openmagicline.Customer.CustomerID
-  ): Promise<Responses.Customer.AccessIdentification[]> {
+  ): Promise<Magicline.Customer.AccessIdentification[]> {
     const { data } = await this.axios(`customer/${customerID}/accessidentification`)
     return data
   }
@@ -50,7 +49,7 @@ export default class Customer {
       params: { customerId, isActive },
     })
 
-    return data as Responses.Customer.Contract[]
+    return data as Magicline.Customer.Contract[]
   }
 
   checkinConditions = async (customerId: number, organizationUnitId?: number) => {
@@ -62,14 +61,14 @@ export default class Customer {
       params: { organizationUnitId },
     })
 
-    return data as Responses.Customer.CheckinCondition[]
+    return data as Magicline.Customer.CheckinCondition[]
   }
 
   benefits = async (
     customerId: Openmagicline.Customer.CustomerID,
     active: boolean | "both" = "both"
   ) => {
-    const returnList: Responses.Customer.Benefit[] = []
+    const returnList: Magicline.Customer.Benefit[] = []
 
     if (active === true || active === "both") {
       const { data } = await this.axios.get("benefitaccount", {
@@ -93,7 +92,7 @@ export default class Customer {
   // removeCard(
   //   customerID: Openmagicline.Customer.CustomerID,
   //   AccessIdentificationID: Openmagicline.Customer.AccessIdentificationID
-  // ): Promise<Responses.ErrorOrSuccess> {
+  // ): Promise<Magicline.ErrorOrSuccess> {
   //   return this.got(`customer/${customerID}/accessidentification/${AccessIdentificationID}`, {
   //     method: "DELETE",
   //     searchParams: {

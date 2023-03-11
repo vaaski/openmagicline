@@ -1,11 +1,7 @@
-import type * as OMGL from "../types/openmagicline"
-import type * as Magicline from "../types/magicline"
+import type { Openmagicline as OMGL, unitID } from "../types"
 
 import type { AxiosInstance } from "axios"
 import createAuthRefreshInterceptor from "axios-auth-refresh"
-
-// eslint-disable-next-line unicorn/prefer-export-from
-export { Openmagicline, OMGL, Magicline }
 
 import _axios from "axios"
 import once from "lodash/once"
@@ -19,9 +15,10 @@ import Checkin from "./checkin"
 import Sales from "./sales"
 import MagicSocket from "./socket"
 
+/** @deprecated todo: move to util */
 export const _log = debug("openmagicline")
-
-export default class Openmagicline {
+export type { Openmagicline as OMGL, Magicline, unitID } from "../types"
+export class Openmagicline {
   protected log: debug.Debugger
   protected axios: AxiosInstance
 
@@ -40,7 +37,7 @@ export default class Openmagicline {
   /** reference to this.sales */
   disposal: Sales
   /** event handler for magiclines websockets */
-  socket: (unitID: OMGL.unitID) => MagicSocket
+  socket: (unitID: unitID) => MagicSocket
 
   // TODO: check version and warn if openmagicline is outdated
   constructor(private config: OMGL.Config, axios?: AxiosInstance) {

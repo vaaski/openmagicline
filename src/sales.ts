@@ -1,15 +1,14 @@
 import type { AxiosInstance } from "axios"
-import type mgl from "."
+import type { Openmagicline as mgl } from "."
 
-import type * as Responses from "../types/magicline"
-import type * as Openmagicline from "../types/openmagicline"
+import type { Magicline, Openmagicline } from "../types"
 
 export default class Sales {
   constructor(private axios: AxiosInstance, private mgl: mgl) {}
 
   async products(
     options?: Openmagicline.Sales.ProductOptions
-  ): Promise<Responses.Sales.ProductOverview> {
+  ): Promise<Magicline.Sales.ProductOverview> {
     const organizationUnitId =
       options?.organizationUnitId ?? (await this.mgl.util.getDefaultUnitID())
 

@@ -1,5 +1,5 @@
 import test from "ava"
-import Openmagicline from "../src"
+import { Openmagicline } from "../src"
 import setup, { config, delay } from "./_setup"
 
 test.beforeEach(delay)

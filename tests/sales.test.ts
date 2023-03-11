@@ -1,6 +1,6 @@
 import type { ExecutionContext } from "ava"
 import type { Magicline } from "../src"
-import type Openmagicline from "../src"
+import type { Openmagicline } from "../src"
 
 import test from "ava"
 import setup, { delay } from "./_setup"

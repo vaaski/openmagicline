@@ -1,8 +1,7 @@
 import type { AxiosInstance } from "axios"
-import type mgl from "."
+import type { Openmagicline as mgl } from "."
 
-import type * as Responses from "../types/magicline"
-import type * as Openmagicline from "../types/openmagicline"
+import type { Magicline, Openmagicline } from "../types"
 
 import { DEFAULT_UNIT_ID } from "./constants"
 
@@ -25,7 +24,7 @@ export default class Checkin {
    */
   async list(
     options?: Openmagicline.Checkin.ListOptions
-  ): Promise<Responses.Checkin.CheckinList> {
+  ): Promise<Magicline.Checkin.CheckinList> {
     let organizationUnitId = options?.organizationUnitId
     if (typeof organizationUnitId !== "number") {
       organizationUnitId = await this.mgl.util.getDefaultUnitID()
@@ -58,7 +57,7 @@ export default class Checkin {
    */
   async checkin(
     options: Openmagicline.Checkin.CheckinOptions
-  ): Promise<Responses.Checkin.CheckinResponse> {
+  ): Promise<Magicline.Checkin.CheckinResponse> {
     let unitID = options.requiredOrganizationUnitId ?? options.fkOrganizationUnit
     if (typeof unitID !== "number") {
       unitID = await this.mgl.util.getDefaultUnitID()
@@ -81,7 +80,7 @@ export default class Checkin {
   async checkout(
     checkinId: number,
     options?: Openmagicline.Checkin.CheckoutOptions
-  ): Promise<Responses.Checkin.CheckinResponse> {
+  ): Promise<Magicline.Checkin.CheckinResponse> {
     const { data } = await this.axios.delete(`checkin/${checkinId}`, {
       params: { ...options },
     })
@@ -96,7 +95,7 @@ export default class Checkin {
     checkinId: number,
     lockerKey: number | string,
     options?: Openmagicline.Checkin.LockerKeyOptions
-  ): Promise<Responses.Checkin.LockerKeyResponse> {
+  ): Promise<Magicline.Checkin.LockerKeyResponse> {
     const { data } = await this.axios.put(`checkin/lockerkey/${checkinId}`, {
       ...this.defaultLockerKeyParams,
       checkinId,

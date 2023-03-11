@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-import Openmagicline from "../src"
+import { Openmagicline } from "../src"
 
 const tokenPath = join(__dirname, "../token.json")
 

@@ -1,4 +1,4 @@
-import type Openmagicline from "../src"
+import type { Openmagicline } from "../src"
 import type { Checkin } from "../types/magicline"
 
 import test from "ava"

@@ -1,7 +1,7 @@
-export * from "./customer"
-export * from "./checkin"
-export * from "./sales"
-export * from "./socket"
+export * as Customer from "./customer"
+export * as Checkin from "./checkin"
+export * as Sales from "./sales"
+export * as Socket from "./socket"
 
 export type CurrentLocale = string
 export type SupportedLocales = string[]

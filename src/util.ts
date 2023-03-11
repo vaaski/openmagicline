@@ -1,6 +1,7 @@
 import type { AxiosInstance } from "axios"
-import type mgl from "."
-import type { unitID } from "../types/openmagicline"
+import type { Openmagicline as mgl } from "."
+
+import type { unitID } from "../types"
 
 import FormData from "form-data"
 import { DEFAULT_UNIT_ID } from "./constants"
