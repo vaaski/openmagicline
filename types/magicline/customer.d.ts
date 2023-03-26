@@ -200,3 +200,15 @@ export interface FlatFeeContract {
   reversed: boolean
   canceled: boolean
 }
+
+export interface DetailedBalance {
+  databaseId: number
+  optlock: null
+  consumptionCreditBalance: number
+  debtClaimBalance: number
+  debtClaimBalanceWithoutLaterSale: number
+  laterSaleBalance: number
+  paymentBalance: number
+  transferBalance: number
+  totalWithoutConsumptionCredit: number
+}

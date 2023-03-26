@@ -49,5 +49,18 @@ test("get customer benefits", async t => {
   t.true(Array.isArray(benefits))
 })
 
+test("get customer detailed balance", async t => {
+  const balance = await instance.customer.detailedBalance(TEST_CUSTOMER)
+
+  t.false(Number.isNaN(balance.databaseId))
+  t.false(Number.isNaN(balance.consumptionCreditBalance))
+  t.false(Number.isNaN(balance.debtClaimBalance))
+  t.false(Number.isNaN(balance.debtClaimBalanceWithoutLaterSale))
+  t.false(Number.isNaN(balance.laterSaleBalance))
+  t.false(Number.isNaN(balance.paymentBalance))
+  t.false(Number.isNaN(balance.transferBalance))
+  t.false(Number.isNaN(balance.totalWithoutConsumptionCredit))
+})
+
 test.todo("add customer card")
 test.todo("remove customer card")

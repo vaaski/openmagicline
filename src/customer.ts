@@ -20,23 +20,20 @@ export default class Customer {
     showOnlyMembers: false,
   }
 
-  async search(
-    searchString: string,
-    options?: OMGL.Customer.SearchOptions
-  ): Promise<Magicline.Customer.SearchedCustomer[]> {
+  async search(searchString: string, options?: OMGL.Customer.SearchOptions) {
     const { data } = await this.axios.post("customersearch", {
       ...this.defaultSearchOptions,
       ...options,
       searchString,
     })
-    return data
+
+    return data as Magicline.Customer.SearchedCustomer[]
   }
 
-  async getCards(
-    customerID: OMGL.Customer.CustomerID
-  ): Promise<Magicline.Customer.AccessIdentification[]> {
+  async getCards(customerID: OMGL.Customer.CustomerID) {
     const { data } = await this.axios(`customer/${customerID}/accessidentification`)
-    return data
+
+    return data as Magicline.Customer.AccessIdentification[]
   }
 
   /**
@@ -85,6 +82,12 @@ export default class Customer {
     }
 
     return returnList
+  }
+
+  detailedBalance = async (customerId: OMGL.Customer.CustomerID) => {
+    const { data } = await this.axios.get(`customer/${customerId}/balance/detailed`)
+
+    return data as Magicline.Customer.DetailedBalance
   }
 
   // todo: implement card methods
