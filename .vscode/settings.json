@@ -1,10 +1,10 @@
 {
-  "cSpell.words": [
-    "Anonymized",
-    "OMGL",
-    "checkinbasedbenefitusages",
-    "sortedby",
-    "stompjs"
-  ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+	"cSpell.words": [
+		"Anonymized",
+		"OMGL",
+		"checkinbasedbenefitusages",
+		"sortedby",
+		"stompjs"
+	],
+	"typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,75 +1,60 @@
 {
-  "name": "openmagicline",
-  "description": "Magicline API for everybody.",
-  "keywords": [
-    "magicline",
-    "gym",
-    "mysports",
-    "reverse-engineered"
-  ],
-  "version": "1.1.0",
-  "main": "dist/index.js",
-  "license": "MIT",
-  "author": "vaaski <admin@vaa.ski>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vaaski/openmagicline.git"
-  },
-  "scripts": {
-    "start": "node -r dotenv/config dist",
-    "build": "tsup",
-    "prepublishOnly": "bun run build",
-    "dev": "nodemon",
-    "test": "nyc ava -s",
-    "test:full": "rimraf token.json && npm test",
-    "test:watch": "nodemon -w src -w tests -w types --exec npm test",
-    "coverage": "live-server coverage/lcov-report --port=8069",
-    "lint": "biome lint --write ",
-    "format": "biome format --write ",
-    "typecheck": "tsc --noEmit && tsc -p tests/tsconfig.json"
-  },
-  "files": [
-    "dist/**/*"
-  ],
-  "ava": {
-    "extensions": [
-      "ts"
-    ],
-    "files": [
-      "tests/**/*.test.ts"
-    ],
-    "require": [
-      "dotenv/config"
-    ],
-    "nodeArguments": [
-      "--loader=tsx"
-    ],
-    "failFast": true,
-    "verbose": true
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.9.2",
-    "@types/debug": "^4.1.5",
-    "@types/lodash": "^4.14.170",
-    "@types/node": "^20",
-    "@types/ws": "^7.4.7",
-    "ava": "^5.1.0",
-    "dotenv": "^10.0.0",
-    "eslint": "^8.28.0",
-    "fs-jetpack": "^4.1.0",
-    "nodemon": "^2.0.7",
-    "nyc": "^15.1.0",
-    "rimraf": "^3.0.2",
-    "tsup": "^6.6.3",
-    "tsx": "^3.12.3",
-    "typescript": "^4.9.3"
-  },
-  "dependencies": {
-    "@stomp/stompjs": "^6.1.0",
-    "debug": "^4.3.1",
-    "form-data": "^4.0.0",
-    "lodash": "^4.17.21",
-    "ofetch": "^1.4.0",
-    "ws": "^7.5.3"
-  }
+	"name": "openmagicline",
+	"description": "Magicline API for everybody.",
+	"keywords": ["magicline", "gym", "mysports", "reverse-engineered"],
+	"version": "1.1.0",
+	"main": "dist/index.js",
+	"license": "MIT",
+	"author": "vaaski <admin@vaa.ski>",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vaaski/openmagicline.git"
+	},
+	"scripts": {
+		"start": "node -r dotenv/config dist",
+		"build": "tsup",
+		"prepublishOnly": "bun run build",
+		"dev": "nodemon",
+		"test": "nyc ava -s",
+		"test:full": "rimraf token.json && npm test",
+		"test:watch": "nodemon -w src -w tests -w types --exec npm test",
+		"coverage": "live-server coverage/lcov-report --port=8069",
+		"lint": "biome lint --write ",
+		"format": "biome format --write ",
+		"typecheck": "tsc --noEmit && tsc -p tests/tsconfig.json"
+	},
+	"files": ["dist/**/*"],
+	"ava": {
+		"extensions": ["ts"],
+		"files": ["tests/**/*.test.ts"],
+		"require": ["dotenv/config"],
+		"nodeArguments": ["--loader=tsx"],
+		"failFast": true,
+		"verbose": true
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.2",
+		"@types/debug": "^4.1.5",
+		"@types/lodash": "^4.14.170",
+		"@types/node": "^20",
+		"@types/ws": "^7.4.7",
+		"ava": "^5.1.0",
+		"dotenv": "^10.0.0",
+		"eslint": "^8.28.0",
+		"fs-jetpack": "^4.1.0",
+		"nodemon": "^2.0.7",
+		"nyc": "^15.1.0",
+		"rimraf": "^3.0.2",
+		"tsup": "^6.6.3",
+		"tsx": "^3.12.3",
+		"typescript": "^4.9.3"
+	},
+	"dependencies": {
+		"@stomp/stompjs": "^6.1.0",
+		"debug": "^4.3.1",
+		"form-data": "^4.0.0",
+		"lodash": "^4.17.21",
+		"ofetch": "^1.4.0",
+		"ws": "^7.5.3"
+	}
 }
