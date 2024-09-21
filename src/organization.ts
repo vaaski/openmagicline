@@ -1,27 +1,24 @@
-import type { AxiosInstance } from "axios"
+import type { $Fetch } from "ofetch"
 import type { Openmagicline as mgl } from "."
 
 import type { Magicline, unitID } from "../types"
 
 export default class Organization {
-  constructor(private axios: AxiosInstance, private mgl: mgl) {}
+  constructor(private fetch: $Fetch, private mgl: mgl) {}
 
-  async permitted(): Promise<Magicline.Permitted> {
-    const { data } = await this.axios("organizationunit/permitted")
-    return data
+  async permitted() {
+    return await this.fetch<Magicline.Permitted>("/organizationunit/permitted")
   }
 
-  async accountInfo(): Promise<Magicline.AccountInfo> {
-    const { data } = await this.axios("me/info")
-    return data
+  async accountInfo() {
+    return await this.fetch<Magicline.AccountInfo>("/me/info")
   }
 
-  async apps(unitID?: unitID): Promise<Magicline.App[]> {
+  async apps(unitID?: unitID) {
     if (!unitID) unitID = await this.mgl.util.getDefaultUnitID()
 
-    const { data } = await this.axios("app", {
-      params: { organizationUnitId: unitID },
+    return await this.fetch<Magicline.App[]>("/app", {
+      query: { organizationUnitId: unitID },
     })
-    return data
   }
 }
