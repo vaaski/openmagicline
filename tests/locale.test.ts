@@ -1,17 +1,11 @@
-import type { Openmagicline } from "../src"
+import { expect, test } from "bun:test"
+import { getInstance } from "./_setup"
 
-import test from "ava"
-import setup, { delay } from "./_setup"
+const instance = await getInstance()
 
-let instance: Openmagicline
-
-test.before(async () => {
-	instance = await setup()
-})
-test.beforeEach(delay)
-
-test("get supported locales", async (t) => {
+test("get supported locales", async () => {
 	const data = await instance.locale.supportedLocales()
-	t.truthy(data.length)
-	t.truthy(typeof data[0] === "string")
+
+	expect(data.length).toBePositive()
+	expect(typeof data[0] === "string").toBeTrue()
 })

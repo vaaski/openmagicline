@@ -1,15 +1,25 @@
 import { join, dirname } from "node:path"
-import { read, write } from "fs-jetpack"
 import { fileURLToPath } from "node:url"
+import { readFile, writeFile } from "node:fs/promises"
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
+import { beforeEach } from "bun:test"
 
 import { Openmagicline } from "../src"
 
-const tokenPath = join(__dirname, "../token.json")
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
-const readToken = (): string[] => read(tokenPath, "json")
-const saveToken = (token: string[]) => write(tokenPath, token)
+const tokenPath = join(__dirname, "../test-cookies.txt")
+
+const readToken = async () => {
+	try {
+		return await readFile(tokenPath, "utf8")
+	} catch {
+		return undefined
+	}
+}
+const saveToken = async (token: string) => {
+	return await writeFile(tokenPath, token)
+}
 
 export const config = {
 	gym: process.env.OPENMAGICLINE_GYM ?? "",
@@ -17,10 +27,9 @@ export const config = {
 	password: process.env.OPENMAGICLINE_PASSWORD ?? "",
 }
 
-export default async (): Promise<Openmagicline> => {
-	const token = readToken()
-
+export const getInstance = async () => {
 	const instance = new Openmagicline(config)
+	const token = await readToken()
 
 	if (token) {
 		try {
@@ -34,18 +43,21 @@ export default async (): Promise<Openmagicline> => {
 		await instance.login()
 	}
 
-	if (instance.cookies) saveToken(instance.cookies)
+	if (instance.cookies) await saveToken(instance.cookies)
 
 	return instance
 }
 
-const randomNumber = (m = 0, M = 1) => Math.random() * (M - m) + m
+const randomFloat = (m = 0, M = 1) => Math.random() * (M - m) + m
 
 /**
  * it seems that magicline starts to return 429s pretty early.
- * we delay calls randomly by 3-10 seconds to avoid this.
+ * we delay calls randomly by 3-6 seconds to avoid this.
  */
 export const delay = (): Promise<void> => {
-	const delay = Math.floor(randomNumber(3e3, 10e3))
+	const delay = Math.floor(randomFloat(3e3, 6e3))
+	console.log({ delay })
 	return new Promise((r) => setTimeout(r, delay))
 }
+
+beforeEach(delay)

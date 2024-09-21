@@ -4,6 +4,7 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"lib": ["ES2020", "DOM", "DOM.Iterable"],
+		"types": [],
 		"outDir": "lib",
 		"allowJs": true,
 		"strict": true,
