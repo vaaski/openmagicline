@@ -7,13 +7,14 @@ import _axios from "axios"
 import once from "lodash/once"
 import debug from "debug"
 
-import Util, { headers, searchParameters } from "./util"
+import Util, { headers } from "./util"
 import Locale from "./locale"
 import Organization from "./organization"
 import Customer from "./customer"
 import Checkin from "./checkin"
 import Sales from "./sales"
 import MagicSocket from "./socket"
+import { ofetch, type $Fetch } from "ofetch"
 
 /** @deprecated todo: move to util */
 export const _log = debug("openmagicline")
@@ -22,8 +23,10 @@ export class Openmagicline {
   protected log: debug.Debugger
   protected axios: AxiosInstance
 
+  private fetch: $Fetch
+
   public baseUrl: string
-  public cookies?: string[]
+  public cookies?: string
 
   customer: Customer
   locale: Locale
@@ -46,7 +49,7 @@ export class Openmagicline {
     this.baseUrl = `https://${this.config.gym}.web.magicline.com`
     const prefixUrl = `${this.baseUrl}/rest-api`
 
-    const httpAxiosLog = this.log.extend("http")
+    const httpLogger = this.log.extend("http")
     // eslint-disable-next-line unicorn/prefer-ternary
     if (axios) this.axios = axios
     else {
@@ -55,6 +58,21 @@ export class Openmagicline {
         headers: headers(this),
       })
     }
+
+    this.fetch = ofetch.create({
+      baseURL: prefixUrl,
+      headers: headers(this),
+      onRequest: ({ options }) => {
+        if (this.cookies) options.headers.set("cookie", this.cookies)
+      },
+      onResponse: ({ response, options, request }) => {
+        let logPrefix = `[${options.method}](${response.status}) `
+        logPrefix += request
+        if (response.status > 200) logPrefix += `\n${response._data}`
+
+        httpLogger(logPrefix)
+      },
+    })
 
     this.axios.interceptors.request.use(config => {
       if (this.cookies) config.headers.cookie = this.cookies
@@ -65,7 +83,7 @@ export class Openmagicline {
       log += response.config.url
       if (response.status > 200) log += `\n${response.data}`
 
-      httpAxiosLog(log)
+      httpLogger(log)
       return response
     })
 
@@ -84,13 +102,13 @@ export class Openmagicline {
     this.socket = unitID => new MagicSocket(this, unitID)
   }
 
-  private _login = async (cookies?: string[]): Promise<Openmagicline> => {
+  private _login = async (cookies?: string) => {
     if (cookies) {
       this.cookies = cookies
       this.login = once(this._login)
 
       if (await this.util.testLogin()) {
-        return this
+        return
       } else {
         this.cookies = undefined
         throw new Error("invalid token")
@@ -102,16 +120,25 @@ export class Openmagicline {
       if (!username || !password)
         throw new Error("username and password need to be set when cookies aren't provided")
 
-      const response = await this.axios.post(
-        "login",
-        searchParameters({ username, password, client: "webclient" }),
-        // @ts-expect-error i am too lazy to fix these types ngl
-        { baseURL: this.baseUrl, skipAuthRefresh: true }
-      )
+      // const response = await this.axios.post(
+      //   "login",
+      //   searchParameters({ username, password, client: "webclient" }),
+      //   // @ts-expect-error i am too lazy to fix these types ngl
+      //   { baseURL: this.baseUrl, skipAuthRefresh: true }
+      // )
+
+      const response = await ofetch.raw("/login", {
+        method: "POST",
+        query: { username, password, client: "webclient" },
+        baseURL: this.baseUrl,
+      })
 
       this.login = once(this._login)
 
-      this.cookies = response.headers["set-cookie"]
+      const cookies = response.headers.get("set-cookie")
+      if (!cookies) throw new Error("no login cookies returned")
+
+      this.cookies = cookies
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error_: any) {
       this.cookies = undefined
@@ -121,8 +148,6 @@ export class Openmagicline {
         : error_
       throw error
     }
-
-    return this
   }
 
   /**

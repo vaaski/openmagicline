@@ -48,33 +48,36 @@ export default class Util {
   }
 }
 
-type AxiosHeaders = Record<string, string>
-export const headers = (mgl: mgl): AxiosHeaders => {
+export const headers = (mgl: mgl): HeadersInit => {
   const u = new URL(mgl.baseUrl)
 
-  const returnValue: AxiosHeaders = {
-    authority: u.hostname,
-    "sec-ch-ua": `"Google Chrome";v="107", "Chromium";v="107", "Not=A?Brand";v="24"`,
-    accept: `application/json, text/javascript, */*; q=0.01`,
-    "x-requested-with": `XMLHttpRequest`,
-    "sec-ch-ua-mobile": `?0`,
-    "user-agent": `Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36`,
-    origin: u.href,
-    "sec-fetch-site": `same-origin`,
-    "sec-fetch-mode": `cors`,
-    "sec-fetch-dest": `empty`,
-    referer: u.href,
-    "accept-language": `en-CA,en-US;q=0.9,en;q=0.8,de-DE;q=0.7,de;q=0.6,en-GB;q=0.5`,
+  // prettier-ignore
+  const returnValue: HeadersInit = {
+    "accept-language": "en-US,en;q=0.5",
+    "accept": "application/json, text/javascript, */*; q=0.01",
+    "authority": u.hostname,
+    "origin": u.href,
+    "priority": "u=1, i",
+    "referer": u.href,
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": '"macOS"',
+    "sec-ch-ua": '"Brave";v="129", "Not=A?Brand";v="8", "Chromium";v="129"',
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "sec-gpc": "1",
+    "x-ml-wc-version": "3.399.7",
+    "x-requested-with": "XMLHttpRequest",
   }
 
-  if (mgl.cookies) returnValue.cookie = mgl.cookies.join("")
+  if (mgl.cookies) returnValue.cookie = mgl.cookies
   return returnValue
 }
 
-export const websocketHeaders = (mgl: mgl): AxiosHeaders => {
+export const websocketHeaders = (mgl: mgl): HeadersInit => {
   const u = new URL(mgl.baseUrl)
 
-  const returnValue: AxiosHeaders = {
+  const returnValue: HeadersInit = {
     Pragma: "no-cache",
     Origin: u.href,
     "Accept-Language": "en-CA,en-US;q=0.9,en;q=0.8,de-DE;q=0.7,de;q=0.6,en-GB;q=0.5",
@@ -83,7 +86,7 @@ export const websocketHeaders = (mgl: mgl): AxiosHeaders => {
     "Cache-Control": "no-cache",
   }
 
-  if (mgl.cookies) returnValue.cookie = mgl.cookies.join("")
+  if (mgl.cookies) returnValue.cookie = mgl.cookies
   return returnValue
 }
 
