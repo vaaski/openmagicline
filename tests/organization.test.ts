@@ -1,32 +1,25 @@
-import type { Openmagicline } from "../src"
+import { expect, test } from "bun:test"
+import { getInstance } from "./_setup"
 
-import test from "ava"
-import setup, { delay } from "./_setup"
+const instance = await getInstance()
 
-let instance: Openmagicline
-
-test.before(async () => {
-	instance = await setup()
-})
-test.beforeEach(delay)
-
-test("get permitted", async (t) => {
+test("get permitted", async () => {
 	const data = await instance.organization.permitted()
-	t.truthy(data)
+	expect(data).toBeTruthy()
 })
 
-test("get accountInfo", async (t) => {
+test("get accountInfo", async () => {
 	const data = await instance.organization.accountInfo()
-	t.truthy(data)
+	expect(data).toBeTruthy()
 })
 
-test("get apps", async (t) => {
+test("get apps", async () => {
 	const data = await instance.organization.apps()
-	t.truthy(data)
+	expect(data).toBeTruthy()
 })
 
-test("get apps for specific unitID", async (t) => {
+test("get apps for specific unitID", async () => {
 	const unitID = await instance.util.getDefaultUnitID()
 	const data = await instance.organization.apps(unitID)
-	t.truthy(data)
+	expect(data).toBeTruthy()
 })

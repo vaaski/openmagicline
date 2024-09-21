@@ -39,11 +39,11 @@ export default class MagicSocket {
 			heartbeatOutgoing: 10_000,
 			webSocketFactory: this.webSocketFactory(mgl.baseUrl, unitID),
 
-			onWebSocketError: /* istanbul ignore next */ (error) => {
+			onWebSocketError: (error) => {
 				console.log(error.target._req.res)
 				throw error
 			},
-			onStompError: /* istanbul ignore next */ (error) => {
+			onStompError: (error) => {
 				throw error
 			},
 		})
@@ -77,12 +77,10 @@ export default class MagicSocket {
 	}
 
 	private deactivateAutomatically() {
-		/* istanbul ignore else */
 		if (Object.entries(this.subscriptions).length === 0) this.deactivate()
 		else this.log("there are still active subscriptions, keeping stomp active")
 	}
 
-	/* eslint-disable @typescript-eslint/indent */
 	private subscribeFactory =
 		<T>(topic: string) =>
 		async (callback: Magicline.Socket.CallbackFunction<T>) => {
@@ -98,7 +96,6 @@ export default class MagicSocket {
 			this.subscriptions[topic] = unsubscribe
 			return this.subscriptions[topic]
 		}
-	/* eslint-enable @typescript-eslint/indent */
 
 	onCheckin = this.subscribeFactory<Magicline.Socket.CheckinEvent>(
 		"/user/topic/checkin",

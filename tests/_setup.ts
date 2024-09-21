@@ -56,7 +56,7 @@ const randomFloat = (m = 0, M = 1) => Math.random() * (M - m) + m
  */
 export const delay = (): Promise<void> => {
 	const delay = Math.floor(randomFloat(2e3, 6e3))
-	console.log("delaying by", delay, "ms")
+	console.log("  delaying by", delay, "ms")
 	return new Promise((r) => setTimeout(r, delay))
 }
 

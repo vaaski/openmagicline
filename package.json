@@ -15,7 +15,7 @@
 		"prepublishOnly": "bun run build",
 		"dev": "bun run test --watch",
 		"test": "bun test --preload ./tests/_setup.ts",
-		"test:full": "rimraf token.json && bun run test",
+		"test:full": "rimraf test-cookies.txt && bun run test",
 		"lint": "biome lint --write ",
 		"format": "biome format --write ",
 		"typecheck": "tsc --noEmit && tsc -p tests/tsconfig.json"

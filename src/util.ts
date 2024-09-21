@@ -34,7 +34,6 @@ export default class Util {
 export const headers = (mgl: mgl): HeadersInit => {
 	const u = new URL(mgl.baseUrl)
 
-	// prettier-ignore
 	const returnValue: HeadersInit = {
 		"accept-language": "en-US,en;q=0.5",
 		accept: "application/json, text/javascript, */*; q=0.01",
@@ -61,13 +60,15 @@ export const websocketHeaders = (mgl: mgl) => {
 	const u = new URL(mgl.baseUrl)
 
 	const returnValue: Record<string, string> = {
-		Pragma: "no-cache",
-		Origin: u.href,
-		"Accept-Language":
-			"en-CA,en-US;q=0.9,en;q=0.8,de-DE;q=0.7,de;q=0.6,en-GB;q=0.5",
-		"User-Agent":
-			"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
-		"Cache-Control": "no-cache",
+		origin: u.href,
+		"accept-language": "en-US,en;q=0.9,de;q=0.8",
+		"cache-control": "no-cache",
+		pragma: "no-cache",
+		"sec-gpc": "1",
+		"sec-websocket-extensions": "permessage-deflate; client_max_window_bits",
+		"sec-websocket-key": "vgZeA5PhZ1K9a7Ec77u1aQ==",
+		"sec-websocket-protocol": "v10.stomp, v11.stomp, v12.stomp",
+		"sec-websocket-version": "13",
 	}
 
 	if (mgl.cookies) returnValue.cookie = mgl.cookies

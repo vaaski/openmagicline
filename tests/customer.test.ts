@@ -1,9 +1,9 @@
-import type { Openmagicline } from "../src"
+import type { Magicline } from "../types"
 
-import test from "ava"
-import setup, { delay } from "./_setup"
+import { expect, test } from "bun:test"
+import { getInstance } from "./_setup"
 
-let instance: Openmagicline
+const instance = await getInstance()
 
 const TEST_CUSTOMER = Number.parseInt(
 	process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0",
@@ -12,63 +12,58 @@ const TEST_FACILITY = Number.parseInt(
 	process.env.OPENMAGICLINE_TEST_FACILITY ?? "0",
 )
 
-test.before(async () => {
-	instance = await setup()
-})
-test.beforeEach(delay)
-
-test("search for customers", async (t) => {
+test("search for customers", async () => {
 	const result = await instance.customer.search("e", {
 		facility: TEST_FACILITY,
 	})
-	t.truthy(result.length)
-	t.truthy(result[0].firstname)
-	t.truthy(result[0].databaseId)
+	expect(result.length).toBeTruthy()
+	expect(result[0].firstname).toBeTruthy()
+	expect(result[0].databaseId).toBeTruthy()
 })
 
-test("get cards of a customer", async (t) => {
+test("get cards of a customer", async () => {
 	const result = await instance.customer.getCards(TEST_CUSTOMER)
-	t.truthy(result.length)
-	t.truthy(result[0].databaseId)
-	t.truthy(result[0].uid)
+	expect(result.length).toBeTruthy()
+	expect(result[0].databaseId).toBeTruthy()
+	expect(result[0].uid).toBeTruthy()
 })
 
-test("get contracts of a customer", async (t) => {
-	const result = await instance.customer.contract(TEST_CUSTOMER)
-	t.truthy(result)
-	t.truthy(Array.isArray(result))
+test("get contracts of a customer", async () => {
+	const result = await instance.customer.getContracts(TEST_CUSTOMER)
+	expect(result).toBeTruthy()
+	expect(Array.isArray(result)).toBeTruthy()
 
 	if (result.length > 0) {
-		t.truthy(result.length)
-		t.truthy(result[0].databaseId)
-		t.truthy(result[0].rateName)
+		expect(result.length).toBeTruthy()
+		expect(result[0].databaseId).toBeTruthy()
+		expect(result[0].rateName).toBeTruthy()
 	}
 })
 
-test("get checkin conditions", async (t) => {
+test("get checkin conditions", async () => {
 	const conditions = await instance.customer.checkinConditions(
 		TEST_CUSTOMER,
 		TEST_FACILITY,
 	)
-	t.true(Array.isArray(conditions))
+	expect(Array.isArray(conditions)).toBeTrue()
 })
 
-test("get customer benefits", async (t) => {
+test("get customer benefits", async () => {
 	const benefits = await instance.customer.benefits(TEST_CUSTOMER)
-	t.true(Array.isArray(benefits))
+	expect(Array.isArray(benefits)).toBeTrue()
 })
 
-test("get customer detailed balance", async (t) => {
+test("get customer detailed balance", async () => {
 	const balance = await instance.customer.detailedBalance(TEST_CUSTOMER)
 
-	t.false(Number.isNaN(balance.databaseId))
-	t.false(Number.isNaN(balance.consumptionCreditBalance))
-	t.false(Number.isNaN(balance.debtClaimBalance))
-	t.false(Number.isNaN(balance.debtClaimBalanceWithoutLaterSale))
-	t.false(Number.isNaN(balance.laterSaleBalance))
-	t.false(Number.isNaN(balance.paymentBalance))
-	t.false(Number.isNaN(balance.transferBalance))
-	t.false(Number.isNaN(balance.totalWithoutConsumptionCredit))
+	expect(Number.isNaN(balance.databaseId)).toBeFalse()
+	expect(Number.isNaN(balance.consumptionCreditBalance)).toBeFalse()
+	expect(Number.isNaN(balance.debtClaimBalance)).toBeFalse()
+	expect(Number.isNaN(balance.debtClaimBalanceWithoutLaterSale)).toBeFalse()
+	expect(Number.isNaN(balance.laterSaleBalance)).toBeFalse()
+	expect(Number.isNaN(balance.paymentBalance)).toBeFalse()
+	expect(Number.isNaN(balance.transferBalance)).toBeFalse()
+	expect(Number.isNaN(balance.totalWithoutConsumptionCredit)).toBeFalse()
 })
 
 test.todo("add customer card")
