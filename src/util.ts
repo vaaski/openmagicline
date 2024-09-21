@@ -74,10 +74,10 @@ export const headers = (mgl: mgl): HeadersInit => {
   return returnValue
 }
 
-export const websocketHeaders = (mgl: mgl): HeadersInit => {
+export const websocketHeaders = (mgl: mgl) => {
   const u = new URL(mgl.baseUrl)
 
-  const returnValue: HeadersInit = {
+  const returnValue: Record<string, string> = {
     Pragma: "no-cache",
     Origin: u.href,
     "Accept-Language": "en-CA,en-US;q=0.9,en;q=0.8,de-DE;q=0.7,de;q=0.6,en-GB;q=0.5",
