@@ -91,12 +91,10 @@ export class Openmagicline {
       this.cookies = cookies
       this.login = once(this._login)
 
-      if (await this.util.testLogin()) {
-        return
-      } else {
-        this.cookies = undefined
-        throw new Error("invalid token")
-      }
+      if (await this.util.testLogin()) return
+
+      this.cookies = undefined
+      throw new Error("invalid token")
     }
 
     const { username, password } = this.config
