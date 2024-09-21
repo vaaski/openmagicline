@@ -1,32 +1,13 @@
-import type { AxiosInstance } from "axios"
-import type { Openmagicline as mgl } from "."
+import type { $Fetch } from "ofetch"
 
+import type { Openmagicline as mgl } from "."
 import type { unitID } from "../types"
 
 import FormData from "form-data"
 import { DEFAULT_UNIT_ID } from "./constants"
 
-//? this was for checkin slots, which i don't currently use.
-// /**
-//  * Just like the native `Date` but with a localized ISOString method `toLocalISOString`.
-//  *
-//  * Magicline seems to use something like this.
-//  */
-// export class mDate extends Date {
-//   /**
-//    * @returns {string} Date as a string value in ISO format for the local Timezone.
-//    */
-//   toLocalISOString(): string {
-//     const offset = this.getTimezoneOffset() * 60e3
-//     const localTime = new Date(this.getTime() - offset)
-//     const iso = localTime.toISOString()
-
-//     return iso.slice(0, -1)
-//   }
-// }
-
 export default class Util {
-  constructor(private axios: AxiosInstance, private mgl: mgl) {}
+  constructor(private fetch: $Fetch, private mgl: mgl) {}
 
   async getDefaultUnitID(): Promise<unitID> {
     const data = await this.mgl.organization.permitted()

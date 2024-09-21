@@ -29,16 +29,25 @@ export class Openmagicline {
   public cookies?: string
 
   customer: Customer
+
+  /** get locale information */
   locale: Locale
+
+  /** get organization information */
   organization: Organization
+
   /** everything related to the checkin process */
   checkin: Checkin
+
   /** miscellaneous helpers and thingies */
   util: Util
+
   /** everything related to retail sales (magicline calls this disposal in some places) */
   sales: Sales
+
   /** reference to this.sales */
   disposal: Sales
+
   /** event handler for magiclines websockets */
   socket: (unitID: unitID) => MagicSocket
 
@@ -93,10 +102,10 @@ export class Openmagicline {
     })
 
     this.customer = new Customer(this.axios, this)
-    this.locale = new Locale(this.axios)
+    this.locale = new Locale(this.fetch)
     this.organization = new Organization(this.axios, this)
     this.checkin = new Checkin(this.axios, this)
-    this.util = new Util(this.axios, this)
+    this.util = new Util(this.fetch, this)
     this.sales = new Sales(this.axios, this)
     this.disposal = this.sales
     this.socket = unitID => new MagicSocket(this, unitID)
@@ -115,39 +124,23 @@ export class Openmagicline {
       }
     }
 
-    try {
-      const { username, password } = this.config
-      if (!username || !password)
-        throw new Error("username and password need to be set when cookies aren't provided")
-
-      // const response = await this.axios.post(
-      //   "login",
-      //   searchParameters({ username, password, client: "webclient" }),
-      //   // @ts-expect-error i am too lazy to fix these types ngl
-      //   { baseURL: this.baseUrl, skipAuthRefresh: true }
-      // )
-
-      const response = await ofetch.raw("/login", {
-        method: "POST",
-        query: { username, password, client: "webclient" },
-        baseURL: this.baseUrl,
-      })
-
-      this.login = once(this._login)
-
-      const cookies = response.headers.get("set-cookie")
-      if (!cookies) throw new Error("no login cookies returned")
-
-      this.cookies = cookies
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error_: any) {
-      this.cookies = undefined
-
-      const error = error_?.response?.data?.error_description
-        ? new Error(error_.response.data.error_description)
-        : error_
-      throw error
+    const { username, password } = this.config
+    if (!username || !password) {
+      throw new Error("username and password need to be set when cookies aren't provided")
     }
+
+    const response = await ofetch.raw("/login", {
+      method: "POST",
+      query: { username, password, client: "webclient" },
+      baseURL: this.baseUrl,
+    })
+
+    this.login = once(this._login)
+
+    const newCookies = response.headers.get("set-cookie")
+    if (!newCookies) throw new Error("no login cookies returned")
+
+    this.cookies = newCookies
   }
 
   /**

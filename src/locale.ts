@@ -1,17 +1,15 @@
-import type { AxiosInstance } from "axios"
+import type { $Fetch } from "ofetch"
 
 import type { Magicline } from "../types"
 
 export default class Locale {
-  constructor(private axios: AxiosInstance) {}
+  constructor(private fetch: $Fetch) {}
 
-  async currentLocale(): Promise<Magicline.CurrentLocale> {
-    const { data } = await this.axios.get("currentLocale")
-    return data
+  async currentLocale() {
+    return await this.fetch<Magicline.CurrentLocale>("/currentLocale")
   }
 
-  async supportedLocales(): Promise<Magicline.SupportedLocales> {
-    const { data } = await this.axios.get("supportedLocales")
-    return data
+  async supportedLocales() {
+    return await this.fetch<Magicline.SupportedLocales>("/supportedLocales")
   }
 }
