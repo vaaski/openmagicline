@@ -108,7 +108,7 @@ export class Openmagicline {
     this.customer = new Customer(this.fetch, this)
     this.locale = new Locale(this.fetch)
     this.organization = new Organization(this.fetch, this)
-    this.checkin = new Checkin(this.axios, this)
+    this.checkin = new Checkin(this.fetch, this)
     this.util = new Util(this.fetch, this)
     this.sales = new Sales(this.axios, this)
     this.disposal = this.sales

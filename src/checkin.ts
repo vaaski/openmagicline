@@ -1,14 +1,14 @@
-import type { AxiosInstance } from "axios"
-import type { Openmagicline as mgl } from "."
+import type { $Fetch } from "ofetch"
 
+import type { Openmagicline as mgl } from "."
 import type { Magicline, OMGL } from "../types"
 
 import { DEFAULT_UNIT_ID } from "./constants"
 
 export default class Checkin {
-  constructor(private axios: AxiosInstance, private mgl: mgl) {}
+  constructor(private fetch: $Fetch, private mgl: mgl) {}
 
-  defaultListParams: OMGL.Checkin.ListOptions = {
+  private defaultListParams: OMGL.Checkin.ListOptions = {
     organizationUnitId: DEFAULT_UNIT_ID,
     checkouts: false,
     offset: 0,
@@ -22,22 +22,19 @@ export default class Checkin {
    * list all checked-in customers
    * @param options filter, sort, etc.
    */
-  async list(
-    options?: OMGL.Checkin.ListOptions
-  ): Promise<Magicline.Checkin.CheckinList> {
+  list = async (options?: Partial<OMGL.Checkin.ListOptions>) => {
     let organizationUnitId = options?.organizationUnitId
     if (typeof organizationUnitId !== "number") {
       organizationUnitId = await this.mgl.util.getDefaultUnitID()
     }
 
-    const { data } = await this.axios("checkin", {
-      params: {
+    return await this.fetch<Magicline.Checkin.CheckinList>("/checkin", {
+      query: {
         ...this.defaultListParams,
         organizationUnitId,
         ...options,
       },
     })
-    return data
   }
 
   private defaultCheckinParams: OMGL.Checkin.CheckinOptions = {
@@ -52,24 +49,28 @@ export default class Checkin {
     optlock: 0,
     requiredOrganizationUnitId: DEFAULT_UNIT_ID,
   }
+
   /**
    * check-in a customer
    */
-  async checkin(
-    options: OMGL.Checkin.CheckinOptions
-  ): Promise<Magicline.Checkin.CheckinResponse> {
+  checkin = async (
+    options: Partial<OMGL.Checkin.CheckinOptions> &
+      Pick<OMGL.Checkin.CheckinOptions, "fkCustomer">
+  ) => {
     let unitID = options.requiredOrganizationUnitId ?? options.fkOrganizationUnit
     if (typeof unitID !== "number") {
       unitID = await this.mgl.util.getDefaultUnitID()
     }
 
-    const { data } = await this.axios.post("checkin", {
-      ...this.defaultCheckinParams,
-      fkOrganizationUnit: unitID,
-      requiredOrganizationUnitId: unitID,
-      ...options,
+    return await this.fetch<Magicline.Checkin.CheckinResponse>("/checkin", {
+      method: "POST",
+      body: {
+        ...this.defaultCheckinParams,
+        fkOrganizationUnit: unitID,
+        requiredOrganizationUnitId: unitID,
+        ...options,
+      },
     })
-    return data
   }
 
   /**
@@ -77,31 +78,33 @@ export default class Checkin {
    * @param checkinId the ID of the checkin, **not** the customer ID
    * @param options optional object containing optLockRemote, not sure what it does
    */
-  async checkout(
-    checkinId: number,
-    options?: OMGL.Checkin.CheckoutOptions
-  ): Promise<Magicline.Checkin.CheckinResponse> {
-    const { data } = await this.axios.delete(`checkin/${checkinId}`, {
-      params: { ...options },
+  checkout = async (checkinId: number, options?: OMGL.Checkin.CheckoutOptions) => {
+    return await this.fetch<Magicline.Checkin.CheckinResponse>(`/checkin/${checkinId}`, {
+      method: "DELETE",
+      query: options,
     })
-    return data
   }
 
   private defaultLockerKeyParams: OMGL.Checkin.LockerKeyOptions = {
     databaseId: undefined,
     optlock: 0,
   }
-  async lockerKey(
+  changeLockerKey = async (
     checkinId: number,
     lockerKey: number | string,
     options?: OMGL.Checkin.LockerKeyOptions
-  ): Promise<Magicline.Checkin.LockerKeyResponse> {
-    const { data } = await this.axios.put(`checkin/lockerkey/${checkinId}`, {
-      ...this.defaultLockerKeyParams,
-      checkinId,
-      lockerKey,
-      ...options,
-    })
-    return data
+  ) => {
+    return await this.fetch<Magicline.Checkin.LockerKeyResponse>(
+      `/checkin/lockerkey/${checkinId}`,
+      {
+        method: "PUT",
+        body: {
+          ...this.defaultLockerKeyParams,
+          ...options,
+          checkinId,
+          lockerKey,
+        },
+      }
+    )
   }
 }
