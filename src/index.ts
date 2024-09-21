@@ -1,9 +1,5 @@
 import type { OMGL, unitID } from "../types"
 
-import type { AxiosInstance } from "axios"
-import createAuthRefreshInterceptor from "axios-auth-refresh"
-
-import _axios from "axios"
 import once from "lodash/once"
 import debug from "debug"
 
@@ -16,12 +12,9 @@ import Sales from "./sales"
 import MagicSocket from "./socket"
 import { ofetch, type $Fetch } from "ofetch"
 
-/** @deprecated todo: move to util */
-export const _log = debug("openmagicline")
 export type { OMGL, Magicline, unitID } from "../types"
 export class Openmagicline {
-  protected log: debug.Debugger
-  protected axios: AxiosInstance
+  readonly log: debug.Debugger
 
   private fetch: $Fetch
 
@@ -52,22 +45,13 @@ export class Openmagicline {
   socket: (unitID: unitID) => MagicSocket
 
   // TODO: check version and warn if openmagicline is outdated
-  constructor(private config: OMGL.Config, axios?: AxiosInstance) {
-    this.log = _log
+  constructor(private config: OMGL.Config) {
+    this.log = debug("openmagicline")
 
     this.baseUrl = `https://${this.config.gym}.web.magicline.com`
     const prefixUrl = `${this.baseUrl}/rest-api`
 
-    const axiosLogger = this.log.extend("axios")
     const ofetchLogger = this.log.extend("fetch")
-    // eslint-disable-next-line unicorn/prefer-ternary
-    if (axios) this.axios = axios
-    else {
-      this.axios = _axios.create({
-        baseURL: prefixUrl,
-        headers: headers(this),
-      })
-    }
 
     this.fetch = ofetch.create({
       baseURL: prefixUrl,
@@ -87,23 +71,10 @@ export class Openmagicline {
       },
     })
 
-    this.axios.interceptors.request.use(config => {
-      if (this.cookies) config.headers.cookie = this.cookies
-      return config
-    })
-    this.axios.interceptors.response.use(response => {
-      let log = `[${response.config.method}](${response.status}) `
-      log += response.config.url
-      if (response.status > 200) log += `\n${response.data}`
-
-      axiosLogger(log)
-      return response
-    })
-
-    createAuthRefreshInterceptor(this.axios, () => {
-      console.log("request failed, refreshing token")
-      return this.login()
-    })
+    // createAuthRefreshInterceptor(this.axios, () => {
+    //   console.log("request failed, refreshing token")
+    //   return this.login()
+    // })
 
     this.customer = new Customer(this.fetch, this)
     this.locale = new Locale(this.fetch)

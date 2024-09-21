@@ -2,8 +2,8 @@ import type { Openmagicline as mgl } from "."
 
 import type { unitID } from "../types"
 import type { Magicline } from "."
+import type { Debugger } from "debug"
 
-import { _log } from "."
 import { Client } from "@stomp/stompjs"
 import { websocketHeaders } from "./util"
 
@@ -11,7 +11,7 @@ import WebSocket from "ws"
 
 export default class MagicSocket {
   private client: Client
-  private log = _log.extend("socket")
+  private log: Debugger
 
   public isActive: false | Promise<unknown> = false
 
@@ -28,6 +28,8 @@ export default class MagicSocket {
   }
 
   constructor(private mgl: mgl, unitID: unitID) {
+    this.log = this.mgl.log.extend("socket")
+
     this.client = new Client({
       debug: this.log,
       heartbeatIncoming: 10_000,
