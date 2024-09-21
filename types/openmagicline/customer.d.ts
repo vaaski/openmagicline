@@ -4,55 +4,55 @@ export type CustomerID = number
 export type AccessIdentificationID = number
 
 export interface SearchOptions {
-  facility?: unitID
+  facility: unitID
   /**
    * searchInAddress
    * @default false
    */
-  searchInAddress?: boolean
+  searchInAddress: boolean
   /**
    * searchInBankAccount
    * @default false
    */
-  searchInBankAccount?: boolean
+  searchInBankAccount: boolean
   /**
    * searchInCardNumber
    * @default false
    */
-  searchInCardNumber?: boolean
+  searchInCardNumber: boolean
   /**
    * searchInCustomerNumber
    * @default true
    */
-  searchInCustomerNumber?: boolean
+  searchInCustomerNumber: boolean
   /**
    * searchInLockerKey
    * @default false
    */
-  searchInLockerKey?: boolean
+  searchInLockerKey: boolean
   /**
    * searchInName
    * @default true
    */
-  searchInName?: boolean
+  searchInName: boolean
   /**
    * searchInPurchasedContingentCode
    * @default false
    */
-  searchInPurchasedContingentCode?: boolean
+  searchInPurchasedContingentCode: boolean
   /**
    * showAllFacilities
    * @default true
    */
-  showAllFacilities?: boolean
+  showAllFacilities: boolean
   /**
    * showCheckedIn
    * @default false
    */
-  showCheckedIn?: boolean
+  showCheckedIn: boolean
   /**
    * showOnlyMembers
    * @default false
    */
-  showOnlyMembers?: boolean
+  showOnlyMembers: boolean
 }

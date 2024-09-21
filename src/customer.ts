@@ -1,12 +1,12 @@
-import type { AxiosInstance } from "axios"
+import type { $Fetch } from "ofetch"
 
 import type { Magicline, OMGL } from "../types"
 import type { Openmagicline as mgl } from "."
 
 export default class Customer {
-  constructor(private axios: AxiosInstance, private mgl: mgl) {}
+  constructor(private fetch: $Fetch, private mgl: mgl) {}
 
-  defaultSearchOptions: Required<OMGL.Customer.SearchOptions> = {
+  private defaultSearchOptions: OMGL.Customer.SearchOptions = {
     facility: 0,
     searchInName: true,
     searchInCustomerNumber: true,
@@ -20,20 +20,32 @@ export default class Customer {
     showOnlyMembers: false,
   }
 
-  async search(searchString: string, options?: OMGL.Customer.SearchOptions) {
-    const { data } = await this.axios.post("customersearch", {
-      ...this.defaultSearchOptions,
-      ...options,
-      searchString,
+  /**
+   * Search for customers.
+   *
+   * You will probably want to set `facility` to the unitID of the gym.
+   */
+  public search = async (
+    searchString: string,
+    options?: Partial<OMGL.Customer.SearchOptions>
+  ) => {
+    return await this.fetch<Magicline.Customer.SearchedCustomer[]>("/customersearch", {
+      method: "POST",
+      body: {
+        ...this.defaultSearchOptions,
+        ...options,
+        searchString,
+      },
     })
-
-    return data as Magicline.Customer.SearchedCustomer[]
   }
 
-  async getCards(customerID: OMGL.Customer.CustomerID) {
-    const { data } = await this.axios(`customer/${customerID}/accessidentification`)
-
-    return data as Magicline.Customer.AccessIdentification[]
+  /**
+   * Get the cards of a customer.
+   */
+  getCards = async (customerID: OMGL.Customer.CustomerID) => {
+    return await this.fetch<Magicline.Customer.AccessIdentification[]>(
+      `/customer/${customerID}/accessidentification`
+    )
   }
 
   /**
@@ -41,12 +53,10 @@ export default class Customer {
    * @param customerId customer id
    * @param isActive get only active contracts (default: `true`)
    */
-  contract = async (customerId: OMGL.Customer.CustomerID, isActive = true) => {
-    const { data } = await this.axios.get("contract", {
-      params: { customerId, isActive },
+  getContracts = async (customerId: OMGL.Customer.CustomerID, isActive = true) => {
+    return await this.fetch<Magicline.Customer.Contract[]>("/contract", {
+      query: { customerId, isActive },
     })
-
-    return data as Magicline.Customer.Contract[]
   }
 
   checkinConditions = async (customerId: number, organizationUnitId?: number) => {
@@ -54,11 +64,12 @@ export default class Customer {
       organizationUnitId = await this.mgl.util.getDefaultUnitID()
     }
 
-    const { data } = await this.axios.get(`customer/${customerId}/conditions/checkin`, {
-      params: { organizationUnitId },
-    })
-
-    return data as Magicline.Customer.CheckinCondition[]
+    return await this.fetch<Magicline.Customer.CheckinCondition[]>(
+      `/customer/${customerId}/conditions/checkin`,
+      {
+        query: { organizationUnitId },
+      }
+    )
   }
 
   benefits = async (
@@ -67,16 +78,16 @@ export default class Customer {
   ) => {
     const returnList: Magicline.Customer.Benefit[] = []
 
-    if (active === true || active === "both") {
-      const { data } = await this.axios.get("benefitaccount", {
-        params: { customerId, active: true },
+    if (active === "both" || active === true) {
+      const data = await this.fetch<Magicline.Customer.Benefit[]>("/benefitaccount", {
+        query: { customerId, active: true },
       })
       returnList.push(...data)
     }
 
-    if (active === false || active === "both") {
-      const { data } = await this.axios.get("benefitaccount", {
-        params: { customerId, active: false },
+    if (active === "both" || active === false) {
+      const data = await this.fetch<Magicline.Customer.Benefit[]>("/benefitaccount", {
+        query: { customerId, active: false },
       })
       returnList.push(...data)
     }
@@ -85,22 +96,8 @@ export default class Customer {
   }
 
   detailedBalance = async (customerId: OMGL.Customer.CustomerID) => {
-    const { data } = await this.axios.get(`customer/${customerId}/balance/detailed`)
-
-    return data as Magicline.Customer.DetailedBalance
+    return await this.fetch<Magicline.Customer.DetailedBalance>(
+      `/customer/${customerId}/balance/detailed`
+    )
   }
-
-  // todo: implement card methods
-  //? removed until more card methods are implemented
-  // removeCard(
-  //   customerID: Openmagicline.Customer.CustomerID,
-  //   AccessIdentificationID: Openmagicline.Customer.AccessIdentificationID
-  // ): Promise<Magicline.ErrorOrSuccess> {
-  //   return this.got(`customer/${customerID}/accessidentification/${AccessIdentificationID}`, {
-  //     method: "DELETE",
-  //     searchParams: {
-  //       optLockRemote: 0,
-  //     },
-  //   }).json()
-  // }
 }

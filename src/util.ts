@@ -12,7 +12,6 @@ export default class Util {
   async getDefaultUnitID(): Promise<unitID> {
     const data = await this.mgl.organization.permitted()
 
-    /* istanbul ignore next */
     return data.listChildren[0].databaseId ?? DEFAULT_UNIT_ID
   }
 

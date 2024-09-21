@@ -53,12 +53,13 @@ export class Openmagicline {
 
   // TODO: check version and warn if openmagicline is outdated
   constructor(private config: OMGL.Config, axios?: AxiosInstance) {
-    this.log = _log.extend(config.gym)
+    this.log = _log
 
     this.baseUrl = `https://${this.config.gym}.web.magicline.com`
     const prefixUrl = `${this.baseUrl}/rest-api`
 
-    const httpLogger = this.log.extend("http")
+    const axiosLogger = this.log.extend("axios")
+    const ofetchLogger = this.log.extend("fetch")
     // eslint-disable-next-line unicorn/prefer-ternary
     if (axios) this.axios = axios
     else {
@@ -71,15 +72,18 @@ export class Openmagicline {
     this.fetch = ofetch.create({
       baseURL: prefixUrl,
       headers: headers(this),
+      referrer: prefixUrl,
       onRequest: ({ options }) => {
         if (this.cookies) options.headers.set("cookie", this.cookies)
       },
       onResponse: ({ response, options, request }) => {
-        let logPrefix = `[${options.method}](${response.status}) `
-        logPrefix += request
-        if (response.status > 200) logPrefix += `\n${response._data}`
+        let logString = `[${options.method ?? "GET"}](${response.status}) `
 
-        httpLogger(logPrefix)
+        if (typeof request === "string") {
+          logString += request.replace(prefixUrl, "")
+        }
+
+        ofetchLogger(logString)
       },
     })
 
@@ -92,7 +96,7 @@ export class Openmagicline {
       log += response.config.url
       if (response.status > 200) log += `\n${response.data}`
 
-      httpLogger(log)
+      axiosLogger(log)
       return response
     })
 
@@ -101,7 +105,7 @@ export class Openmagicline {
       return this.login()
     })
 
-    this.customer = new Customer(this.axios, this)
+    this.customer = new Customer(this.fetch, this)
     this.locale = new Locale(this.fetch)
     this.organization = new Organization(this.fetch, this)
     this.checkin = new Checkin(this.axios, this)
