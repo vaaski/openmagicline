@@ -1,9 +1,0 @@
-{
-	"ext": "ts, json",
-	"events": {
-		"start": "node -e console.clear()"
-	},
-	"env": {
-		"DEBUG": "openmagicline*"
-	}
-}

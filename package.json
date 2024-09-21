@@ -11,14 +11,11 @@
 		"url": "https://github.com/vaaski/openmagicline.git"
 	},
 	"scripts": {
-		"start": "node -r dotenv/config dist",
 		"build": "tsup",
 		"prepublishOnly": "bun run build",
 		"dev": "bun run test --watch",
 		"test": "bun test --preload ./tests/_setup.ts",
-		"test:full": "rimraf token.json && npm test",
-		"test:watch": "nodemon -w src -w tests -w types --exec npm test",
-		"coverage": "live-server coverage/lcov-report --port=8069",
+		"test:full": "rimraf token.json && bun run test",
 		"lint": "biome lint --write ",
 		"format": "biome format --write ",
 		"typecheck": "tsc --noEmit && tsc -p tests/tsconfig.json"
@@ -32,11 +29,7 @@
 		"@types/node": "^20",
 		"@types/ws": "^7.4.7",
 		"ava": "^5.1.0",
-		"dotenv": "^10.0.0",
-		"eslint": "^8.28.0",
-		"fs-jetpack": "^4.1.0",
 		"nodemon": "^2.0.7",
-		"nyc": "^15.1.0",
 		"rimraf": "^3.0.2",
 		"tsup": "^6.6.3",
 		"tsx": "^3.12.3",
