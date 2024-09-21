@@ -1,23 +1,20 @@
-import type { AxiosInstance } from "axios"
+import type { $Fetch } from "ofetch"
 import type { Openmagicline as mgl } from "."
 
 import type { Magicline, OMGL } from "../types"
 
 export default class Sales {
-  constructor(private axios: AxiosInstance, private mgl: mgl) {}
+  constructor(private fetch: $Fetch, private mgl: mgl) {}
 
-  async products(
-    options?: OMGL.Sales.ProductOptions
-  ): Promise<Magicline.Sales.ProductOverview> {
+  products = async (options?: OMGL.Sales.ProductOptions) => {
     const organizationUnitId =
       options?.organizationUnitId ?? (await this.mgl.util.getDefaultUnitID())
 
-    const { data } = await this.axios("sales/productoverview", {
-      params: {
+    return await this.fetch<Magicline.Sales.ProductOverview>("/sales/productoverview", {
+      query: {
         organizationUnitId,
         ...options,
       },
     })
-    return data
   }
 }

@@ -110,7 +110,7 @@ export class Openmagicline {
     this.organization = new Organization(this.fetch, this)
     this.checkin = new Checkin(this.fetch, this)
     this.util = new Util(this.fetch, this)
-    this.sales = new Sales(this.axios, this)
+    this.sales = new Sales(this.fetch, this)
     this.disposal = this.sales
     this.socket = unitID => new MagicSocket(this, unitID)
   }
