@@ -14,7 +14,7 @@
 		"start": "node -r dotenv/config dist",
 		"build": "tsup",
 		"prepublishOnly": "bun run build",
-		"dev": "nodemon",
+		"dev": "bun run test --watch",
 		"test": "bun test --preload ./tests/_setup.ts",
 		"test:full": "rimraf token.json && npm test",
 		"test:watch": "nodemon -w src -w tests -w types --exec npm test",
