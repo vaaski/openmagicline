@@ -26,3 +26,10 @@ test("re-authenticates when passing an invalid token but valid username/password
 	expect(instance.cookies).not.toBe(wrongCookies)
 	expect(locale).toBeTruthy()
 })
+
+test("get default unitID", async () => {
+	const instance = new Openmagicline(config)
+	const unitID = await instance.unitID
+
+	expect(typeof unitID === "number").toBeTrue()
+})

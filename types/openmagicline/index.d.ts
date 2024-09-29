@@ -1,3 +1,5 @@
+import type { unitID } from ".."
+
 export * as Customer from "./customer"
 export * as Checkin from "./checkin"
 export * as Sales from "./sales"
@@ -18,5 +20,5 @@ export interface Config {
 	 * login password, making a dedicated account for API access is recommended.
 	 */
 	password?: string
-	// unitID?: number
+	unitID?: unitID
 }

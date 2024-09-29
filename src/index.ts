@@ -21,6 +21,21 @@ export class Openmagicline {
 	public baseUrl: string
 	public cookies?: string
 
+	#unitID: unitID | undefined
+	get unitID() {
+		if (this.#unitID === undefined) {
+			const promise = this.util.getDefaultUnitID()
+
+			promise.then((unitID) => {
+				this.#unitID = unitID
+			})
+
+			return promise
+		}
+
+		return this.#unitID
+	}
+
 	customer: Customer
 
 	/** get locale information */
@@ -45,6 +60,7 @@ export class Openmagicline {
 	// socket: (unitID: unitID) => MagicSocket
 
 	// TODO: check version and warn if openmagicline is outdated
+	// TODO: save orgID per instance to avoid re-checking it
 	constructor(private config: OMGL.Config) {
 		this.log = debug("openmagicline")
 
@@ -87,6 +103,8 @@ export class Openmagicline {
 		this.sales = new Sales(this.fetch, this)
 		this.disposal = this.sales
 		// this.socket = (unitID) => new MagicSocket(this, unitID)
+
+		this.#unitID = config.unitID
 	}
 
 	private _login = async (cookies?: string) => {
@@ -119,6 +137,10 @@ export class Openmagicline {
 		if (!newCookies) throw new Error("no login cookies returned")
 
 		this.cookies = newCookies
+
+		if (this.config.unitID === undefined) {
+			this.config.unitID = await this.util.getDefaultUnitID()
+		}
 	}
 
 	/**

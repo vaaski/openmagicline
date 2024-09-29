@@ -72,8 +72,7 @@ export default class Customer {
 		customerId: number,
 		organizationUnitId?: number,
 	) => {
-		const unitID =
-			organizationUnitId ?? (await this.mgl.util.getDefaultUnitID())
+		const unitID = organizationUnitId ?? (await this.mgl.unitID)
 
 		return await this.fetch<Magicline.Customer.CheckinCondition[]>(
 			`/customer/${customerId}/conditions/checkin`,

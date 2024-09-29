@@ -4,7 +4,7 @@ import { readFile, writeFile } from "node:fs/promises"
 
 import { beforeEach } from "bun:test"
 
-import { Openmagicline } from "../src"
+import { Openmagicline, type OMGL } from "../src"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -21,7 +21,7 @@ const saveToken = async (token: string) => {
 	return await writeFile(tokenPath, token)
 }
 
-export const config = {
+export const config: OMGL.Config = {
 	gym: process.env.OPENMAGICLINE_GYM ?? "",
 	username: process.env.OPENMAGICLINE_USERNAME ?? "",
 	password: process.env.OPENMAGICLINE_PASSWORD ?? "",

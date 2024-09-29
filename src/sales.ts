@@ -11,7 +11,7 @@ export default class Sales {
 
 	products = async (options?: OMGL.Sales.ProductOptions) => {
 		const organizationUnitId =
-			options?.organizationUnitId ?? (await this.mgl.util.getDefaultUnitID())
+			options?.organizationUnitId ?? (await this.mgl.unitID)
 
 		return await this.fetch<Magicline.Sales.ProductOverview>(
 			"/sales/productoverview",

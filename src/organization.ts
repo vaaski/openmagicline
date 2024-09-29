@@ -18,8 +18,7 @@ export default class Organization {
 	}
 
 	async apps(organizationUnitId?: unitID) {
-		const unitID =
-			organizationUnitId ?? (await this.mgl.util.getDefaultUnitID())
+		const unitID = organizationUnitId ?? (await this.mgl.unitID)
 
 		return await this.fetch<Magicline.App[]>("/app", {
 			query: { organizationUnitId: unitID },

@@ -34,7 +34,7 @@ export default class Checkin {
 	list = async (options?: Partial<OMGL.Checkin.ListOptions>) => {
 		let organizationUnitId = options?.organizationUnitId
 		if (typeof organizationUnitId !== "number") {
-			organizationUnitId = await this.mgl.util.getDefaultUnitID()
+			organizationUnitId = await this.mgl.unitID
 		}
 
 		const result = await this.fetch<Magicline.Checkin.CheckinList>("/checkin", {
@@ -75,7 +75,7 @@ export default class Checkin {
 		let unitID =
 			options.requiredOrganizationUnitId ?? options.fkOrganizationUnit
 		if (typeof unitID !== "number") {
-			unitID = await this.mgl.util.getDefaultUnitID()
+			unitID = await this.mgl.unitID
 		}
 
 		return await this.fetch<Magicline.Checkin.CheckinResponse>("/checkin", {
