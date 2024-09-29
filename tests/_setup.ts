@@ -49,15 +49,18 @@ export const getInstance = async () => {
 }
 
 const randomFloat = (m = 0, M = 1) => Math.random() * (M - m) + m
+export const wait = (t: number): Promise<void> => {
+	return new Promise((r) => setTimeout(r, t))
+}
 
 /**
  * it seems that magicline starts to return 429s pretty early.
  * we delay calls randomly by 2-6 seconds to avoid this.
  */
 export const delay = (): Promise<void> => {
-	const delay = Math.floor(randomFloat(2e3, 6e3))
-	console.log("  delaying by", delay, "ms")
-	return new Promise((r) => setTimeout(r, delay))
+	const duration = Math.floor(randomFloat(2e3, 6e3))
+	console.log("  delaying by", duration, "ms")
+	return wait(duration)
 }
 
 beforeEach(delay)

@@ -1,7 +1,7 @@
 import type { Magicline } from "../types"
 
 import { expect, test } from "bun:test"
-import { getInstance } from "./_setup"
+import { getInstance, wait } from "./_setup"
 
 const instance = await getInstance()
 
@@ -12,12 +12,15 @@ const TEST_FACILITY = Number.parseInt(
 	process.env.OPENMAGICLINE_TEST_FACILITY ?? "0",
 )
 
+const TEST_KEY_1 = "openmagicline automated test"
+const TEST_KEY_2 = "openmagicline automated test 2"
+
 let checkin: Magicline.Checkin.CheckinResponse
 let checkinList: Magicline.Checkin.CheckinList
 
 test("check-in a customer", async () => {
 	checkin = await instance.checkin.checkin({
-		lockerKey: "openmagicline automated test",
+		lockerKey: TEST_KEY_1,
 		fkCustomer: TEST_CUSTOMER,
 	})
 	expect(checkin.fkCustomer === TEST_CUSTOMER).toBeTrue()
@@ -30,14 +33,13 @@ test("get checkin list", async () => {
 	expect(typeof checkinList.checkins[0].databaseId === "number").toBeTrue()
 })
 
-const changedTo = "openmagicline automated test 2"
 test("change lockerKey: change key", async () => {
 	const changed = await instance.checkin.changeLockerKey(
 		checkin.databaseId,
-		changedTo,
+		TEST_KEY_2,
 	)
 
-	expect(changed.lockerKey === changedTo).toBeTrue()
+	expect(changed.lockerKey === TEST_KEY_2).toBeTrue()
 	expect(changed.checkinId === checkin.databaseId).toBeTrue()
 })
 
@@ -56,10 +58,24 @@ test("change lockerKey: check key", async () => {
 	)
 	if (!changedCheckin) throw "can't find lockerkey-changed checkin anymore"
 
-	expect(changedCheckin.lockerKey === changedTo).toBeTrue()
+	expect(changedCheckin.lockerKey === TEST_KEY_2).toBeTrue()
 })
 
 test("check-out a customer", async () => {
 	const checkout = await instance.checkin.checkout(checkin.databaseId)
+	expect(checkout.fkCustomer === TEST_CUSTOMER).toBeTrue()
+})
+
+test("check-out by customerID", async () => {
+	checkin = await instance.checkin.checkin({
+		lockerKey: TEST_KEY_1,
+		fkCustomer: TEST_CUSTOMER,
+	})
+	expect(checkin.fkCustomer === TEST_CUSTOMER).toBeTrue()
+	expect(checkin.lockerKey === TEST_KEY_1).toBeTrue()
+
+	wait(500)
+
+	const checkout = await instance.checkin.checkoutByCustomerID(TEST_CUSTOMER)
 	expect(checkout.fkCustomer === TEST_CUSTOMER).toBeTrue()
 })

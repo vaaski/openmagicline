@@ -11,6 +11,12 @@ export default class Checkin {
 		private mgl: mgl,
 	) {}
 
+	#checkinMemberMap = new Map<number, number>()
+	/** map of `customerID` -> `checkinID` */
+	get checkinMemberMap() {
+		return this.#checkinMemberMap
+	}
+
 	private readonly defaultListParams: OMGL.Checkin.ListOptions = {
 		organizationUnitId: DEFAULT_UNIT_ID,
 		checkouts: false,
@@ -31,13 +37,19 @@ export default class Checkin {
 			organizationUnitId = await this.mgl.util.getDefaultUnitID()
 		}
 
-		return await this.fetch<Magicline.Checkin.CheckinList>("/checkin", {
+		const result = await this.fetch<Magicline.Checkin.CheckinList>("/checkin", {
 			query: {
 				...this.defaultListParams,
 				organizationUnitId,
 				...options,
 			},
 		})
+
+		for (const checkin of result.checkins) {
+			this.#checkinMemberMap.set(checkin.customerId, checkin.databaseId)
+		}
+
+		return result
 	}
 
 	private readonly defaultCheckinParams: OMGL.Checkin.CheckinOptions = {
@@ -93,6 +105,19 @@ export default class Checkin {
 				query: options,
 			},
 		)
+	}
+
+	checkoutByCustomerID = async (customerID: number) => {
+		let checkinID = this.#checkinMemberMap.get(customerID)
+
+		if (!checkinID) {
+			await this.list()
+			checkinID = this.#checkinMemberMap.get(customerID)
+		}
+
+		if (!checkinID) throw new Error("customerID not found in checkinMemberMap")
+
+		return this.checkout(checkinID)
 	}
 
 	private readonly defaultLockerKeyParams: OMGL.Checkin.LockerKeyOptions = {
