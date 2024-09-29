@@ -11,6 +11,7 @@ export default class Checkin {
 		private mgl: mgl,
 	) {}
 
+	/** map of `customerID` -> `checkinID` */
 	#checkinMemberMap = new Map<number, number>()
 	/** map of `customerID` -> `checkinID` */
 	get checkinMemberMap() {
