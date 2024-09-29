@@ -2,13 +2,17 @@ import { join, dirname } from "node:path"
 import { fileURLToPath } from "node:url"
 import { readFile, writeFile } from "node:fs/promises"
 
-import { beforeEach } from "bun:test"
+import { afterAll, beforeEach } from "bun:test"
 
 import { Openmagicline, type OMGL } from "../src"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const tokenPath = join(__dirname, "../test-cookies.txt")
+
+const TEST_CUSTOMER = Number.parseInt(
+	process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0",
+)
 
 const readToken = async () => {
 	try {
@@ -64,3 +68,9 @@ export const delay = (): Promise<void> => {
 }
 
 beforeEach(delay)
+afterAll(async () => {
+	await delay()
+
+	const instance = await getInstance()
+	await instance.checkin.checkoutByCustomerID(TEST_CUSTOMER)
+})
