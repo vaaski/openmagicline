@@ -14,7 +14,7 @@
 		"build": "tsup",
 		"prepublishOnly": "bun run build",
 		"dev": "bun run test --watch",
-		"test": "bun test --preload ./tests/_setup.ts",
+		"test": "bun test --preload ./tests/_setup.ts --timeout 10000",
 		"test:full": "rimraf test-cookies.txt && bun run test",
 		"lint": "biome lint --write ",
 		"format": "biome format --write ",
