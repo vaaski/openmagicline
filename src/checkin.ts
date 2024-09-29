@@ -11,7 +11,7 @@ export default class Checkin {
 		private mgl: mgl,
 	) {}
 
-	private defaultListParams: OMGL.Checkin.ListOptions = {
+	private readonly defaultListParams: OMGL.Checkin.ListOptions = {
 		organizationUnitId: DEFAULT_UNIT_ID,
 		checkouts: false,
 		offset: 0,
@@ -40,7 +40,7 @@ export default class Checkin {
 		})
 	}
 
-	private defaultCheckinParams: OMGL.Checkin.CheckinOptions = {
+	private readonly defaultCheckinParams: OMGL.Checkin.CheckinOptions = {
 		customerCardNumber: undefined,
 		customerUUID: "",
 		fkCustomer: 0,
@@ -95,7 +95,7 @@ export default class Checkin {
 		)
 	}
 
-	private defaultLockerKeyParams: OMGL.Checkin.LockerKeyOptions = {
+	private readonly defaultLockerKeyParams: OMGL.Checkin.LockerKeyOptions = {
 		databaseId: undefined,
 		optlock: 0,
 	}

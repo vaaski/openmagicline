@@ -9,7 +9,7 @@ export default class Customer {
 		private mgl: mgl,
 	) {}
 
-	private defaultSearchOptions: OMGL.Customer.SearchOptions = {
+	private readonly defaultSearchOptions: OMGL.Customer.SearchOptions = {
 		facility: 0,
 		searchInName: true,
 		searchInCustomerNumber: true,
