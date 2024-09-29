@@ -10,6 +10,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    concurrency:
+      group: omgl-test
+      cancel-in-progress: false
 
     steps:
       - uses: actions/checkout@v4
