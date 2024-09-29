@@ -111,13 +111,16 @@ export default class Checkin {
 		let checkinID = this.#checkinMemberMap.get(customerID)
 
 		if (!checkinID) {
-			await this.list()
+			await this.list({ maxResults: 100 })
 			checkinID = this.#checkinMemberMap.get(customerID)
 		}
 
 		if (!checkinID) throw new Error("customerID not found in checkinMemberMap")
 
-		return this.checkout(checkinID)
+		const checkout = this.checkout(checkinID)
+		this.#checkinMemberMap.delete(customerID)
+
+		return checkout
 	}
 
 	private readonly defaultLockerKeyParams: OMGL.Checkin.LockerKeyOptions = {
