@@ -1,20 +1,24 @@
-<h1><p align="center">openmagicline</p></h1>
+<h1><p align="center">Openmagicline</p></h1>
 <p align="center">The Magicline API for everybody.</p>
 
-## synopsis
+## Synopsis
 
-I'm working at a gym that has been using [magicline](https://magicline.com) for well over 10 years now.
+I'm working at a gym that has been using [magicline](https://magicline.com) for
+well over a decade now.
 
-When they switched to a completely new web-based interface in about 2016,
+When they switched to a completely new cloud-based web-interface in about 2016,
 using magicline got a lot slower. The new interface not only took a
 significant time to get used to, it also runs considerably slower than
 the previous (native) one. This sucks for an environment where the
 customer expects fast and reliable service.
 
+I build custom software to speed up the workflow, and Openmagicline is the
+adapter that powers it.
+
 Openmagicline is a **reverse-engineered**, **strongly-typed** version of
 magicline's internal API.
 
-## usage
+## Usage
 
 This is far from feature-complete as I only implement the parts I need.
 Feel free to use it, but expect a lot of functionality to be missing.
@@ -33,22 +37,23 @@ await magicline.login()
 await magicline.customer.search("John Doe")
 ```
 
-## features
+## Features
 
 - **Strongly-typed** - All API calls and responses are typed
 - **Authenticates** - Automatically re-authenticates on session expiry
-- **Covered** - [100% test coverage](#testing)
+- **Covered** - Probably close to 100% test coverage
 
-## ideas (contributions welcome)
+## Roadmap
 
-- detect magicline version and warn if openmagicline is outdated
-- improve tests with zod
-- verify API responses with zod
+- Detect magicline version and warn if openmagicline is outdated
+- Improve tests and verify API responses with something like zod
 
-## testing
+## New in v2
 
-I strive for 100% coverage with automated tests using [`ava`](https://npmr.vaa.ski/ava).
-
-This is very useful for rapidly detecting changes in magicline's internal API.
-There will be periodic tests set up using GitHub actions once I consider
-openmagicline stable.
+- Added setting `organizationUnitId` per instance to avoid re-checking it.
+  - This is optional, it'll get the default unitID if not provided.
+- Added checkoutByCustomerID to Checkin class which utilizes a cached map of
+  customerID -> checkinID to avoid having to re-list checkins.
+- Switched to [Bun](https://bun.sh) for package management and testing.
+- Switched to [ofetch](https://npmr.vaa.ski/ofetch) for HTTP requests.
+- Switched to [Biome](https://biomejs.dev) for linting and formatting.
