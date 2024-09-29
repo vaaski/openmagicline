@@ -74,7 +74,7 @@ test("check-out by customerID", async () => {
 	expect(checkin.fkCustomer === TEST_CUSTOMER).toBeTrue()
 	expect(checkin.lockerKey === TEST_KEY_1).toBeTrue()
 
-	wait(500)
+	await wait(500)
 
 	const checkout = await instance.checkin.checkoutByCustomerID(TEST_CUSTOMER)
 	expect(checkout.fkCustomer === TEST_CUSTOMER).toBeTrue()
