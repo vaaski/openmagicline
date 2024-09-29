@@ -42,7 +42,7 @@ export class Openmagicline {
 	disposal: Sales
 
 	/** event handler for magiclines websockets */
-	socket: (unitID: unitID) => MagicSocket
+	// socket: (unitID: unitID) => MagicSocket
 
 	// TODO: check version and warn if openmagicline is outdated
 	constructor(private config: OMGL.Config) {
@@ -84,7 +84,7 @@ export class Openmagicline {
 		this.util = new Util(this.fetch, this)
 		this.sales = new Sales(this.fetch, this)
 		this.disposal = this.sales
-		this.socket = (unitID) => new MagicSocket(this, unitID)
+		// this.socket = (unitID) => new MagicSocket(this, unitID)
 	}
 
 	private _login = async (cookies?: string) => {
