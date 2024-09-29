@@ -16,16 +16,13 @@ test("throws with wrong username/password", async () => {
 	expect(instance.login()).rejects.toThrow()
 })
 
-test.todo(
-	"re-authenticates when passing an invalid token but valid username/password",
-	async () => {
-		const instance = new Openmagicline(config)
-		const wrongCookies = "wrong"
-		instance.cookies = wrongCookies
+test("re-authenticates when passing an invalid token but valid username/password", async () => {
+	const instance = new Openmagicline(config)
+	const wrongCookies = "wrong"
+	instance.cookies = wrongCookies
 
-		const locale = await instance.locale.currentLocale()
+	const locale = await instance.locale.currentLocale()
 
-		expect(instance.cookies).not.toBe(wrongCookies)
-		expect(locale).toBeTruthy()
-	},
-)
+	expect(instance.cookies).not.toBe(wrongCookies)
+	expect(locale).toBeTruthy()
+})

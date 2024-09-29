@@ -69,13 +69,15 @@ export class Openmagicline {
 
 				ofetchLogger(logString)
 			},
-		})
+			onResponseError: async (context) => {
+				if (context.response.status === 401) {
+					this.log("token expired, re-authenticating")
+					await this.login()
 
-		// todo: recreate this
-		// createAuthRefreshInterceptor(this.axios, () => {
-		//   console.log("request failed, refreshing token")
-		//   return this.login()
-		// })
+					context.response = await this.fetch(context.request)
+				}
+			},
+		})
 
 		this.customer = new Customer(this.fetch, this)
 		this.locale = new Locale(this.fetch)
