@@ -3,7 +3,7 @@
 
 ## Synopsis
 
-I'm working at a gym that has been using [magicline](https://magicline.com) for
+I work at a gym that has been using [magicline](https://magicline.com) for
 well over a decade now.
 
 When they switched to a completely new cloud-based web-interface in about 2016,
@@ -23,7 +23,7 @@ magicline's internal API.
 This is far from feature-complete as I only implement the parts I need.
 Feel free to use it, but expect a lot of functionality to be missing.
 
-I am, however, very open to [contributions](#ideas) and this project should be a
+I am, however, very open to [contributions](#roadmap) and this project should be a
 solid starting point for anyone who wants to implement missing functionality.
 
 ```ts
@@ -40,7 +40,7 @@ await magicline.customer.search("John Doe")
 ## Features
 
 - **Strongly-typed** - All API calls and responses are typed
-- **Authenticates** - Automatically re-authenticates on session expiry
+- **Authentication** - Automatically re-authenticates on session expiry
 - **Covered** - Probably close to 100% test coverage
 
 ## Roadmap
