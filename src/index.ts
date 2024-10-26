@@ -57,11 +57,11 @@ export class Openmagicline {
 	disposal: Sales
 
 	/** event handler for magiclines websockets */
-	// socket: (unitID: unitID) => MagicSocket
+	socket: (unitID?: unitID) => Promise<MagicSocket>
 
 	// TODO: check version and warn if openmagicline is outdated
-	// TODO: save orgID per instance to avoid re-checking it
-	constructor(private config: OMGL.Config) {
+	// TODO: remove default unit id
+	constructor(readonly config: OMGL.Config) {
 		this.log = debug("openmagicline")
 
 		this.baseUrl = `https://${this.config.gym}.web.magicline.com`
@@ -102,7 +102,10 @@ export class Openmagicline {
 		this.util = new Util(this.fetch, this)
 		this.sales = new Sales(this.fetch, this)
 		this.disposal = this.sales
-		// this.socket = (unitID) => new MagicSocket(this, unitID)
+		this.socket = async (unitID) => {
+			const _unitID = unitID ?? (await this.unitID)
+			return new MagicSocket(this, _unitID)
+		}
 
 		this.#unitID = config.unitID
 	}

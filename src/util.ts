@@ -57,18 +57,17 @@ export const headers = (mgl: mgl): HeadersInit => {
 }
 
 export const websocketHeaders = (mgl: mgl) => {
-	const u = new URL(mgl.baseUrl)
-
 	const returnValue: Record<string, string> = {
-		origin: u.href,
-		"accept-language": "en-US,en;q=0.9,de;q=0.8",
-		"cache-control": "no-cache",
+		host: `${mgl.config.gym}.web.magicline.com`,
+		connection: "Upgrade",
 		pragma: "no-cache",
-		"sec-gpc": "1",
-		"sec-websocket-extensions": "permessage-deflate; client_max_window_bits",
-		"sec-websocket-key": "vgZeA5PhZ1K9a7Ec77u1aQ==",
-		"sec-websocket-protocol": "v10.stomp, v11.stomp, v12.stomp",
-		"sec-websocket-version": "13",
+		"cache-control": "no-cache",
+		upgrade: "websocket",
+		origin: `https://${mgl.config.gym}.web.magicline.com`,
+		"user-agent":
+			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
+		"accept-encoding": "gzip, deflate, br, zstd",
+		"accept-language": "en-US,en;q=0.9,de;q=0.8",
 	}
 
 	if (mgl.cookies) returnValue.cookie = mgl.cookies
