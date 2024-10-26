@@ -1,12 +1,7 @@
 {
 	"name": "openmagicline",
 	"description": "Magicline API for everybody.",
-	"keywords": [
-		"magicline",
-		"gym",
-		"mysports",
-		"reverse-engineered"
-	],
+	"keywords": ["magicline", "gym", "mysports", "reverse-engineered"],
 	"version": "2.0.0",
 	"main": "dist/index.js",
 	"license": "MIT",
@@ -23,11 +18,9 @@
 		"test:full": "rimraf test-cookies.txt && bun run test",
 		"lint": "biome lint --write ",
 		"format": "biome format --write ",
-		"typecheck": "tsc --noEmit && tsc -p tests/tsconfig.json"
+		"typecheck": "tsc --noEmit & tsc -p tests/tsconfig.json"
 	},
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"devDependencies": {
 		"@biomejs/biome": "1.9.2",
 		"@types/bun": "^1.1.12",
