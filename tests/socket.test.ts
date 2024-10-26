@@ -1,7 +1,7 @@
 import type { Magicline } from "../types"
 
-import { expect, test, afterAll } from "bun:test"
-import { getInstance } from "./_setup"
+import { expect, test } from "bun:test"
+import { delay, getInstance } from "./_setup"
 
 const instance = await getInstance()
 
@@ -13,28 +13,27 @@ const TEST_FACILITY = Number.parseInt(
 )
 
 let checkin: Magicline.Checkin.CheckinResponse
+test("checkin event handler fires", async (done) => {
+	const socket = await instance.socket(TEST_FACILITY)
+	await socket.connected
 
-test.todo("checkin event handler fires", async (done) => {
-	// const socket = instance.socket(TEST_FACILITY)
-	// console.log("before socket.onCheckin")
-	// await socket.onCheckin((data) => {
-	// 	expect(data.payload.fkCustomer === TEST_CUSTOMER).toBeTrue()
-	// 	socket.unsubscribeAll()
-	// 	socket.deactivate()
-	// 	done()
-	// })
-	// console.log("after socket.onCheckin")
-	// // checks if already active returns instantly
-	// await socket.activate()
-	// console.log("checking in")
-	// checkin = await instance.checkin.checkin({
-	// 	fkCustomer: TEST_CUSTOMER,
-	// 	requiredOrganizationUnitId: TEST_FACILITY,
-	// })
+	socket.onCheckin(async (data) => {
+		expect(data.payload.fkCustomer === TEST_CUSTOMER).toBeTrue()
+		socket.close()
+
+		await delay()
+		await instance.checkin.checkout(checkin.databaseId)
+		done()
+	})
+
+	checkin = await instance.checkin.checkin({
+		fkCustomer: TEST_CUSTOMER,
+		requiredOrganizationUnitId: TEST_FACILITY,
+	})
 })
 
 test.todo(
-	"socket unsubscribing deactivates the connection automatically",
+	"socket subscription doesn't fire after unsubscribing",
 	async (done) => {
 		// // eslint-disable-next-line no-async-promise-executor
 		// const socket = instance.socket(TEST_FACILITY)

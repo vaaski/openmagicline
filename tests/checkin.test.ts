@@ -1,7 +1,7 @@
 import type { Magicline } from "../types"
 
-import { expect, test } from "bun:test"
-import { getInstance, wait } from "./_setup"
+import { afterAll, expect, test } from "bun:test"
+import { delay, getInstance, wait } from "./_setup"
 
 const instance = await getInstance()
 
@@ -74,4 +74,15 @@ test("check-out by customerID", async () => {
 
 	const checkout = await instance.checkin.checkoutByCustomerID(TEST_CUSTOMER)
 	expect(checkout.fkCustomer === TEST_CUSTOMER).toBeTrue()
+})
+
+afterAll(async () => {
+	await delay()
+
+	try {
+		const instance = await getInstance()
+		await instance.checkin.checkoutByCustomerID(TEST_CUSTOMER)
+	} catch {
+		// ignore
+	}
 })

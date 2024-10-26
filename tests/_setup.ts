@@ -68,9 +68,3 @@ export const delay = (): Promise<void> => {
 }
 
 beforeEach(delay)
-afterAll(async () => {
-	await delay()
-
-	const instance = await getInstance()
-	await instance.checkin.checkoutByCustomerID(TEST_CUSTOMER)
-})
