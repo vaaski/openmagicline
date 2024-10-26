@@ -17,10 +17,17 @@ const verifyProductOverview = ({
 }: Magicline.Sales.ProductOverview) => {
 	expect(classOfGoodsList.length).toBeTruthy()
 
-	const { productList } = classOfGoodsList[0]
+	const [classOfGoods] = classOfGoodsList
+	if (!classOfGoods) throw new Error("classOfGoods not found")
+
+	const { productList } = classOfGoods
 	expect(productList.length).toBeTruthy()
 
-	const { productVariantList } = productList[0]
+	const [product] = productList
+	if (!product) throw new Error("product not found")
+
+	const { productVariantList } = product
+
 	expect(productVariantList.length).toBeTruthy()
 }
 

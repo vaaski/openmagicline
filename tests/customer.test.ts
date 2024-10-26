@@ -17,15 +17,15 @@ test("search for customers", async () => {
 		facility: TEST_FACILITY,
 	})
 	expect(result.length).toBeTruthy()
-	expect(result[0].firstname).toBeTruthy()
-	expect(result[0].databaseId).toBeTruthy()
+	expect(result[0]?.firstname).toBeTruthy()
+	expect(result[0]?.databaseId).toBeTruthy()
 })
 
 test("get cards of a customer", async () => {
 	const result = await instance.customer.getCards(TEST_CUSTOMER)
 	expect(result.length).toBeTruthy()
-	expect(result[0].databaseId).toBeTruthy()
-	expect(result[0].uid).toBeTruthy()
+	expect(result[0]?.databaseId).toBeTruthy()
+	expect(result[0]?.uid).toBeTruthy()
 })
 
 test("get contracts of a customer", async () => {
@@ -35,8 +35,8 @@ test("get contracts of a customer", async () => {
 
 	if (result.length > 0) {
 		expect(result.length).toBeTruthy()
-		expect(result[0].databaseId).toBeTruthy()
-		expect(result[0].rateName).toBeTruthy()
+		expect(result[0]?.databaseId).toBeTruthy()
+		expect(result[0]?.rateName).toBeTruthy()
 	}
 })
 

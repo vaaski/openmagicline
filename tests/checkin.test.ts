@@ -29,8 +29,8 @@ test("check-in a customer", async () => {
 test("get checkin list", async () => {
 	checkinList = await instance.checkin.list()
 	expect(Array.isArray(checkinList.checkins)).toBeTrue()
-	expect(checkinList.checkins[0].firstname).toBeTruthy()
-	expect(typeof checkinList.checkins[0].databaseId === "number").toBeTrue()
+	expect(checkinList.checkins[0]?.firstname).toBeTruthy()
+	expect(typeof checkinList.checkins[0]?.databaseId === "number").toBeTrue()
 })
 
 test("change lockerKey: change key", async () => {
@@ -48,8 +48,8 @@ test("get checkin list with a unitID", async () => {
 		organizationUnitId: TEST_FACILITY,
 	})
 	expect(Array.isArray(checkinList.checkins)).toBeTrue()
-	expect(checkinList.checkins[0].firstname).toBeTruthy()
-	expect(typeof checkinList.checkins[0].databaseId === "number").toBeTrue()
+	expect(checkinList.checkins[0]?.firstname).toBeTruthy()
+	expect(typeof checkinList.checkins[0]?.databaseId === "number").toBeTrue()
 })
 
 test("change lockerKey: check key", async () => {

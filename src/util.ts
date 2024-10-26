@@ -14,8 +14,11 @@ export default class Util {
 
 	async getDefaultUnitID(): Promise<unitID> {
 		const data = await this.mgl.organization.permitted()
+		const [firstChild] = data.listChildren
 
-		return data.listChildren[0].databaseId ?? DEFAULT_UNIT_ID
+		if (!firstChild) throw new Error("no children found")
+
+		return firstChild.databaseId ?? DEFAULT_UNIT_ID
 	}
 
 	/**
