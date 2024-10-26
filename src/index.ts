@@ -137,10 +137,6 @@ export class Openmagicline {
 		if (!newCookies) throw new Error("no login cookies returned")
 
 		this.cookies = newCookies
-
-		if (this.config.unitID === undefined) {
-			this.config.unitID = await this.util.getDefaultUnitID()
-		}
 	}
 
 	/**
