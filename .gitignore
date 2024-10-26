@@ -1,8 +1,9 @@
 node_modules
-
 dist
 
 .env
 test-cookies.txt
 
 .DS_Store
+
+local.*
