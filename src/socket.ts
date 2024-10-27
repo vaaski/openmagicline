@@ -7,17 +7,24 @@ import WebSocket from "ws"
 import { websocketHeaders } from "./util"
 
 export const knownTopics = [
-	"/user/topic/currentlicense",
 	"/user/topic/app/status",
-	"/user/topic/lead",
+	"/user/topic/checkin",
+	"/user/topic/checkin/request",
+	"/user/topic/checkout/request",
+	"/user/topic/currentlicense",
 	"/user/topic/customerrecovery",
+	"/user/topic/downloadmanager",
+	"/user/topic/featuremodule/configuration",
+	"/user/topic/lead",
 	"/user/topic/studiotask",
 	"/user/topic/supportcenteractivity",
-	"/user/topic/featuremodule/configuration",
-	"/user/topic/downloadmanager",
-	"/user/topic/checkin",
 ] as const
-export type Topic = (typeof knownTopics)[number]
+
+// apparently the `& {}` magic will give autocompletion for known topics but
+// also allow any strings starting with `/user/topic/`
+export type Topic =
+	| (typeof knownTopics)[number]
+	| (`/user/topic/${string}` & {})
 
 // biome-ignore lint/suspicious/noExplicitAny: I am too lazy to properly type this
 type CallbackFunction<T = any> = (data: T) => void
