@@ -1,23 +1,20 @@
-export type CallbackFunction<T> = (data: T) => void
-export type UnsubscribeFunction = () => void
-
-export interface CheckinEvent {
+export type Checkin = {
 	type: string
 	action: string
 	timestamp: number
 	tenantName: string
 	organizationUnitId: number
 	customerIds: unknown[]
-	payload: Payload
+	payload: CheckinPayload
 }
 
-export interface Payload {
+export type CheckinPayload = {
 	databaseId: number
 	optlock: number
 	fkOrganizationUnit: number
 	fkCustomer: number
 	fkEmployee: null
-	fkDevice: number
+	fkDevice: null
 	firstname: string
 	lastname: string
 	cardNumber: null
@@ -25,7 +22,7 @@ export interface Payload {
 	employeeNumber: null
 	dateOfBirth: string
 	gender: number
-	imageUrl: ImageURL | null
+	imageUrl: null
 	studioName: null
 	lockerKey: null | string
 	checkinTime: string
@@ -33,7 +30,58 @@ export interface Payload {
 	stompDestination: string
 }
 
-export interface ImageURL {
-	url: string
-	rewrite: boolean
+export type CheckinRequest = {
+	type: string
+	action: string
+	timestamp: number
+	tenantName: string
+	organizationUnitId: number
+	customerIds: unknown[]
+	payload: CheckinRequestPayload
+}
+
+export type CheckinRequestPayload = {
+	deviceId: number
+	customer: Customer
+	stompDestination: string
+}
+
+export type Customer = {
+	checkinId: number
+	checkoutTime: string
+	databaseId: number
+	organizationUnit: number
+	facilityName: string
+	customerNumber: string
+	cardNumber: string
+	firstname: string
+	secondFirstname: null
+	lastname: string
+	secondLastname: null
+	taxId: null
+	telPrivate: string
+	telPrivateMobile: null
+	telBusiness: null
+	telBusinessMobile: null
+	email: null
+	emailStatusType: null
+	street: string
+	houseNumber: string
+	zip: string
+	city: string
+	dateOfBirth: string
+	underage: boolean
+	gender: number
+	customerStatus: number
+	textMessageStatus: string
+	textMessageNumber: string
+	lockerKey: null
+	lastCheckIn: string
+	imageUrl: null
+	isAnonymized: boolean
+	emailVerificationStatus: null
+	noExcuseState: null
+	addressStatus: null
+	addressToLegalRepresentative: boolean
+	checkedIn: boolean
 }

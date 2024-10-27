@@ -61,6 +61,7 @@ export class Openmagicline {
 
 	// TODO: check version and warn if openmagicline is outdated
 	// TODO: remove default unit id
+	// TODO: make a responsedump folder to auto-generate types script
 	constructor(readonly config: OMGL.Config) {
 		this.log = debug("openmagicline")
 

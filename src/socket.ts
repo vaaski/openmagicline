@@ -201,10 +201,21 @@ export default class MagicSocket {
 		}
 	}
 
+	/** fires when a customer gets checked in or out */
 	public readonly onCheckin = (
-		callback: CallbackFunction<Magicline.Socket.CheckinEvent>,
+		callback: CallbackFunction<Magicline.Socket.Checkin>,
 	) => {
 		return this.subscribe("/user/topic/checkin", callback)
+	}
+
+	/**
+	 * fires when a card gets tapped to a checkin device
+	 * using magicline device manager
+	 */
+	public readonly onCheckinRequest = (
+		callback: CallbackFunction<Magicline.Socket.CheckinRequest>,
+	) => {
+		return this.subscribe("/user/topic/checkin/request", callback)
 	}
 
 	public readonly close = () => {
