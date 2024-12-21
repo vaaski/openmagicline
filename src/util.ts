@@ -41,18 +41,20 @@ export const headers = (mgl: mgl): HeadersInit => {
 		"accept-language": "en-US,en;q=0.5",
 		accept: "application/json, text/javascript, */*; q=0.01",
 		authority: u.hostname,
-		origin: u.href,
+		origin: u.origin,
 		priority: "u=1, i",
-		referer: u.href,
+		referer: u.origin,
 		"sec-ch-ua-mobile": "?0",
 		"sec-ch-ua-platform": '"macOS"',
-		"sec-ch-ua": '"Brave";v="129", "Not=A?Brand";v="8", "Chromium";v="129"',
+		"sec-ch-ua": '"Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
 		"sec-fetch-dest": "empty",
 		"sec-fetch-mode": "cors",
 		"sec-fetch-site": "same-origin",
 		"sec-gpc": "1",
-		"x-ml-wc-version": "3.399.7",
+		"x-ml-wc-version": "3.412.8",
 		"x-requested-with": "XMLHttpRequest",
+		"user-agent":
+			"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
 	}
 
 	if (mgl.cookies) returnValue.cookie = mgl.cookies
