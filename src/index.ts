@@ -10,6 +10,7 @@ import Customer from "./customer"
 import Checkin from "./checkin"
 import Sales from "./sales"
 import MagicSocket from "./socket"
+import Leads from "./leads"
 import { ofetch, type $Fetch } from "ofetch"
 
 export type { OMGL, Magicline, unitID } from "../types"
@@ -56,6 +57,9 @@ export class Openmagicline {
 	/** reference to this.sales */
 	disposal: Sales
 
+	/** everything related to leads/interessenten */
+	leads: Leads
+
 	/** event handler for magiclines websockets */
 	socket: (unitID?: unitID) => Promise<MagicSocket>
 
@@ -72,10 +76,12 @@ export class Openmagicline {
 
 		this.fetch = ofetch.create({
 			baseURL: prefixUrl,
-			headers: headers(this),
 			referrer: prefixUrl,
 			onRequest: ({ options }) => {
 				if (this.cookies) options.headers.set("cookie", this.cookies)
+				for (const [key, value] of Object.entries(headers(this))) {
+					if (!options.headers.has(key)) options.headers.set(key, value)
+				}
 			},
 			onResponse: ({ response, options, request }) => {
 				let logString = `[${options.method ?? "GET"}](${response.status}) `
@@ -103,6 +109,7 @@ export class Openmagicline {
 		this.util = new Util(this.fetch, this)
 		this.sales = new Sales(this.fetch, this)
 		this.disposal = this.sales
+		this.leads = new Leads(this.fetch, this)
 		this.socket = async (unitID) => {
 			const _unitID = unitID ?? (await this.unitID)
 			return new MagicSocket(this, _unitID)

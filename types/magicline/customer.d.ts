@@ -212,3 +212,10 @@ export interface DetailedBalance {
 	transferBalance: number
 	totalWithoutConsumptionCredit: number
 }
+
+export type CustomerTagID = {
+	databaseId: number
+	name: string
+	active: boolean
+	colorHex: string
+}

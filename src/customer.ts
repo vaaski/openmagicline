@@ -116,4 +116,20 @@ export default class Customer {
 			`/customer/${customerId}/balance/detailed`,
 		)
 	}
+
+	getAssignableTagIDs = async (facilityId: number) => {
+		return this.fetch<Magicline.Customer.CustomerTagID[]>(
+			`/customer-tag/assignable/simple?facilityIds=${facilityId}`,
+		)
+	}
+
+	setTagIDs = async (customerId: OMGL.Customer.CustomerID, IDs: number[]) => {
+		return this.fetch<{ success: "true" }>(
+			`/customer/${customerId}/customer-tag/ids`,
+			{
+				body: IDs,
+				method: "PUT",
+			},
+		)
+	}
 }
