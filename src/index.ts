@@ -2,6 +2,7 @@ import type { OMGL, unitID } from "../types"
 
 import once from "lodash/once"
 import debug from "debug"
+import { ofetch, type $Fetch } from "ofetch"
 
 import Util, { headers } from "./util"
 import Locale from "./locale"
@@ -11,7 +12,7 @@ import Checkin from "./checkin"
 import Sales from "./sales"
 import MagicSocket from "./socket"
 import Leads from "./leads"
-import { ofetch, type $Fetch } from "ofetch"
+import Classes from "./classes"
 
 export type { OMGL, Magicline, unitID } from "../types"
 export class Openmagicline {
@@ -59,6 +60,9 @@ export class Openmagicline {
 
 	/** everything related to leads/interessenten */
 	leads: Leads
+
+	/** everything related to classes */
+	classes: Classes
 
 	/** event handler for magiclines websockets */
 	socket: (unitID?: unitID) => Promise<MagicSocket>
@@ -110,6 +114,7 @@ export class Openmagicline {
 		this.sales = new Sales(this.fetch, this)
 		this.disposal = this.sales
 		this.leads = new Leads(this.fetch, this)
+		this.classes = new Classes(this.fetch, this)
 		this.socket = async (unitID) => {
 			const _unitID = unitID ?? (await this.unitID)
 			return new MagicSocket(this, _unitID)
