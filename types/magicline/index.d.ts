@@ -4,6 +4,7 @@ export * as Sales from "./sales"
 export * as Socket from "./socket"
 export * as Leads from "./leads"
 export * as Classes from "./classes"
+export * as Appointments from "./appointments"
 
 export type CurrentLocale = string
 export type SupportedLocales = string[]

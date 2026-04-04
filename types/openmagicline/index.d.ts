@@ -4,6 +4,7 @@ export * as Customer from "./customer"
 export * as Checkin from "./checkin"
 export * as Sales from "./sales"
 export * as Classes from "./classes"
+export * as Appointments from "./appointments"
 
 export interface Config {
 	/**
