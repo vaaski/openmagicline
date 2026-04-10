@@ -13,6 +13,7 @@ import Sales from "./sales"
 import MagicSocket from "./socket"
 import Leads from "./leads"
 import Classes from "./classes"
+import Appointments from "./appointments"
 
 export type { OMGL, Magicline, unitID } from "../types"
 export class Openmagicline {
@@ -63,6 +64,9 @@ export class Openmagicline {
 
 	/** everything related to classes */
 	classes: Classes
+
+	/** everything related to appointments */
+	appointments: Appointments
 
 	/** event handler for magiclines websockets */
 	socket: (unitID?: unitID) => Promise<MagicSocket>
@@ -115,6 +119,7 @@ export class Openmagicline {
 		this.disposal = this.sales
 		this.leads = new Leads(this.fetch, this)
 		this.classes = new Classes(this.fetch, this)
+		this.appointments = new Appointments(this.fetch, this)
 		this.socket = async (unitID) => {
 			const _unitID = unitID ?? (await this.unitID)
 			return new MagicSocket(this, _unitID)
