@@ -45,9 +45,9 @@ export default class Appointments {
 	}
 
 	/** get a single appointment by its database ID. */
-	get = async (appointmentId: number) => {
+	get = async (appointmentId: number, type: "single" | "course" = "single") => {
 		return await this.fetch<Magicline.Appointments.Appointment>(
-			`/singleappointments/${appointmentId}`,
+			`/${type}appointments/${appointmentId}`,
 		)
 	}
 }

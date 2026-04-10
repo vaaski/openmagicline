@@ -26,7 +26,15 @@ test("get single appointment", async () => {
 
 	if (!first) return
 
-	const appointment = await instance.appointments.get(first.databaseId)
+	console.log(first)
+
+	const type = first.appointmentType.toLowerCase()
+
+	if (type !== "course" && type !== "single") {
+		throw new Error("invalid appointment type")
+	}
+
+	const appointment = await instance.appointments.get(first.databaseId, type)
 
 	expect(appointment.databaseId).toBe(first.databaseId)
 })
