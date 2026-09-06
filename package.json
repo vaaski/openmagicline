@@ -21,15 +21,12 @@
 		"dev": "bun run test --watch",
 		"test": "bun test --preload ./tests/_setup.ts --timeout 10000",
 		"test:full": "rimraf test-cookies.txt && bun run test",
-		"lint": "biome lint --write ",
-		"format": "biome format --write ",
 		"typecheck": "tsc --noEmit & tsc -p tests/tsconfig.json"
 	},
 	"files": [
 		"dist"
 	],
 	"devDependencies": {
-		"@biomejs/biome": "1.9.2",
 		"@types/bun": "^1.1.12",
 		"@types/debug": "^4.1.12",
 		"@types/lodash": "^4.17.12",
