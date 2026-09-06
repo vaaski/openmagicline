@@ -64,5 +64,5 @@ test("get customer detailed balance", async () => {
 	expect(Number.isNaN(balance.totalWithoutConsumptionCredit)).toBeFalse()
 })
 
-test.todo("add customer card")
-test.todo("remove customer card")
+test.todo("add customer card", () => {})
+test.todo("remove customer card", () => {})
