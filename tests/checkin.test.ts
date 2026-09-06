@@ -56,7 +56,7 @@ test("change lockerKey: check key", async () => {
 	const changedCheckin = checkinList.checkins.find(
 		c => c.databaseId === checkin.databaseId,
 	)
-	if (!changedCheckin) throw "can't find lockerkey-changed checkin anymore"
+	if (!changedCheckin) throw new Error("can't find lockerkey-changed checkin anymore")
 
 	expect(changedCheckin.lockerKey === TEST_KEY_2).toBeTrue()
 })

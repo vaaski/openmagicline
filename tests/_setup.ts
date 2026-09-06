@@ -11,10 +11,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const tokenPath = join(__dirname, "../test-cookies.txt")
 
-const TEST_CUSTOMER = Number.parseInt(
-	process.env.OPENMAGICLINE_TEST_CUSTOMER ?? "0",
-)
-
 const readToken = async () => {
 	try {
 		return await readFile(tokenPath, "utf8")

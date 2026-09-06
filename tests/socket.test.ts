@@ -34,7 +34,7 @@ test("checkin event handler fires", async (done) => {
 
 test.todo(
 	"socket subscription doesn't fire after unsubscribing",
-	async (done) => {
+	async (_done) => {
 		// // eslint-disable-next-line no-async-promise-executor
 		// const socket = instance.socket(TEST_FACILITY)
 		// const unsubscribe = await socket.onCheckin(() => "")
