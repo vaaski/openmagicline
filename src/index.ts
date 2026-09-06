@@ -1,21 +1,22 @@
+import type { $Fetch } from "ofetch"
+
 import type { OMGL, unitID } from "../types"
-
-import once from "lodash/once"
 import debug from "debug"
-import { ofetch, type $Fetch } from "ofetch"
+import once from "lodash/once"
+import { ofetch } from "ofetch"
 
-import Util, { headers } from "./util"
+import Appointments from "./appointments"
+import Checkin from "./checkin"
+import Classes from "./classes"
+import Customer from "./customer"
+import Leads from "./leads"
 import Locale from "./locale"
 import Organization from "./organization"
-import Customer from "./customer"
-import Checkin from "./checkin"
 import Sales from "./sales"
 import MagicSocket from "./socket"
-import Leads from "./leads"
-import Classes from "./classes"
-import Appointments from "./appointments"
+import Util, { headers } from "./util"
 
-export type { OMGL, Magicline, unitID } from "../types"
+export type { Magicline, OMGL, unitID } from "../types"
 export class Openmagicline {
 	readonly log: debug.Debugger
 

@@ -1,9 +1,9 @@
-export interface LockerKeyResponse {
+export type LockerKeyResponse = {
 	checkinId: number
 	lockerKey: string
 }
 
-export interface CheckinResponse {
+export type CheckinResponse = {
 	/** this is the checkinID **not** the customerID, that is `fkCustomer` */
 	databaseId: number
 	optlock: number
@@ -27,12 +27,12 @@ export interface CheckinResponse {
 	stompDestination: string
 }
 
-export interface CheckinList {
+export type CheckinList = {
 	checkins: Checkin[]
 	summary: { [key: string]: number }
 }
 
-export interface Checkin {
+export type Checkin = {
 	databaseId: number
 	optlock: null
 	customerId: number
@@ -55,12 +55,12 @@ export interface Checkin {
 	isAnonymized: boolean
 }
 
-export interface Badge {
+export type Badge = {
 	badge: string
 	label: string
 }
 
-export interface CustomerCode {
+export type CustomerCode = {
 	databaseId: number
 	optlock: number
 	facilityInfo: null
@@ -70,7 +70,7 @@ export interface CustomerCode {
 	active: boolean
 }
 
-export interface ImageURL {
+export type ImageURL = {
 	url: string
 	rewrite: boolean
 }

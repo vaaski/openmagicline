@@ -1,7 +1,7 @@
 import type { $Fetch } from "ofetch"
 
-import type { Magicline, OMGL } from "../types"
 import type { Openmagicline as mgl } from "."
+import type { Magicline, OMGL } from "../types"
 
 export default class Customer {
 	constructor(

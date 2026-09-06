@@ -1,10 +1,10 @@
-export interface ProductOverview {
+export type ProductOverview = {
 	fkOrganizationUnit: null
 	customer: null
 	classOfGoodsList: ClassOfGoodsList[]
 }
 
-export interface ClassOfGoodsList {
+export type ClassOfGoodsList = {
 	databaseId: number
 	name: string
 	materialClassOfGoods: boolean
@@ -12,7 +12,7 @@ export interface ClassOfGoodsList {
 	productList: ProductList[]
 }
 
-export interface ProductList {
+export type ProductList = {
 	databaseId: number | null
 	name: string
 	regularTaxRate: TaxRate
@@ -20,7 +20,7 @@ export interface ProductList {
 	productVariantList: ProductVariantList[]
 }
 
-export interface ProductVariantList {
+export type ProductVariantList = {
 	databaseId: number
 	name: string
 	itemNumber: string
@@ -31,7 +31,7 @@ export interface ProductVariantList {
 	ean: null | string
 }
 
-export interface TaxRate {
+export type TaxRate = {
 	name: string
 	percent: number
 }

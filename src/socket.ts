@@ -22,9 +22,9 @@ export const knownTopics = [
 
 // apparently the `& {}` magic will give autocompletion for known topics but
 // also allow any strings starting with `/user/topic/`
-export type Topic =
-	| (typeof knownTopics)[number]
-	| (`/user/topic/${string}` & {})
+export type Topic
+	= | (typeof knownTopics)[number]
+		| (`/user/topic/${string}` & {})
 
 // biome-ignore lint/suspicious/noExplicitAny: I am too lazy to properly type this
 type CallbackFunction<T = any> = (data: T) => void
@@ -141,7 +141,7 @@ export default class MagicSocket {
 	private handleTypeCONNECTED = (metadata: string[]) => {
 		this.connectedResolve?.()
 
-		const heartbeatData = metadata.find((m) => m.startsWith("heart-beat:"))
+		const heartbeatData = metadata.find(m => m.startsWith("heart-beat:"))
 		if (!heartbeatData) return this.log("no heartbeat data found")
 
 		const [, heartbeats] = heartbeatData.split(":")
@@ -159,7 +159,7 @@ export default class MagicSocket {
 	}
 
 	private handleTypeMESSAGE = (metadata: string[], payload?: string) => {
-		const destinationData = metadata.find((m) => m.startsWith("destination:"))
+		const destinationData = metadata.find(m => m.startsWith("destination:"))
 		if (!destinationData) return this.log("no destination data found")
 
 		const [, destination] = destinationData.split(":")

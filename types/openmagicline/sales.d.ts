@@ -1,6 +1,6 @@
 import type { unitID } from ".."
 
-export interface ProductOptions {
+export type ProductOptions = {
 	organizationUnitId?: unitID
 	customerId?: number
 }

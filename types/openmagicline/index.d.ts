@@ -1,12 +1,12 @@
 import type { unitID } from ".."
 
-export * as Customer from "./customer"
-export * as Checkin from "./checkin"
-export * as Sales from "./sales"
-export * as Classes from "./classes"
 export * as Appointments from "./appointments"
+export * as Checkin from "./checkin"
+export * as Classes from "./classes"
+export * as Customer from "./customer"
+export * as Sales from "./sales"
 
-export interface Config {
+export type Config = {
 	/**
 	 * the gym's url prefix
 	 *

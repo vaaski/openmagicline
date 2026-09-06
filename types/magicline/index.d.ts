@@ -1,17 +1,17 @@
-export * as Customer from "./customer"
+export * as Appointments from "./appointments"
 export * as Checkin from "./checkin"
+export * as Classes from "./classes"
+export * as Customer from "./customer"
+export * as Leads from "./leads"
 export * as Sales from "./sales"
 export * as Socket from "./socket"
-export * as Leads from "./leads"
-export * as Classes from "./classes"
-export * as Appointments from "./appointments"
 
 export type CurrentLocale = string
 export type SupportedLocales = string[]
-export interface Success {
+export type Success = {
 	success: "true"
 }
-export interface GenericError {
+export type GenericError = {
 	errorMessage: string
 	errorCode: string
 	args: unknown[]
@@ -20,7 +20,7 @@ export interface GenericError {
 
 export type ErrorOrSuccess = Partial<Success> & GenericError[]
 
-export interface Permitted {
+export type Permitted = {
 	databaseId: null | number
 	optlock: null | number
 	name: string
@@ -42,7 +42,7 @@ export interface Permitted {
 	isStudioLoginPermitted: boolean
 }
 export type Notices = unknown[]
-export interface AccountInfo {
+export type AccountInfo = {
 	firstname: string
 	lastname: string
 	fullName: string
@@ -52,7 +52,7 @@ export interface AccountInfo {
 		rewrite: boolean
 	}
 }
-export interface App {
+export type App = {
 	app: string
 	status: string
 	values: {

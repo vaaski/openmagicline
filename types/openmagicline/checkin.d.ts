@@ -1,6 +1,6 @@
 import type { unitID } from ".."
 
-export interface ListOptions {
+export type ListOptions = {
 	organizationUnitId: unitID
 	offset: number
 	/** magiclines webclient sets this to  */
@@ -18,7 +18,7 @@ export interface ListOptions {
 	direction: "DESCENDING" | "ASCENDING"
 }
 
-export interface CheckinOptions {
+export type CheckinOptions = {
 	/** not sure what this is for */
 	customerCardNumber: null | unknown
 	/** not sure what this is for */
@@ -40,11 +40,11 @@ export interface CheckinOptions {
 	requiredOrganizationUnitId: unitID
 }
 
-export interface CheckoutOptions {
+export type CheckoutOptions = {
 	optLockRemote?: number
 }
 
-export interface LockerKeyOptions {
+export type LockerKeyOptions = {
 	/** not sure what this is for */
 	databaseId?: null | unknown
 	/** not sure what this is for */

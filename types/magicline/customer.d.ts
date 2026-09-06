@@ -1,6 +1,6 @@
 import type * as Openmagicline from "../openmagicline"
 
-export interface Benefit {
+export type Benefit = {
 	name: string
 	available: number | null
 	total: number | null
@@ -18,17 +18,17 @@ export interface Benefit {
 	flat: boolean
 }
 
-export interface Base {
+export type Base = {
 	databaseId: Openmagicline.Customer.CustomerID
 }
 
-export interface CheckinCondition {
+export type CheckinCondition = {
 	type: string
 	messageKey: string
 	args: string[]
 }
 
-export interface SearchedCustomer extends Base {
+export type SearchedCustomer = {
 	firstname: string
 	lastname: string
 	gender: number
@@ -47,9 +47,9 @@ export interface SearchedCustomer extends Base {
 	houseNumber: null | string
 	zip: null | string
 	city: null | string
-}
+} & Base
 
-export interface AccessIdentification {
+export type AccessIdentification = {
 	databaseId: Openmagicline.Customer.AccessIdentificationID
 	optlock: number
 	fkOrganizationUnit: number
@@ -59,7 +59,7 @@ export interface AccessIdentification {
 	stompDestination: string
 }
 
-export interface Contract {
+export type Contract = {
 	databaseId: number
 	optlock: number
 	rateId: number
@@ -122,7 +122,7 @@ export interface Contract {
 	paymentRunGroupSimpleDto: null
 }
 
-export interface ContractCancelation {
+export type ContractCancelation = {
 	databaseId: number
 	optlock: number
 	fkCancelationReason: number
@@ -137,7 +137,7 @@ export interface ContractCancelation {
 	cancelationByStudio: boolean
 }
 
-export interface ContractPaymentFrequency {
+export type ContractPaymentFrequency = {
 	databaseId: number
 	optlock: number
 	type: string
@@ -161,22 +161,22 @@ export interface ContractPaymentFrequency {
 	dynamicAdjustmentRules: unknown[]
 }
 
-export interface FirstBookingDelay {
+export type FirstBookingDelay = {
 	term: number
 	termUnit: number
 }
 
-export interface Money {
+export type Money = {
 	amount: number
 	currencyCode: string
 }
 
-export interface CurrentPriceWithDate {
+export type CurrentPriceWithDate = {
 	date: string
 	price: number
 }
 
-export interface FlatFeeContract {
+export type FlatFeeContract = {
 	databaseId: number
 	optlock: number
 	currencyUnit: string
@@ -201,7 +201,7 @@ export interface FlatFeeContract {
 	canceled: boolean
 }
 
-export interface DetailedBalance {
+export type DetailedBalance = {
 	databaseId: number
 	optlock: null
 	consumptionCreditBalance: number

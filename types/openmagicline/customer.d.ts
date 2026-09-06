@@ -3,7 +3,7 @@ import type { unitID } from ".."
 export type CustomerID = number
 export type AccessIdentificationID = number
 
-export interface SearchOptions {
+export type SearchOptions = {
 	facility: unitID
 	/**
 	 * searchInAddress

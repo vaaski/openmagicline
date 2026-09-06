@@ -28,9 +28,9 @@ solid starting point for anyone who wants to implement missing functionality.
 
 ```ts
 const magicline = new Openmagicline({
-  gym: "gym", // example for https://gym.web.magicline.com
-  username: "your username",
-  password: "your password",
+	gym: "gym", // example for https://gym.web.magicline.com
+	username: "your username",
+	password: "your password",
 })
 
 await magicline.login()

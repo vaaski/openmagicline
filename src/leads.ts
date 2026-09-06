@@ -1,6 +1,6 @@
 import type { $Fetch } from "ofetch"
 import type { Openmagicline as mgl } from "."
-import type { Magicline, OMGL } from "../types"
+import type { Magicline } from "../types"
 
 export default class Leads {
 	constructor(
@@ -8,8 +8,8 @@ export default class Leads {
 		private mgl: mgl,
 	) {}
 
-	private readonly defaultCreateLeadOptions: Partial<Magicline.Leads.CreateLeadOptions> =
-		{
+	private readonly defaultCreateLeadOptions: Partial<Magicline.Leads.CreateLeadOptions>
+		= {
 			source: { type: "MANUAL" },
 			status: "PENDING",
 			customer: {

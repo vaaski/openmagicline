@@ -19,8 +19,8 @@ export default class Appointments {
 	 * defaults to the current week (Monday to Sunday) if no dates are provided.
 	 */
 	search = async (options?: Partial<OMGL.Appointments.SearchOptions>) => {
-		const organizationUnitId =
-			options?.organizationUnitId ?? (await this.mgl.unitID)
+		const organizationUnitId
+			= options?.organizationUnitId ?? (await this.mgl.unitID)
 
 		const startDate = options?.startDate ?? defaultStartDate()
 		const endDate = options?.endDate ?? defaultEndDate(startDate)
@@ -36,8 +36,8 @@ export default class Appointments {
 					startDate,
 					endDate,
 					appointmentStatuses: (
-						options?.appointmentStatuses ??
-						this.defaultSearchOptions.appointmentStatuses
+						options?.appointmentStatuses
+						?? this.defaultSearchOptions.appointmentStatuses
 					)?.join(","),
 				},
 			},

@@ -10,8 +10,8 @@ export default class Classes {
 	) {}
 
 	getClasses = async (options?: OMGL.Classes.GetClassesOptions) => {
-		const organizationUnitId =
-			options?.organizationUnitId ?? (await this.mgl.unitID)
+		const organizationUnitId
+			= options?.organizationUnitId ?? (await this.mgl.unitID)
 
 		const startDateTime = new Date()
 		const endDateTime = new Date()

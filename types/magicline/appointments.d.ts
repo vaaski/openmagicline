@@ -2,26 +2,26 @@ export type AppointmentStatus = "PLANNED" | "COMPLETED" | "CANCELLED"
 
 export type AppointmentSource = "MYSPORTS" | "INTERNAL_API" | "STUDIO"
 
-export type AppointmentVisualType =
-	| "SINGLE_APPOINTMENT_WITHOUT_SERIES"
-	| "SINGLE_APPOINTMENT_WITH_SERIES"
+export type AppointmentVisualType
+	= | "SINGLE_APPOINTMENT_WITHOUT_SERIES"
+		| "SINGLE_APPOINTMENT_WITH_SERIES"
 
 export type AppointmentType = "SINGLE"
 
-export type DescriptionType =
-	| "CUSTOMERS"
-	| "BENEFIT"
-	| "EQUIPMENTS"
-	| "STUDIO"
-	| "EVENT"
-	| "NOTE"
+export type DescriptionType
+	= | "CUSTOMERS"
+		| "BENEFIT"
+		| "EQUIPMENTS"
+		| "STUDIO"
+		| "EVENT"
+		| "NOTE"
 
-export interface Description {
+export type Description = {
 	description: string
 	type: DescriptionType
 }
 
-export interface AppointmentCustomer {
+export type AppointmentCustomer = {
 	databaseId: number
 	optlock: number
 	fkOrganizationUnit: number
@@ -29,7 +29,7 @@ export interface AppointmentCustomer {
 	lastname: string
 }
 
-export interface Appointment {
+export type Appointment = {
 	databaseId: number
 	optlock: number
 	fkOrganizationUnit: number

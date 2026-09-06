@@ -28,6 +28,7 @@ export default class Checkin {
 		sortedby: "checkinTime",
 		direction: "DESCENDING",
 	}
+
 	/**
 	 * list all checked-in customers
 	 * @param options filter, sort, etc.
@@ -70,11 +71,11 @@ export default class Checkin {
 	 * check-in a customer
 	 */
 	checkin = async (
-		options: Partial<OMGL.Checkin.CheckinOptions> &
-			Pick<OMGL.Checkin.CheckinOptions, "fkCustomer">,
+		options: Partial<OMGL.Checkin.CheckinOptions>
+			& Pick<OMGL.Checkin.CheckinOptions, "fkCustomer">,
 	) => {
-		let unitID =
-			options.requiredOrganizationUnitId ?? options.fkOrganizationUnit
+		let unitID
+			= options.requiredOrganizationUnitId ?? options.fkOrganizationUnit
 		if (typeof unitID !== "number") {
 			unitID = await this.mgl.unitID
 		}
@@ -128,6 +129,7 @@ export default class Checkin {
 		databaseId: undefined,
 		optlock: 0,
 	}
+
 	changeLockerKey = async (
 		checkinId: number,
 		lockerKey: number | string,

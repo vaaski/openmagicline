@@ -39,14 +39,14 @@ export const headers = (mgl: mgl) => {
 
 	const returnValue: HeadersInit = {
 		"accept-language": "en-US,en;q=0.6",
-		accept: "application/json, text/javascript, */*; q=0.01",
-		authority: u.hostname,
-		origin: u.origin,
-		referer: u.origin,
-		priority: "u=1, i",
-		"sec-ch-ua": '"Brave";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+		"accept": "application/json, text/javascript, */*; q=0.01",
+		"authority": u.hostname,
+		"origin": u.origin,
+		"referer": u.origin,
+		"priority": "u=1, i",
+		"sec-ch-ua": "\"Brave\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"",
 		"sec-ch-ua-mobile": "?0",
-		"sec-ch-ua-platform": '"macOS"',
+		"sec-ch-ua-platform": "\"macOS\"",
 		"sec-fetch-dest": "empty",
 		"sec-fetch-mode": "cors",
 		"sec-fetch-site": "same-origin",
@@ -62,12 +62,12 @@ export const headers = (mgl: mgl) => {
 
 export const websocketHeaders = (mgl: mgl) => {
 	const returnValue: Record<string, string> = {
-		host: `${mgl.config.gym}.web.magicline.com`,
-		connection: "Upgrade",
-		pragma: "no-cache",
+		"host": `${mgl.config.gym}.web.magicline.com`,
+		"connection": "Upgrade",
+		"pragma": "no-cache",
 		"cache-control": "no-cache",
-		upgrade: "websocket",
-		origin: `https://${mgl.config.gym}.web.magicline.com`,
+		"upgrade": "websocket",
+		"origin": `https://${mgl.config.gym}.web.magicline.com`,
 		"user-agent":
 			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
 		"accept-encoding": "gzip, deflate, br, zstd",

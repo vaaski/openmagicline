@@ -54,7 +54,7 @@ test("get checkin list with a unitID", async () => {
 
 test("change lockerKey: check key", async () => {
 	const changedCheckin = checkinList.checkins.find(
-		(c) => c.databaseId === checkin.databaseId,
+		c => c.databaseId === checkin.databaseId,
 	)
 	if (!changedCheckin) throw "can't find lockerkey-changed checkin anymore"
 

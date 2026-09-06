@@ -1,10 +1,11 @@
-import { join, dirname } from "node:path"
-import { fileURLToPath } from "node:url"
+import type { OMGL } from "../src"
 import { readFile, writeFile } from "node:fs/promises"
+import { dirname, join } from "node:path"
 
-import { afterAll, beforeEach } from "bun:test"
+import { fileURLToPath } from "node:url"
 
-import { Openmagicline, type OMGL } from "../src"
+import { beforeEach } from "bun:test"
+import { Openmagicline } from "../src"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -54,7 +55,7 @@ export const getInstance = async () => {
 
 const randomFloat = (m = 0, M = 1) => Math.random() * (M - m) + m
 export const wait = (t: number): Promise<void> => {
-	return new Promise((r) => setTimeout(r, t))
+	return new Promise(r => setTimeout(r, t))
 }
 
 /**

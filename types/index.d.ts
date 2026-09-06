@@ -1,5 +1,5 @@
-export * as OMGL from "./openmagicline"
 export * as Magicline from "./magicline"
+export * as OMGL from "./openmagicline"
 
 /**
  * the "organizationUnitId" used to identify different units for the same gym.

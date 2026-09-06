@@ -1,5 +1,3 @@
-import type { Magicline } from "../types"
-
 import { expect, test } from "bun:test"
 import { getInstance } from "./_setup"
 

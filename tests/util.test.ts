@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
-import { config, getInstance } from "./_setup"
 import { Openmagicline } from "../src"
+import { config, getInstance } from "./_setup"
 
 test("logs in with valid preexisting token", async () => {
 	const instance = await getInstance()
