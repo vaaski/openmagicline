@@ -3,7 +3,6 @@ import type { $Fetch } from "ofetch"
 import type { Openmagicline as mgl } from "."
 import type { unitID } from "../types"
 
-import FormData from "form-data"
 import { DEFAULT_UNIT_ID } from "./constants"
 
 export default class Util {
@@ -76,12 +75,6 @@ export const websocketHeaders = (mgl: mgl) => {
 
 	if (mgl.cookies) returnValue.cookie = mgl.cookies
 	return returnValue
-}
-
-export const formData = (data: Record<string, string>): FormData => {
-	const form = new FormData()
-	for (const [key, value] of Object.entries(data)) form.append(key, value)
-	return form
 }
 
 export const searchParameters = (
