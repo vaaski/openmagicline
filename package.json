@@ -1,47 +1,52 @@
 {
-	"name": "openmagicline",
-	"description": "Magicline API for everybody.",
-	"keywords": [
-		"magicline",
-		"gym",
-		"mysports",
-		"reverse-engineered"
-	],
-	"version": "2.3.0",
-	"main": "dist/index.js",
-	"license": "MIT",
-	"author": "vaaski <admin@vaa.ski>",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/vaaski/openmagicline.git"
-	},
-	"scripts": {
-		"build": "tsup",
-		"prepublishOnly": "bun run build",
-		"dev": "bun run test --watch",
-		"test": "bun test --preload ./tests/_setup.ts --timeout 10000",
-		"test:full": "rimraf test-cookies.txt && bun run test",
-		"typecheck": "tsc --noEmit & tsc -p tests/tsconfig.json"
-	},
-	"files": [
-		"dist"
-	],
-	"devDependencies": {
-		"@types/bun": "^1.1.12",
-		"@types/debug": "^4.1.12",
-		"@types/lodash": "^4.17.12",
-		"@types/node": "^20.17.1",
-		"@types/ws": "^7.4.7",
-		"rimraf": "^3.0.2",
-		"tsup": "^6.7.0",
-		"typescript": "^4.9.5"
-	},
-	"dependencies": {
-		"@stomp/stompjs": "^6.1.2",
-		"debug": "^4.3.7",
-		"form-data": "^4.0.1",
-		"lodash": "^4.17.21",
-		"ofetch": "^1.4.1",
-		"ws": "^7.5.10"
-	}
+  "name": "openmagicline",
+  "description": "Magicline API for everybody.",
+  "keywords": [
+    "magicline",
+    "gym",
+    "mysports",
+    "reverse-engineered"
+  ],
+  "version": "2.3.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "author": "vaaski <admin@vaa.ski>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaaski/openmagicline.git"
+  },
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "bun run build",
+    "dev": "bun run test --watch",
+    "test": "bun test --preload ./tests/_setup.ts --timeout 10000",
+    "test:full": "rimraf test-cookies.txt && bun run test",
+    "typecheck": "tsc --noEmit & tsc -p tests/tsconfig.json",
+    "lint": "eslint ."
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@antfu/eslint-config": "^9.5.1",
+    "@types/bun": "^1.1.12",
+    "@types/debug": "^4.1.12",
+    "@types/lodash": "^4.17.12",
+    "@types/node": "^20.17.1",
+    "@types/ws": "^7.4.7",
+    "eslint": "^10.10.0",
+    "eslint-plugin-format": "^2.0.1",
+    "eslint-plugin-vaaski": "^3.1.1",
+    "rimraf": "^3.0.2",
+    "tsup": "^6.7.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@stomp/stompjs": "^6.1.2",
+    "debug": "^4.3.7",
+    "form-data": "^4.0.1",
+    "lodash": "^4.17.21",
+    "ofetch": "^1.4.1",
+    "ws": "^7.5.10"
+  }
 }
