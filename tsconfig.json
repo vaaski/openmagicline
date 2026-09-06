@@ -1,20 +1,29 @@
 {
 	"compilerOptions": {
-		"target": "es2022",
-		"lib": ["ES2020", "DOM", "DOM.Iterable"],
-		"module": "es2022",
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"types": [],
-		"allowJs": true,
+		"target": "ESNext",
+		"jsx": "react-jsx",
+		"lib": [
+			"ESNext",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"moduleDetection": "force",
+		"module": "Preserve",
+		"moduleResolution": "bundler",
+		"types": [
+		],
+		"allowImportingTsExtensions": true,
+		"allowJs": false,
 		"strict": true,
-		"noImplicitAny": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
 		"noUncheckedIndexedAccess": true,
-		"declaration": true,
-		"outDir": "lib",
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
+		"noEmit": true,
+		"verbatimModuleSyntax": true,
 		"skipLibCheck": true
 	},
-	"include": ["src/**/*", "types/**/*"]
+	"include": [
+		"src/**/*",
+		"types/**/*"
+	]
 }
