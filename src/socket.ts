@@ -26,8 +26,7 @@ export type Topic
 	= | (typeof knownTopics)[number]
 		| (`/user/topic/${string}` & {})
 
-// biome-ignore lint/suspicious/noExplicitAny: I am too lazy to properly type this
-type CallbackFunction<T = any> = (data: T) => void
+type CallbackFunction<T = unknown> = (data: T) => void
 
 export default class MagicSocket {
 	private socket: WebSocket
@@ -39,7 +38,7 @@ export default class MagicSocket {
 	private messageEnd = "\u0000"
 	private heartbeatInterval?: ReturnType<typeof setInterval>
 
-	private subscriptions: Map<Topic, Set<CallbackFunction>> = new Map()
+	private subscriptions: Map<Topic, Set<CallbackFunction<never>>> = new Map()
 	private subscriptionCounter = 0
 
 	public readonly connected: Promise<void>
@@ -169,7 +168,7 @@ export default class MagicSocket {
 		if (!subscriptions) return
 
 		for (const callback of subscriptions) {
-			callback(payload ? JSON.parse(payload) : undefined)
+			callback((payload ? JSON.parse(payload) : undefined) as never)
 		}
 	}
 

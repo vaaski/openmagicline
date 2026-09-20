@@ -15,11 +15,13 @@
 		"reverse-engineered"
 	],
 	"main": "dist/index.mjs",
+	"types": "dist/index.d.ts",
 	"files": [
-		"dist"
+		"dist",
+		"types"
 	],
 	"scripts": {
-		"build": "bunup",
+		"build": "bunup --no-dts && tsc -p tsconfig.build.json",
 		"prepublishOnly": "bun run build",
 		"dev": "bun run test --watch",
 		"test": "bun test --preload ./tests/_setup.ts --timeout 10000",
