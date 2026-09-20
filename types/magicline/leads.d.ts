@@ -1,74 +1,106 @@
 export type CreateLeadResponse = {
-	tenant: string
-	facilityId: number
-	customer: CreateLeadResponseCustomer
-	notes: null
-	source: CreateLeadResponseSource
 	databaseId: number
-	customerId: number
-	optlock: number
-	employee: null
-	status: string
-	createdDate: string
-	modifiedDate: string
-	campaign: null
-	newLead: boolean
-	lossReasonSelection: null
+	fkOrganizationUnit: number
+	masterData: CreateLeadResponseMasterData
+	address: CreateLeadResponseAddress
+	bankAccount: null
+	listCustomerTagFks: number[]
+	paymentMethod: number
+	uuid: string
+	creditCard: null
+	campaignId: null
+	payer: null
+	grantSepaMandate: null
+	customerNumber: string
+	fkBasedOnMember: null
 }
 
-export type CreateLeadResponseCustomer = {
+export type CreateLeadResponseAddress = {
+	databaseId: number
+	optlock: number
+	street: string
+	houseNumber: string
+	zip: string
+	city: string
+	country: string
+	addition: string
+	details: Details
+	studioCountryCode: null
+	status: Status
+	addressInquiryStatus: null
+	streetLine: string
+	cityLine: null
+}
+
+export type Details = {
+	additionalInformation: null | string
+	streetType: null | string
+	block: null | string
+	portal: null | string
+	stairway: null | string
+	floor: null | string
+	door: null | string
+	province: null | string
+	provinceCode: null | string
+	secondStreet: null | string
+	buildingName: null | string
+	cityPart: null | string
+	district: null | string
+}
+
+export type Status = {
+	type: string
+	statusInformation: null
+	since: null
+}
+
+export type CreateLeadResponseMasterData = {
 	firstname: string
 	secondFirstname: null
 	lastname: string
 	secondLastname: null
-	identityNumber: null
-	gender: string
-	dateOfBirth: null
+	taxId: null
+	documentIdentification: PurpleDocumentIdentification
+	gender: number
+	customerTitle: number
+	birthInformation: PurpleBirthInformation
+	customerStatus: number
+	telPrivate: string
+	telPrivateMobile: string
+	telBusiness: string
+	telBusinessMobile: string
+	email: string
+	emailStatusType: string
+	emailStatusInfo: string
+	locale: string
+	textMessageStatusType: string
+	textMessageStatusInfo: string
+	textMessageNumber: string
+	note: null
+	noExcuseState: string
+	emailVerificationStatus: string
+	campaignId: null
+	medicalCertificate: MedicalCertificate
+	sportFederationCertificate: null
+	studioCountryCode: null
+	dateOfBirth: string
+}
+
+export type PurpleBirthInformation = {
+	dateOfBirth: string
 	placeOfBirth: null
 	countryOfBirth: null
-	uuid: string
-	email: null
-	phone: null
-	locale: null
-	address: PurpleAddress
 }
 
-export type PurpleAddress = {
-	street: null
-	housenumber: null
-	zip: null
-	city: null
-	country: string
-	addition: null
-	details: PurpleDetails
+export type PurpleDocumentIdentification = {
+	documentNumber: null
+	documentType: null
 }
 
-export type PurpleDetails = {
-	additionalInformation: null
-	streetType: null
-	block: null
-	portal: null
-	stairway: null
-	floor: null
-	door: null
-	province: null
-	provinceCode: null
-}
-
-export type CreateLeadResponseSource = {
-	type: string
-	profileId: null
-	campaignId: null
-}
-
-export type CreateLeadOptions = {
-	facilityId: number
-	source: CreateLeadOptionsSource
-	status: string
-	customer: Partial<CreateLeadOptionsCustomer>
-	notes?: string
-	tenant: string
-	campaign?: Campaign
+export type MedicalCertificate = {
+	expirationDate: null
+	status: null
+	certificateStatus: null
 }
 
 export type Campaign = {
@@ -77,7 +109,9 @@ export type Campaign = {
 	facilityInfo: FacilityInfo
 	externalIdentifier: string
 	name: string
+	description: null | string
 	colorHex: string
+	timePeriodDto: TimePeriodDto | null
 }
 
 export type FacilityInfo = {
@@ -93,21 +127,81 @@ export type WhitelistEntry = {
 	persistable: boolean
 }
 
-export type CreateLeadOptionsCustomer = {
-	firstname: string
-	lastname: string
-	gender: string
-	address: FluffyAddress
-	placeOfBirth: string
+export type TimePeriodDto = {
+	startDate: string
+	endDate: string
 }
 
-export type FluffyAddress = {
-	details: FluffyDetails
+export type CreateLeadOptions = {
+	identityCardProvided: boolean
+	masterData: CreateLeadOptionsMasterData
+	voucher: Voucher
+	address: CreateLeadOptionsAddress
+	listCustomerTagFks: number[]
+	fkOrganizationUnit: number
+	cardNumber: string
+	image: Image
+}
+
+export type CreateLeadOptionsAddress = {
+	optlock: number
+	addition: string
+	city: string
+	street: string
+	houseNumber: string
+	zip: string
 	country: string
+	details: Details
 }
 
-export type FluffyDetails = unknown
-
-export type CreateLeadOptionsSource = {
+export type Image = {
+	imageUrl: string
 	type: string
+	isPlaceholder: boolean
+}
+
+export type CreateLeadOptionsMasterData = {
+	customerTitle: number
+	note: string
+	telPrivate: string
+	telBusiness: string
+	telPrivateMobile: string
+	telBusinessMobile: string
+	firstname: string
+	identityCardProvided: boolean
+	gender: number
+	dateOfBirth: string
+	lastname: string
+	email: string
+	info: string
+	birthInformation: FluffyBirthInformation
+	medicalCertificate: Certificate
+	sportFederationCertificate: Certificate
+	secondFirstname: string
+	secondLastname: string
+	fax: string
+	documentIdentification: FluffyDocumentIdentification
+}
+
+export type FluffyBirthInformation = {
+	dateOfBirth: string
+	placeOfBirth: string
+	databaseId: null
+	optlock: number
+}
+
+export type FluffyDocumentIdentification = {
+	documentNumber: string
+}
+
+export type Certificate = {
+	certificateStatus?: string
+	status: null
+	databaseId: null
+	optlock: number
+	sportFederation?: null
+}
+
+export type Voucher = {
+	optlock: number
 }
