@@ -11,3 +11,7 @@ export * as OMGL from "./openmagicline"
  * mine was 2 by default for some reason, you can find yours using `.permitted()`
  */
 export type unitID = number
+
+export type DeepPartial<T> = T extends object ? {
+	[P in keyof T]?: DeepPartial<T[P]>
+} : T

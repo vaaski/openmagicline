@@ -1,6 +1,6 @@
 import type { $Fetch } from "ofetch"
 import type { Openmagicline as mgl } from "."
-import type { Magicline } from "../types"
+import type { DeepPartial, Magicline } from "../types"
 
 export default class Leads {
 	constructor(
@@ -89,7 +89,7 @@ export default class Leads {
 	/**
 	 * create a new lead, provide at least customer.firstname and customer.lastname
 	 */
-	createLead = async (options: Partial<Magicline.Leads.CreateLeadOptions>) => {
+	createLead = async (options: DeepPartial<Magicline.Leads.CreateLeadOptions>) => {
 		if (options.fkOrganizationUnit === undefined) {
 			options.fkOrganizationUnit = await this.mgl.unitID
 		}
@@ -99,7 +99,7 @@ export default class Leads {
 			body: {
 				...this.defaultCreateLeadOptions,
 				...options,
-				customer: {
+				masterData: {
 					...this.defaultCreateLeadOptions.masterData,
 					...options.masterData,
 				},
