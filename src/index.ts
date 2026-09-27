@@ -2,7 +2,6 @@ import type { $Fetch } from "ofetch"
 
 import type { OMGL, unitID } from "../types"
 import debug from "debug"
-import once from "lodash/once"
 import { ofetch } from "ofetch"
 
 import Appointments from "./appointments"
@@ -14,7 +13,7 @@ import Locale from "./locale"
 import Organization from "./organization"
 import Sales from "./sales"
 import MagicSocket from "./socket"
-import Util, { headers } from "./util"
+import Util, { headers, once } from "./util"
 
 export type { Magicline, OMGL, unitID } from "../types"
 export class Openmagicline {
